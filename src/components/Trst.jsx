@@ -7,22 +7,22 @@ const Trst = () => {
       <div className="flex justify-center mb-4">
         <img
           src="/logo.png"  // <-- Replace with your image path
-          alt="firstShaadi Logo"
+          alt="firstmarriage Logo"
           className="w-16 h-16 object-contain"
         />
       </div>
 
       {/* Title */}
       <h1 className="text-2xl md:text-3xl font-semibold text-[#ff5a60] mb-4">
-        FirstShaadi.com - Trusted by over 35 Million Members
+      <span className='text-black '>First</span> Marriage.com - Trusted by over 35 Million Members
       </h1>
+      
 
       {/* Description */}
       <p className="max-w-3xl mx-auto text-gray-600 leading-7 mb-2">
-        FirstShadi.com is India’s trusted destination for meaningful matrimonial connections, created with a heartfelt mission — to bring people together in the journey of lifelong companionship.
-Launched with the vision to simplify the search for a life partner, FirstShadi.com offers a modern and secure platform that blends tradition with technology.
+        First Marriage.com is India’s trusted destination for meaningful matrimonial connections, created with a heartfelt mission — to bring people together in the journey of lifelong companionship.
+Launched with the vision to simplify the search for a life partner, First Marriage.com offers a modern and secure platform that blends tradition with technology.
 Since its inception, it has helped thousands find their perfect match by transforming how Indian brides and grooms connect, engage, and build lasting relationships.
-        
       </p>
 
       {/* Country Links */}
@@ -32,15 +32,15 @@ Since its inception, it has helped thousands find their perfect match by transfo
         <a href="#" className="hover:underline">Canada</a>|
         <a href="#" className="hover:underline">UK</a>|
         <a href="#" className="hover:underline">Singapore</a>|
-        <a href="#" className="hover:underline">Australia</a>|
+        
         <a href="#" className="hover:underline">UAE</a>|
         <a href="#" className="hover:underline">NRI Matrimonials ▸</a>
       </div>
 
       {/* Button */}
       <div className="flex justify-center mb-8">
-        <button className="bg-[#00bcd5] text-white px-6 py-2 rounded font-semibold hover:bg-[#00aabf] transition">
-          Trusted by Millions
+        <button className="bg-[#00bcd5] text-white px-6 py-2 rounded font-semibold hover:bg-[#1e3437] transition">
+       Get Membership plans
         </button>
       </div>
 

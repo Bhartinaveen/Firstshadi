@@ -6,7 +6,7 @@ const Spcl = () => {
       id: 1,
       icon: '📝', // You can replace with an actual icon or SVG
       title: 'Sign Up',
-      description: 'Register for free & put up your Matrimony Profile',
+      description: 'Register Your Profile',
     },
     {
       id: 2,
@@ -18,14 +18,14 @@ const Spcl = () => {
       id: 3,
       icon: '💬',
       title: 'Interact',
-      description: 'Become a Premium Member & Start a Conversation',
+      description: 'Become a Premium Member & Start a Conversation with verified profile',
     },
   ];
 
   return (
     <div className="bg-gray-100 py-12 text-center">
       <h2 className="text-3xl font-semibold text-red-700 mb-12">
-        Find your Special Someone
+        Find Your Soulmate
       </h2>
       <div className="flex justify-center items-start gap-12 flex-wrap">
         {steps.map(({ id, icon, title, description }) => (
@@ -57,7 +57,7 @@ const Spcl = () => {
               {title}
             </h3>
             <p
-              className="mt-2 text-yellow-600 text-sm px-4
+              className="mt-2 text-black text-sm px-4
                 transition-colors duration-300 ease-in-out
                 hover:text-yellow-800"
             >

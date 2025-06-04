@@ -9,6 +9,7 @@ const Pstst = () => {
       <button className="bg-red-500 text-sky-400 border border-white px-6 py-2 rounded shadow-md hover:shadow-lg transition">
         Get Started
       </button>
+      
     </div>
   );
 };

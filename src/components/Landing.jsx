@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Landing = () => {
+  const [minAge, setMinAge] = useState(18);
+  const [maxAge, setMaxAge] = useState(30);
+
+  const ageOptions = Array.from({ length: 83 }, (_, i) => i + 18);
+
   return (
     <div
       className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 
@@ -10,7 +15,7 @@ const Landing = () => {
       <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center">
         <div className="text-red-100 text-center px-4 max-w-4xl">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            The World's No.1 Matchmaking Service
+            The World's No.1 Matchmaking Partner
           </h1>
           <p className="text-lg md:text-xl mb-6">
             Search by City, Profession & Community
@@ -20,34 +25,54 @@ const Landing = () => {
             {/* Gender */}
             <div className="flex flex-col">
               <label className="text-sm font-medium">I'm looking for a</label>
-              <select className="px-3 py-2 rounded border border-red-600 z-50">
+              <select className="px-3 py-2 rounded border border-red-600 ">
                 <option>Woman</option>
                 <option>Man</option>
               </select>
             </div>
 
             {/* Age */}
-            <div className="flex flex-col z-50">
+            <div className="flex flex-col ">
               <label className="text-sm font-medium">Age</label>
               <div className="flex gap-2">
-                <select className="px-3 py-2 rounded border border-red-600 z-50">
-                  {Array.from({ length: 83 }, (_, i) => (
-                    <option key={i}>{i + 18}</option>
+                <select
+                  className="px-3 py-2 rounded border border-red-600 "
+                  value={minAge}
+                  onChange={(e) => {
+                    const newMinAge = parseInt(e.target.value);
+                    setMinAge(newMinAge);
+                    if (newMinAge > maxAge) {
+                      setMaxAge(newMinAge);
+                    }
+                  }}
+                >
+                  {ageOptions.map((age) => (
+                    <option key={age} value={age}>
+                      {age}
+                    </option>
                   ))}
                 </select>
                 <span className="self-center text-sm font-semibold">to</span>
-                <select className="px-3 py-2 rounded border border-red-600 z-50">
-                  {Array.from({ length: 83 }, (_, i) => (
-                    <option key={i}>{i + 18}</option>
-                  ))}
+                <select
+                  className="px-3 py-2 rounded border border-red-600 "
+                  value={maxAge}
+                  onChange={(e) => setMaxAge(parseInt(e.target.value))}
+                >
+                  {ageOptions
+                    .filter((age) => age >= minAge)
+                    .map((age) => (
+                      <option key={age} value={age}>
+                        {age}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
 
             {/* Religion */}
             <div className="flex flex-col">
-              <label className="text-sm font-medium">Of religion</label>
-              <select className="px-3 py-2 rounded border border-red-600 z-50">
+              <label className="text-sm font-medium">Religion</label>
+              <select className="px-3 py-2 rounded border border-red-600 ">
                 <option>Select</option>
                 <option>Hindu</option>
                 <option>Muslim</option>
@@ -58,8 +83,8 @@ const Landing = () => {
 
             {/* Mother Tongue */}
             <div className="flex flex-col">
-              <label className="text-sm font-medium">And mother tongue</label>
-              <select className="px-3 py-2 rounded border border-red-600 z-50">
+              <label className="text-sm font-medium">Mother tongue</label>
+              <select className="px-3 py-2 rounded border border-red-600 ">
                 <option>Select</option>
                 <option>Hindi</option>
                 <option>English</option>

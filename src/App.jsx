@@ -7,6 +7,7 @@ import Spcl from './components/Spcl'
 import Prsn from './components/Prsn'
 import Pstst from'./components/Pstst'
 import Trst from './components/Trst'
+import Footer from './components/Footer'
 import './App.css'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Prsn/>
       <Pstst/>
       <Trst/>
+      <Footer/>
     </>
   )
 }
