@@ -10,37 +10,37 @@ const stories = [
     name: "Shubham & Shruti",
     image: "/image/s1.jpg",
     description:
-      "Shubham and Shruti’s journey from strangers to life partners is a heartwarming tale of modern love facilitated by Shaadi.com. Their story is a testament to how digital platforms…",
+      "Shubham and Shruti’s journey from strangers to life partners is a heartwarming tale of modern love facilitated by First marriage.com. Their story is a testament to how digital platforms…",
   },
   {
     name: "Habeeba & Alikhan",
-    image: "/image/s1.jpg",
+    image: "/image/s2.jpg",
     description:
-      "I have married with Syed Habeeba from Nellore on 4.7.2024 Thursday, Thank you so much Shaadi.com owner and supporting all staffs. Jazakallahu khair Assalamu alaikum.",
+      "I have married with Syed Habeeba from Nellore on 4.7.2024 Thursday, Thank you First marriage.com owner and supporting all staffs. Jazakallahu khair Assalamu alaikum.",
   },
   {
     name: "Pinkey & Nikhil",
     image: "/image/s3.jpg",
     description:
-      "We had met in Ayodhya first time April 2022. After completing a year, a lots of fight and love then we decided to marry togetger in Feb 2024. Thank you Shaadi.com.",
+      "We had met in Ayodhya first time April 2022. After completing a year, a lots of fight and love then we decided to marry togetger in Feb 2024. Thank you First marriage.com.",
   },
   {
     name: "Ravi & Anjali",
     image: "/image/s4.jpg",
     description:
-      "Our journey started with Shaadi.com and ended with us being happily married since 2023. We are grateful for this wonderful platform that brought us together.",
+      "Our journey started with First marriage.com and ended with us being happily married since 2023. We are grateful for this wonderful platform that brought us together. and make love ",
   },
   {
     name: "Amit & Priya",
     image: "/image/s5.jpg",
     description:
-      "Thanks to Shaadi.com, we found each other despite the busy city life. Our love story is proof that true love still exists in this fast world. for the life for the love and happy ",
+      "Thanks to First marriage.com, we found each other despite the busy city life. Our love story is proof that true love still exists in this fast world. for the life for the love and happy ",
   },
   {
     name: "Karan & Meera",
     image: "/image/s6.jpg",
     description:
-      "From the first chat to tying the knot, Shaadi.com has been our silent partner. We highly recommend this platform to anyone looking for true companionship. this make me a happy in my life ",
+      "From the first thanks to First marriage.com has been our silent partner. We highly recommend this platform to anyone looking for true companionship. this make me a happy  ",
   },
 ];
 
