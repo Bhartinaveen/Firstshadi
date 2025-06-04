@@ -17,8 +17,8 @@ const Navbar = () => {
               alt="Logo"
               className="h-20 w-20"
             />
-            <span className="text-sm font-semibold text-[#0a0a0a]">First</span>
-            <span className="text-sm font-semibold text-[#b21616]">Marriage.Com</span>
+            <span className="  -translate-x-4 font-bold text-[#0a0a0a]">First</span>
+            <span className=" -translate-x-4 font-bold text-red-700">Marriage.Com</span>
           </div>
 
           {/* Desktop Links */}
