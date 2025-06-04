@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { AiFillApple, AiFillAndroid } from 'react-icons/ai';
 
 const Footer = () => {
@@ -33,9 +33,10 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-3">Help</h3>
           <ul className="space-y-2">
             <li><a href="#">Contact us</a></li>
-            <li><a href="#">First Marriage.com centers </a></li>
+            <li><a href="#">First Marriage.com  </a></li>
           </ul>
         </div>
+        
 
         {/* Legal */}
         <div>
@@ -53,19 +54,13 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-
-      {/* Bottom Bar */}
-      <div className="bg-[#22313f] py-4 px-6 text-sm">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          
-
-          <div className="flex items-center gap-3">
+       <div className="flex items-center gap-3 -translate-y-6 translate-x-4">
             <span className="font-medium">Follow us on</span>
             <a
               href="https://www.facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-500"
+              className="hover:text-blue-500 bg-blue-700"
             >
               <FaFacebookF className="text-xl" />
             </a>
@@ -73,7 +68,7 @@ const Footer = () => {
               href="https://www.twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-400"
+              className="hover:text-blue-400 bg-blue-700"
             >
               <FaTwitter className="text-xl" />
             </a>
@@ -81,13 +76,31 @@ const Footer = () => {
               href="https://www.instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-pink-500"
+              className="hover:text-pink-500 bg-pink-500"
             >
               <FaInstagram className="text-xl" />
             </a>
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-red-500 bg-red-700"
+            >
+              <FaYoutube className="text-xl" />
+            </a>
           </div>
-        </div>
-      </div>
+
+      {/* Bottom Bar */}
+    
+<div className="bg-[#22313f] py-4 px-6 text-sm">
+  <div className="max-w-7xl mx-auto flex justify-center items-center">
+    <p className="text-center">
+   Copyright@2025, Developed by First Marriage.com
+    </p>
+  </div>
+</div>
+
+      
     </footer>
   );
 };

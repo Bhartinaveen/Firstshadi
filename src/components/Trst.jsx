@@ -6,9 +6,9 @@ const Trst = () => {
       {/* Logo Image */}
       <div className="flex justify-center mb-4">
         <img
-          src="/logo.png"  // <-- Replace with your image path
+          src="/image/l1.png"  // <-- Replace with your image path
           alt="firstmarriage Logo"
-          className="w-16 h-16 object-contain"
+          className="w-20 h-20 object-contain"
         />
       </div>
 

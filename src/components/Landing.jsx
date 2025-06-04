@@ -21,7 +21,7 @@ const Landing = () => {
             Search by City, Profession & Community
           </p>
 
-          <form className="flex flex-wrap justify-center gap-4 bg-orange-100 bg-opacity-90 p-4 rounded-lg text-red-900 mb-20">
+          <form className="flex flex-wrap justify-center gap-4 bg-orange-100 bg-opacity-90 p-4 rounded-lg text-red-900 mb-20 translate-y-20">
             {/* Gender */}
             <div className="flex flex-col">
               <label className="text-sm font-medium">I'm looking for a</label>

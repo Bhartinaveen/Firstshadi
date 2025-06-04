@@ -1,8 +1,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules"; // make sure your swiper version supports this import
+import { Pagination, Autoplay } from "swiper/modules"; // Removed Navigation
 import "swiper/css";
-import "swiper/css/navigation";
+// Removed "swiper/css/navigation"
 import "swiper/css/pagination";
 
 const stories = [
@@ -51,10 +51,9 @@ const Prsn = () => {
         6 Million Success Stories & Counting
       </h2>
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Pagination, Autoplay]} // Removed Navigation
         spaceBetween={30}
         slidesPerView={1}
-        navigation
         pagination={{ clickable: true }}
         loop={true}
         autoplay={{
