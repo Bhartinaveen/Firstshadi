@@ -22,9 +22,10 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex space-x-6 text-gray-800 font-medium">
+          <div className="hidden md:flex space-x-6 text-gray-800 font-medium -translate-y-3">
             <a href="#">Home</a>
             <a href="#">About Us</a>
+             <a href="#">My Matches</a>
             <a href="#">Help</a>
             <a href="#" className="font-semibold">Sign In</a>
           </div>
@@ -47,10 +48,12 @@ const Navbar = () => {
             <button onClick={toggleMenu} className="self-end">
               <X className="h-6 w-6" />
             </button>
-            <a href="#" onClick={toggleMenu}>Home</a>
-            <a href="#" onClick={toggleMenu}>About Us</a>
-            <a href="#" onClick={toggleMenu}>Help</a>
-            <a href="#" onClick={toggleMenu} className="font-semibold">Sign In</a>
+            <a href="#" onClick={toggleMenu}>🏠Home</a>
+            <a href="#" onClick={toggleMenu}>🧑‍💼About Us</a>
+            <a href="#">❤️My Matches</a>
+            <a href="#" onClick={toggleMenu}>❓Help</a>
+             <a href="#" onClick={toggleMenu}>📞 Contact Us</a>
+            <a href="#" onClick={toggleMenu} className="font-semibold">🔐Sign In</a>
           </div>
         </div>
       </nav>

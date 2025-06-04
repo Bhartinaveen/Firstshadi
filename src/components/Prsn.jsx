@@ -8,39 +8,39 @@ import "swiper/css/pagination";
 const stories = [
   {
     name: "Shubham & Shruti",
-    image: "https://via.placeholder.com/300x300.png?text=Shubham+%26+Shruti",
+    image: "/image/s1.jpg",
     description:
       "Shubham and Shruti’s journey from strangers to life partners is a heartwarming tale of modern love facilitated by Shaadi.com. Their story is a testament to how digital platforms…",
   },
   {
     name: "Habeeba & Alikhan",
-    image: "https://via.placeholder.com/300x300.png?text=Habeeba+%26+Alikhan",
+    image: "/image/s1.jpg",
     description:
       "I have married with Syed Habeeba from Nellore on 4.7.2024 Thursday, Thank you so much Shaadi.com owner and supporting all staffs. Jazakallahu khair Assalamu alaikum.",
   },
   {
     name: "Pinkey & Nikhil",
-    image: "https://via.placeholder.com/300x300.png?text=Pinkey+%26+Nikhil",
+    image: "/image/s3.jpg",
     description:
       "We had met in Ayodhya first time April 2022. After completing a year, a lots of fight and love then we decided to marry togetger in Feb 2024. Thank you Shaadi.com.",
   },
   {
     name: "Ravi & Anjali",
-    image: "https://via.placeholder.com/300x300.png?text=Ravi+%26+Anjali",
+    image: "/image/s4.jpg",
     description:
       "Our journey started with Shaadi.com and ended with us being happily married since 2023. We are grateful for this wonderful platform that brought us together.",
   },
   {
     name: "Amit & Priya",
-    image: "https://via.placeholder.com/300x300.png?text=Amit+%26+Priya",
+    image: "/image/s5.jpg",
     description:
-      "Thanks to Shaadi.com, we found each other despite the busy city life. Our love story is proof that true love still exists in this fast world.",
+      "Thanks to Shaadi.com, we found each other despite the busy city life. Our love story is proof that true love still exists in this fast world. for the life for the love and happy ",
   },
   {
     name: "Karan & Meera",
-    image: "https://via.placeholder.com/300x300.png?text=Karan+%26+Meera",
+    image: "/image/s6.jpg",
     description:
-      "From the first chat to tying the knot, Shaadi.com has been our silent partner. We highly recommend this platform to anyone looking for true companionship.",
+      "From the first chat to tying the knot, Shaadi.com has been our silent partner. We highly recommend this platform to anyone looking for true companionship. this make me a happy in my life ",
   },
 ];
 

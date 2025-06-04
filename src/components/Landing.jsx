@@ -89,7 +89,17 @@ const Landing = () => {
                 <option>Hindi</option>
                 <option>English</option>
                 <option>Bengali</option>
+                <option>Assamese</option>
+                <option> Gujarati</option>
                 <option>Telugu</option>
+                <option>Kannada</option>
+                <option> Kashmir</option>
+                <option>Marathi</option>
+                <option>Punjabi</option>
+                <option>Urdu</option>
+                <option>Bhojpuri</option>
+                <option>Odia</option>
+                
               </select>
             </div>
 
