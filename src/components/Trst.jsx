@@ -8,7 +8,7 @@ const Trst = () => {
         <img
           src="/image/l1.png"  // <-- Replace with your image path
           alt="firstmarriage Logo"
-          className="w-20 h-20 object-contain"
+          className="w-24 h-24 object-contain"
         />
       </div>
 

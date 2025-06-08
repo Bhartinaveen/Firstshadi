@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
@@ -14,14 +13,14 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2 -translate-y-3 -translate-x-4">
             <Link to="/">
-            <img
-              src="/image/l1.png"
-              alt="Logo"
-              className="h-20 w-20"
-            />
+              <img
+                src="/image/l1.png"
+                alt="Logo"
+                className="h-20 w-20"
+              />
             </Link>
-            <span className="  -translate-x-4 font-bold text-[#0a0a0a]">First</span>
-            <span className=" -translate-x-4 font-bold text-red-700">Marriage.Com</span>
+            <span className=" -translate-x-4 font-bold text-[#0a0a0a]">First</span>
+            <span className=" -translate-x-5 font-bold text-red-700">Marriage.Com</span>
           </div>
 
           {/* Desktop Links */}
@@ -29,9 +28,16 @@ const Navbar = () => {
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
             <Link to="/matches">My Matches</Link>
-            <Link to="/help">Help</Link>
             <Link to="/contact">Contact Us</Link>
             <Link to="/signin" className="font-semibold">Sign In</Link>
+            <a
+              href="https://wa.me/919876543210"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-800 font-semibold"
+            >
+              Chat
+            </a>
           </div>
 
           {/* Mobile menu toggle */}
@@ -55,9 +61,16 @@ const Navbar = () => {
             <Link to="/" onClick={toggleMenu}>🏠 Home</Link>
             <Link to="/about" onClick={toggleMenu}>🧑‍💼 About Us</Link>
             <Link to="/matches" onClick={toggleMenu}>❤️ My Matches</Link>
-            <Link to="/help" onClick={toggleMenu}>❓ Help</Link>
             <Link to="/contact" onClick={toggleMenu}>📞 Contact Us</Link>
             <Link to="/signin" onClick={toggleMenu} className="font-semibold">🔐 Sign In</Link>
+            <a
+              href="https://wa.me/919876543210"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={toggleMenu}
+            >
+              ❓ Chat
+            </a>
           </div>
         </div>
       </nav>
