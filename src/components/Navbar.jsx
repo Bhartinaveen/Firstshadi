@@ -64,7 +64,7 @@ const Navbar = () => {
             <Link to="/contact" onClick={toggleMenu}>📞 Contact Us</Link>
             <Link to="/signin" onClick={toggleMenu} className="font-semibold">🔐 Sign In</Link>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/+919040170727"
               target="_blank"
               rel="noopener noreferrer"
               onClick={toggleMenu}
