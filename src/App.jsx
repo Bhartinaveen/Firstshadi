@@ -12,6 +12,8 @@ import Frod from'./pages/Frod'
 import Box from './pages/Box'
 import Boxsc from'./pages/Boxsc'
 import Rels from './pages/Rels'
+import Terms from './pages/Terms'
+import Priv from './pages/Priv'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -48,6 +50,8 @@ function App() {
           <Route path="/box" element={<Box />} />
           <Route path="/boxsc" element={<Boxsc />} />
             <Route path="/rels" element={<Rels />} />
+            <Route path="/terms" element={<Terms />} />
+              <Route path="/priv" element={<Priv />} />
       </Routes>
     </Router>
   )
