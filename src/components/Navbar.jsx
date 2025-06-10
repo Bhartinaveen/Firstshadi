@@ -11,12 +11,12 @@ const Navbar = () => {
       <nav className="fixed h-18 top-0 left-0 w-full bg-[#f5fdd5] px-6 py-2 shadow-md z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2 -translate-y-3 -translate-x-4">
+          <div className="flex items-center space-x-2 -translate-y-4 -translate-x-4">
             <Link to="/">
               <img
                 src="/image/l1.png"
                 alt="Logo"
-                className="h-20 w-20"
+                className="h-21 w-21"
               />
             </Link>
             <span className=" -translate-x-4 font-bold text-[#0a0a0a]">First</span>
@@ -41,9 +41,9 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu toggle */}
-          <div className="md:hidden -translate-y-3">
+          <div className="md:hidden -translate-y-4">
             <button onClick={toggleMenu}>
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-7 w-7" />}
             </button>
           </div>
         </div>
