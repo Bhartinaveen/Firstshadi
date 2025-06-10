@@ -57,13 +57,18 @@ const Boxsc = () => {
     <div>
       <div className="min-h-screen flex items-center justify-center bg-white p-4">
         <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
-          <div className="flex justify-center mb-6">
+           <img
+          src="./image/s14.jpg" // Update the path as needed
+          alt="Sign Up Banner"
+          className="rounded-md w-full object-cover -translate-y-4"
+        />
+          {/* <div className="flex justify-center mb-6">
             <div className="bg-purple-100 p-4 rounded-full">
               <svg className="h-8 w-8 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M13 7a3 3 0 11-6 0 3 3 0 016 0zM4 13a4 4 0 018 0H4z" />
               </svg>
             </div>
-          </div>
+          </div> */}
 
           <h2 className="text-lg font-semibold text-gray-700 mb-2">His name</h2>
           <input

@@ -38,13 +38,21 @@ const Box = () => {
 
   return (
     <div>
+      
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+
+        
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md sm:max-w-sm">
-          <div className="flex justify-center mb-4">
+          <img
+          src="./image/s13.jpg" // Update the path as needed
+          alt="Sign Up Banner"
+          className="rounded-md w-full object-cover -translate-y-4"
+        />
+          {/* <div className="flex justify-center mb-4">
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
               <span className="text-orange-500 text-2xl">👤</span>
             </div>
-          </div>
+          </div> */}
 
           <h2 className="text-base font-medium mb-2 text-center sm:text-left">
             This Profile is for

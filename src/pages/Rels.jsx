@@ -17,8 +17,13 @@ const Rels = () => {
     <div>
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white shadow-lg p-6 sm:p-8 rounded-xl w-full max-w-md relative">
+         <img
+          src="./image/s15.jpg" // Update the path as needed
+          alt="Sign Up Banner"
+          className="rounded-md w-full object-cover -translate-y-4"
+        />
         {/* Avatar Icon */}
-        <div className="flex justify-center mb-6 mt-4 sm:mt-0">
+        {/* <div className="flex justify-center mb-6 mt-4 sm:mt-0">
           <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
@@ -26,7 +31,7 @@ const Rels = () => {
               className="w-6 h-6"
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Religion */}
         <div className="mb-4">
