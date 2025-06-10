@@ -1,26 +1,36 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Spcl = () => {
+  const navigate = useNavigate();
+
   const steps = [
     {
       id: 1,
-      icon: '📝', // You can replace with an actual icon or SVG
+      icon: '📝',
       title: 'Sign Up',
       description: 'Register Your Profile',
+      route: '/box', // ➤ Link to Box.jsx
     },
     {
       id: 2,
       icon: '💑',
       title: 'Connect',
       description: 'Select & Connect with Matches you like',
+      route: '/box', // ➤ Link to Boxsc.jsx
     },
     {
       id: 3,
       icon: '💬',
       title: 'Interact',
       description: 'Become a Premium Member & Start a Conversation with verified profile',
+      route: '/box', // ➤ Link to Rels.jsx
     },
   ];
+
+  const handleClick = (route) => {
+    navigate(route);
+  };
 
   return (
     <div className="bg-gray-100 py-12 text-center">
@@ -28,9 +38,10 @@ const Spcl = () => {
         Find Your Soulmate
       </h2>
       <div className="flex justify-center items-start gap-12 flex-wrap">
-        {steps.map(({ id, icon, title, description }) => (
+        {steps.map(({ id, icon, title, description, route }) => (
           <div
             key={id}
+            onClick={() => handleClick(route)} // ➤ Navigate to correct route
             className="flex flex-col items-center max-w-xs cursor-pointer
               transform transition-transform duration-300 ease-in-out
               hover:scale-105"
@@ -49,18 +60,10 @@ const Spcl = () => {
                 {id}
               </span>
             </div>
-            <h3
-              className="mt-6 text-red-600 text-xl font-semibold
-                transition-colors duration-300 ease-in-out
-                hover:text-red-800"
-            >
+            <h3 className="mt-6 text-red-600 text-xl font-semibold hover:text-red-800">
               {title}
             </h3>
-            <p
-              className="mt-2 text-black text-sm px-4
-                transition-colors duration-300 ease-in-out
-                hover:text-yellow-800"
-            >
+            <p className="mt-2 text-black text-sm px-4 hover:text-yellow-800">
               {description}
             </p>
           </div>

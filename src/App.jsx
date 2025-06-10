@@ -8,7 +8,10 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Register from './pages/Register'
 import Signin from './Signin'
-
+import Frod from'./pages/Frod'
+import Box from './pages/Box'
+import Boxsc from'./pages/Boxsc'
+import Rels from './pages/Rels'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -41,6 +44,10 @@ function App() {
         <Route path="/contact" element={<Contact />} />
          <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/fraud" element={<Frod />} />
+          <Route path="/box" element={<Box />} />
+          <Route path="/boxsc" element={<Boxsc />} />
+            <Route path="/rels" element={<Rels />} />
       </Routes>
     </Router>
   )
