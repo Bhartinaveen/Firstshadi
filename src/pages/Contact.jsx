@@ -44,7 +44,7 @@ const Contact = () => {
     <div>
       <div className="flex flex-col items-center justify-center p-4 max-w-4xl mx-auto">
         <img
-          src="/image/s8.png"
+          src="/image/s16.png"
           alt="Customer Support"
           className="w-full max-w-sm h-auto rounded-xl mb-6"
         />
@@ -98,7 +98,7 @@ const Contact = () => {
           </button>
         </form>
 
-        <div className="bg-blue-900 text-white p-6 rounded-lg mt-8 w-full max-w-md">
+        <div className="bg-red-900 text-white p-6 rounded-lg mt-8 w-full max-w-md">
           <h2 className="text-lg font-bold mb-2 text-red-600">Contact Information</h2>
           <p><strong>Address:</strong> 123 First Marriage.com Street, Cityname, Country</p>
           <p><strong>Phone:</strong> +1 (294) 984-784</p>

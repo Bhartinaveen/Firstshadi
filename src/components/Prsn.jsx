@@ -48,7 +48,7 @@ const Prsn = () => {
   return (
     <div className="py-10 px-4 md:px-20 bg-white">
       <h2 className="text-3xl font-bold text-center text-red-500 mb-10">
-        6 Million Success Stories & Counting
+        5 Million Success Stories
       </h2>
       <Swiper
         modules={[Pagination, Autoplay]} // Removed Navigation

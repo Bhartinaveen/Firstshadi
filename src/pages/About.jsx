@@ -24,7 +24,7 @@ const About = () => {
       <div className="w-full max-w-4xl bg-red-50 border border-red-400 rounded-md p-4 shadow-sm">
         <h2 className="font-semibold text-lg mb-2">Our Mission</h2>
         <p className="text-sm text-gray-700">
-          To revolutionize the matchmaking experience by connecting individuals and families through innovative technology and heartfelt service. At FirstMarriage.com, we ensure transparency, trust, and compatibility in every match — helping you find your perfect life partner with confidence.
+          To revolutionize the matchmaking experience by connecting individuals and families through innovative technology and heartfelt service.First Marriage.com, we ensure transparency, trust, and compatibility in every match — helping you find your perfect life partner with confidence.
         </p>
       </div>
 
@@ -37,7 +37,7 @@ const About = () => {
       </div>
 
       {/* Why Choose Us Section */}
-      <div className="w-full max-w-4xl bg-blue-900 text-indigo-100 text-center rounded-md p-6">
+      <div className="w-full max-w-4xl bg-red-900 text-indigo-100 text-center rounded-md p-6">
         <h2 className="text-xl font-semibold mb-2">Why Choose Us?</h2>
         <p className="text-sm">
          We bring together a trusted network of genuine profiles, intelligent matchmaking technology, and dedicated support to ensure your search for the perfect life partner is smooth, secure, and successful — every step of the way.

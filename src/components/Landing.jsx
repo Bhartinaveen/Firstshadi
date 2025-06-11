@@ -78,6 +78,9 @@ const Landing = () => {
                 <option>Muslim</option>
                 <option>Christian</option>
                 <option>Sikh</option>
+                 <option>Baudh</option>
+
+              
               </select>
             </div>
 
@@ -89,11 +92,11 @@ const Landing = () => {
                 <option>Hindi</option>
                 <option>English</option>
                 <option>Bengali</option>
-                <option>Assamese</option>
-                <option> Gujarati</option>
+                <option>Asomiya</option>
+                <option>Gujarati</option>
                 <option>Telugu</option>
                 <option>Kannada</option>
-                <option> Kashmir</option>
+                <option>Kashmiri</option>
                 <option>Marathi</option>
                 <option>Punjabi</option>
                 <option>Urdu</option>

@@ -14,6 +14,10 @@ import Boxsc from'./pages/Boxsc'
 import Rels from './pages/Rels'
 import Terms from './pages/Terms'
 import Priv from './pages/Priv'
+import Refcan from './pages/Refcan'
+import Cyb from './pages/Cyb'
+import Memb from './pages/Memb'
+import Mreg from './pages/Mreg'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -52,6 +56,11 @@ function App() {
             <Route path="/rels" element={<Rels />} />
             <Route path="/terms" element={<Terms />} />
               <Route path="/priv" element={<Priv />} />
+               <Route path="/ref" element={<Refcan />} />
+               <Route path="/cyb" element={<Cyb />} />
+               <Route path="/memb" element={<Memb />} />
+               <Route path="/mreg" element={<Mreg />} />
+               
       </Routes>
     </Router>
   )

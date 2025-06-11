@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Navigation hook
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Box = () => {
   const [profileFor, setProfileFor] = useState('');
   const [gender, setGender] = useState('');
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate();
 
   const profilesWithGender = ['Myself', 'My Relative', 'My Friend'];
   const showGender = profilesWithGender.includes(profileFor);
-  const isFormComplete = showGender ? gender !== '' : profileFor !== '';
+  const isFormComplete = showGender ? gender !== '' && profileFor !== '' : profileFor !== '';
 
   const profileOptions = [
     'Myself',
@@ -33,31 +33,25 @@ const Box = () => {
   };
 
   const handleContinue = () => {
-    navigate('/boxsc'); // Navigate to Boxsc page
+    if (isFormComplete) {
+      navigate('/boxsc');
+    }
   };
 
   return (
     <div>
-      
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-
-        
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md sm:max-w-sm">
           <img
-          src="./image/s13.jpg" // Update the path as needed
-          alt="Sign Up Banner"
-          className="rounded-md w-full object-cover -translate-y-4"
-        />
-          {/* <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
-              <span className="text-orange-500 text-2xl">👤</span>
-            </div>
-          </div> */}
+            src="./image/s13.jpg"
+            alt="Sign Up Banner"
+            className="rounded-md w-full object-cover -translate-y-4"
+          />
 
           <h2 className="text-base font-medium mb-2 text-center sm:text-left">
             This Profile is for
           </h2>
-          
+
           <div className="flex flex-wrap gap-2 justify-center sm:justify-start mb-4">
             {profileOptions.map((option) => (
               <button
@@ -95,14 +89,17 @@ const Box = () => {
             </>
           )}
 
-          {isFormComplete && (
-            <button
-              onClick={handleContinue}
-              className="w-full py-2 rounded-full text-white text-sm transition-all duration-300 bg-blue-600 hover:bg-blue-700"
-            >
-              Continue
-            </button>
-          )}
+          <button
+            onClick={handleContinue}
+            disabled={!isFormComplete}
+            className={`w-full py-2 rounded-full text-white text-sm transition-all duration-300 ${
+              isFormComplete
+                ? 'bg-blue-600 hover:bg-blue-700'
+                : 'bg-blue-400 cursor-not-allowed opacity-50'
+            }`}
+          >
+            Continue
+          </button>
         </div>
       </div>
       <Footer />

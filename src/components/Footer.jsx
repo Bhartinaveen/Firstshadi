@@ -46,7 +46,11 @@ const Footer = () => {
             <li><Link to="/fraud">Fraud Alert</Link></li> 
             
             <li><Link to="/terms">Terms of use</Link></li>
+            <li><Link to="/ref">Cancellation & Refund Policy</Link></li>
             <li><Link to="/priv">Privacy policy</Link></li>
+            <li><Link to="/cyb">Cyber Security</Link></li>
+
+
             
           </ul>
         </div>
@@ -89,10 +93,10 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="bg-[#22313f] py-4 px-6 text-sm">
+      <div className="bg-gray-500 py-4 px-6 text-sm">
         <div className="max-w-7xl mx-auto flex justify-center items-center">
           <p className="text-center">
-            Copyright@2025, Developed by First Marriage.com
+            Copyright@2025, <span className='text-black font-bold'>First</span> <span className='text-red-900 font-bold'>Marriage.com </span>All rights reserved
           </p>
         </div>
       </div>
