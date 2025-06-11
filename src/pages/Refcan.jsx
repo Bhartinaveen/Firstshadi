@@ -10,7 +10,7 @@ const Refcan = () => {
           Cancellation & Refund Policy
         </h1>
         <p className="mb-4">
-          At <strong>First<span className="text-red-600">Marriage.com</span></strong>, we strive to ensure that our users have a safe, smooth, and satisfactory experience. The following policy outlines the terms regarding cancellation of memberships and refunds.
+          At <strong>First<span className="text-red-600 "> Marriage.com</span></strong>, we strive to ensure that our users have a safe, smooth, and satisfactory experience. The following policy outlines the terms regarding cancellation of memberships and refunds.
         </p>
         <ul className="list-disc list-inside space-y-3">
           <li>
@@ -38,10 +38,10 @@ const Refcan = () => {
             In case of duplicate payments due to technical errors, verified excess amounts will be refunded within 10 days after validation.
           </li>
           <li>
-            In case of fraudulent or unauthorized use of the account, First<span className="text-red-600">Marriage.com</span> reserves the right to suspend access without any refund.
+            In case of fraudulent or unauthorized use of the account, First<span className="text-red-600"> Marriage.com</span> reserves the right to suspend access without any refund.
           </li>
           <li>
-            Any exceptions due to unforeseen circumstances will be handled solely at the discretion of <strong>First<span className="text-red-600">Marriage.com</span></strong> support team.
+            Any exceptions due to unforeseen circumstances will be handled solely at the discretion of <strong>First<span className="text-red-600"> Marriage.com</span></strong> support team.
           </li>
         </ul>
       </div>
