@@ -3,95 +3,38 @@ import Footer from '../components/Footer';
 
 const Mreg = () => {
   return (
-    <div>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-100 to-white px-4 py-8">
-        <div className="bg-white shadow-2xl rounded-3xl w-full max-w-2xl p-8">
-          <h2 className="text-2xl font-bold text-center text-red-700 mb-6">
-            Create Your Account
-          </h2>
-          <p className="text-sm text-center text-blue-900 mb-8">
-            Begin your journey to finding the right match by filling in the details below.
-          </p>
-          <form className="space-y-5">
-            <div>
-              <label className="block text-gray-900 text-sm mb-1">
-                Your Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                required
-                className="w-full border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-700"
-                placeholder="Enter your email"
-              />
-            </div>
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-md w-full max-w-md my-10">
+          <h2 className="text-2xl font-semibold text-center mb-6 text-red-700">Sign In</h2>
 
-            <div>
-              <label className="block text-gray-900 text-sm mb-1">
-                Mobile No. <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="tel"
-                required
-                className="w-full border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-700"
-                placeholder="Enter mobile number"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-900 text-sm mb-1">
-                Create New Password <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="password"
-                required
-                className="w-full border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-700"
-                placeholder="Create new password"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-900 text-sm mb-1">
-                Confirm Password <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="password"
-                required
-                className="w-full border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-700"
-                placeholder="Confirm Password"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-900 text-sm mb-1">
-                Create profile for <span className="text-red-500">*</span>
-              </label>
-              <select
-                required
-                className="w-full border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-700"
-              >
-                <option value="">-- Select --</option>
-                <option value="Myself">Myself</option>
-                <option value="Son">Son</option>
-                <option value="Daughter">Daughter</option>
-                <option value="Brother">Brother</option>
-                <option value="Sister">Sister</option>
-                <option value="Friend">Friend</option>
-                <option value="Relative">Relative</option>
-              </select>
-            </div>
+          <form>
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full px-4 py-3 mb-6 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+              required
+            />
 
             <button
               type="submit"
-              className="w-full bg-red-900 text-white py-2 rounded-xl hover:bg-purple-700 transition-all"
+              className="w-full bg-red-800 hover:bg-red-900 text-white py-3 rounded-md font-semibold transition duration-300"
             >
-              Register Now
+              SIGN IN
             </button>
           </form>
 
-          <p className="text-xs text-center text-gray-900 mt-5">
-            By clicking on <strong>Register Now</strong>, you agree to our{' '}
-            <span className="text-blue-900 underline">Terms of Use</span> and{' '}
-            <span className="text-blue-900 underline">Privacy Policy</span>.
+          <p className="text-center mt-4 text-sm">
+            Don’t have an account?{' '}
+            <a href="/grm" className="text-red-600 hover:underline font-medium">
+              Register here
+            </a>
           </p>
         </div>
       </div>

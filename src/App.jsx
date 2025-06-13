@@ -18,6 +18,7 @@ import Refcan from './pages/Refcan'
 import Cyb from './pages/Cyb'
 import Memb from './pages/Memb'
 import Mreg from './pages/Mreg'
+import Gromdtl from './pages/Grmdtl'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -60,6 +61,7 @@ function App() {
                <Route path="/cyb" element={<Cyb />} />
                <Route path="/memb" element={<Memb />} />
                <Route path="/mreg" element={<Mreg />} />
+                <Route path="/grm" element={<Gromdtl />} />
                
       </Routes>
     </Router>

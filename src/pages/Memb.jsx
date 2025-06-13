@@ -18,7 +18,11 @@ const Memb = () => {
   ];
 
   const handleJoinFree = () => {
-    navigate('/mreg'); // ✅ Link to Mreg.jsx route
+    navigate('/grm'); // ✅ Navigate on Join Free
+  };
+
+  const handleSeePremiumPlans = () => {
+    navigate('/grm'); // ✅ Navigate on See Premium Plans
   };
 
   return (
@@ -45,7 +49,7 @@ const Memb = () => {
                 ))}
               </ul>
               <button
-                onClick={handleJoinFree} // ✅ Link added here
+                onClick={handleJoinFree}
                 className="mt-6 w-full bg-red-900 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold"
               >
                 Join Free
@@ -63,7 +67,10 @@ const Memb = () => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 w-full bg-yellow-400 hover:bg-yellow-300 text-indigo-900 py-2 rounded-lg font-semibold">
+              <button
+                onClick={handleSeePremiumPlans}
+                className="mt-6 w-full bg-yellow-400 hover:bg-yellow-300 text-indigo-900 py-2 rounded-lg font-semibold"
+              >
                 See Premium Plans
               </button>
             </div>
