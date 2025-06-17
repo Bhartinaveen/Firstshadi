@@ -57,22 +57,25 @@ const Boxsc = () => {
 
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center bg-white p-4">
-        <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
-          <img
-            src="./image/s14.jpg"
-            alt="Sign Up Banner"
-            className="rounded-md w-full object-cover -translate-y-4"
-          />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4">
 
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">His name</h2>
+        {/* 🖼️ Image outside the card */}
+        <img
+          src="./image/s14.jpg"
+          alt="Banner"
+          className="w-85 h-70 object-cover rounded-md mb-4 shadow-lg"
+        />
+
+        {/* 📦 Card */}
+        <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">His name</h2>
           <input
             type="text"
             name="firstName"
             placeholder="First name"
             value={form.firstName}
             onChange={handleChange}
-            className="w-full mb-2 p-2 border rounded focus:outline-none"
+            className="w-full mb-2 p-2 border rounded focus:outline-none border-yellow-600 placeholder-yellow-600"
             required
           />
           <input
@@ -81,11 +84,11 @@ const Boxsc = () => {
             placeholder="Last name"
             value={form.lastName}
             onChange={handleChange}
-            className="w-full mb-4 p-2 border rounded focus:outline-none"
+            className="w-full mb-4 p-2 border rounded focus:outline-none border-yellow-600 placeholder-yellow-600"
             required
           />
 
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Date of birth</h2>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">Date of birth</h2>
           <div className="flex space-x-2 mb-4">
             <input
               type="text"
@@ -94,7 +97,7 @@ const Boxsc = () => {
               value={form.day}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-1/3 p-2 border rounded focus:outline-none"
+              className="w-1/3 p-2 border rounded focus:outline-none border-yellow-600 placeholder-yellow-600"
               maxLength="2"
               required
             />
@@ -103,14 +106,16 @@ const Boxsc = () => {
               name="month"
               value={form.month}
               onChange={handleChange}
-              className="w-1/3 p-2 border rounded focus:outline-none bg-white"
+              className={`w-1/3 p-2 border rounded focus:outline-none bg-white border-yellow-600 ${
+                form.month === '' ? 'text-yellow-600' : 'text-black'
+              }`}
               required
             >
-              <option value="">Month</option>
+              <option value="" className="text-yellow-600">Month</option>
               {Array.from({ length: 12 }, (_, i) => {
                 const val = (i + 1).toString().padStart(2, '0');
                 return (
-                  <option key={val} value={val}>
+                  <option key={val} value={val} className="text-black">
                     {val}
                   </option>
                 );
@@ -124,7 +129,7 @@ const Boxsc = () => {
               value={form.year}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-1/3 p-2 border rounded focus:outline-none"
+              className="w-1/3 p-2 border rounded focus:outline-none border-yellow-600 placeholder-yellow-600"
               maxLength="4"
               required
             />
@@ -133,7 +138,7 @@ const Boxsc = () => {
           <button
             onClick={handleContinue}
             disabled={!isFormComplete}
-            className={`w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-2 rounded-full font-semibold transition-all duration-300 ${
+            className={`w-full bg-gradient-to-r from-red-700 to-red-900 text-white py-2 rounded-full font-semibold transition-all duration-300 ${
               isFormComplete ? 'hover:opacity-90' : 'opacity-50 cursor-not-allowed'
             }`}
           >

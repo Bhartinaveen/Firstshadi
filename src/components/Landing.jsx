@@ -9,15 +9,18 @@ const Landing = () => {
   return (
     <div
       className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 
-                 bg-no-repeat bg-center bg-cover"
-      style={{ backgroundImage: "url('/image/m1.png')" }}
+                 bg-no-repeat bg-cover"
+      style={{
+        backgroundImage: "url('/image/m1.png')",
+        backgroundPosition: "center calc(40% - 50px)", // ✅ shift upward by 50px
+      }}
     >
       <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center">
-        <div className="text-red-100 text-center px-4 max-w-4xl">
+        <div className="text-red-400 text-center px-4 max-w-4xl">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             The World's No.1 Matchmaking Partner
           </h1>
-          <p className="text-lg md:text-xl mb-6">
+          <p className="text-lg md:text-xl mb-6 text-yellow-400">
             Search by City, Profession & Community
           </p>
 
@@ -78,9 +81,12 @@ const Landing = () => {
                 <option>Muslim</option>
                 <option>Christian</option>
                 <option>Sikh</option>
-                 <option>Baudh</option>
-
-              
+                <option>Buddhist</option>
+                <option>Jewish</option>
+                <option>Parsi</option>
+                <option>No Religion</option>
+                <option>Spiritual</option>
+                <option>Other</option>
               </select>
             </div>
 
@@ -92,17 +98,31 @@ const Landing = () => {
                 <option>Hindi</option>
                 <option>English</option>
                 <option>Bengali</option>
-                <option>Asomiya</option>
+                <option>Marathi</option>
+                <option>Punjabi</option>
+                <option>Assamese</option>
+                <option>Tamil</option>
                 <option>Gujarati</option>
                 <option>Telugu</option>
                 <option>Kannada</option>
                 <option>Kashmiri</option>
-                <option>Marathi</option>
-                <option>Punjabi</option>
+                <option>Haryanavi</option>
+                <option>Himachali/pahari</option>
+                <option>kanauji</option>
+                <option>Ladakhi</option>
+                <option>Magahi</option>
+                <option>Maithili</option>
+                <option>Malayalam</option>
+                <option>Manipuri</option>
+                <option>Miji</option>
+                <option>Rajasthani</option>
+                <option>Sanskrit</option>
+                <option>Santhali</option>
                 <option>Urdu</option>
                 <option>Bhojpuri</option>
                 <option>Odia</option>
-                
+                <option>Arunachali</option>
+                <option>Other</option>
               </select>
             </div>
 
@@ -113,7 +133,7 @@ const Landing = () => {
                 style={{ backgroundColor: '#DDA853' }}
                 className="hover:opacity-90 text-white font-semibold px-5 py-2 rounded"
               >
-                Let's Begin
+                Search
               </button>
             </div>
           </form>

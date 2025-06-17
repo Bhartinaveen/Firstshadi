@@ -19,6 +19,7 @@ import Cyb from './pages/Cyb'
 import Memb from './pages/Memb'
 import Mreg from './pages/Mreg'
 import Gromdtl from './pages/Grmdtl'
+import Regone from './pages/Regone'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -62,6 +63,7 @@ function App() {
                <Route path="/memb" element={<Memb />} />
                <Route path="/mreg" element={<Mreg />} />
                 <Route path="/grm" element={<Gromdtl />} />
+                <Route path="/regone" element={<Regone />} />
                
       </Routes>
     </Router>

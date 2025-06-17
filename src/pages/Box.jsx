@@ -40,15 +40,18 @@ const Box = () => {
 
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md sm:max-w-sm">
-          <img
-            src="./image/s13.jpg"
-            alt="Sign Up Banner"
-            className="rounded-md w-full object-cover -translate-y-4"
-          />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
+        
+        {/* 🖼️ Image outside the card */}
+        <img
+          src="./image/s18.jpg"
+          alt="Banner"
+          className="w-85 h-78 object-cover rounded-md mb-4 shadow-lg"
+        />
 
-          <h2 className="text-base font-medium mb-2 text-center sm:text-left">
+        {/* 📦 Card */}
+        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md sm:max-w-sm">
+          <h2 className="text-base font-medium mb-2 text-center sm:text-left text-red-800">
             This Profile is for
           </h2>
 
@@ -70,7 +73,7 @@ const Box = () => {
 
           {showGender && (
             <>
-              <h2 className="text-base font-medium mb-2 text-center sm:text-left">Gender</h2>
+              <h2 className="text-base font-medium mb-2 text-center sm:text-left text-red-800">Gender</h2>
               <div className="flex gap-4 justify-center sm:justify-start mb-6">
                 {['Male', 'Female'].map((option) => (
                   <button
@@ -94,8 +97,8 @@ const Box = () => {
             disabled={!isFormComplete}
             className={`w-full py-2 rounded-full text-white text-sm transition-all duration-300 ${
               isFormComplete
-                ? 'bg-blue-600 hover:bg-blue-700'
-                : 'bg-blue-400 cursor-not-allowed opacity-50'
+                ? 'bg-red-700 hover:bg-red-900'
+                : 'bg-red-600 cursor-not-allowed opacity-50'
             }`}
           >
             Continue

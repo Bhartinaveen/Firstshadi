@@ -1,28 +1,30 @@
 import React from 'react';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router-dom'; // ✅ Import navigate
+import { useNavigate } from 'react-router-dom';
 
 const Memb = () => {
-  const navigate = useNavigate(); // ✅ Create navigate instance
+  const navigate = useNavigate();
 
   const features = [
     { title: "Explore Profiles", free: true, paid: true },
     { title: "Express Interest", free: true, paid: true },
     { title: "Chat without limits", free: true, paid: true },
-    { title: "Receive triple match suggestions", free: false, paid: true },
-    { title: "Advanced filter tools", free: false, paid: true },
-    { title: "Access contact info", free: false, paid: true },
+    { title: "Receive triple match suggestions", free: true, paid: true },
+    { title: "Advanced filter tools", free: true, paid: true },
+   
+    { title: "Priority profile highlights", free: true, paid: true },
+    { title: "Verified Profile", free: true, paid: true }, // ✅ Added Verified Profile to both
+     { title: "Access contact info", free: false, paid: true },
     { title: "HD video and voice calls", free: false, paid: true },
-    { title: "Priority profile highlights", free: false, paid: true },
   ];
 
   const handleJoinFree = () => {
-    navigate('/grm'); // ✅ Navigate on Join Free
+    navigate('/grm');
   };
 
   const handleSeePremiumPlans = () => {
-    navigate('/grm'); // ✅ Navigate on See Premium Plans
+    navigate('/grm');
   };
 
   return (
@@ -39,10 +41,10 @@ const Memb = () => {
               <ul className="space-y-4 text-left">
                 {features.map((item, index) => (
                   <li key={index} className={`flex items-center ${item.free ? "text-gray-800" : "text-gray-400"}`}>
-                    {item.free ? (
-                      <CheckCircleIcon className="w-5 h-5 text-green-500 mr-2" />
+                    {(item.title === "Access contact info" || item.title === "HD video and voice calls") ? (
+                      <XCircleIcon className="w-5 h-5 text-red-500 mr-2" />
                     ) : (
-                      <XCircleIcon className="w-5 h-5 text-red-400 mr-2" />
+                      <CheckCircleIcon className="w-5 h-5 text-green-500 mr-2" />
                     )}
                     {item.title}
                   </li>
