@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import Footer from '../components/Footer';
-import { Link } from "react-router-dom";
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'; // Install: npm i @heroicons/react
+import { Link, useNavigate } from "react-router-dom";
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // You can also add custom validation logic here if needed
+    navigate('/regone');
+  };
 
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 px-4 py-8">
-        {/* Header Image */}
         <div className="w-full max-w-md flex justify-center mb-6">
           <img
             src="./image/s11.jpg"
@@ -19,33 +25,35 @@ const Register = () => {
           />
         </div>
 
-        {/* Form Container */}
         <div className="w-full max-w-md bg-white p-6 rounded-md shadow-md">
           <h2 className="text-center text-2xl font-semibold mb-6 text-red-800">Create Account</h2>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleRegister}>
             <input
               type="text"
               placeholder="Full Name"
-              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500  placeholder-yellow-600"
+              required
+              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
             />
             <input
               type="text"
               placeholder="Phone Number"
-              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500  placeholder-yellow-600"
+              required
+              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
             />
             <input
               type="email"
               placeholder="Email"
-              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500  placeholder-yellow-600"
+              required
+              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
             />
 
-            {/* Password Field with Toggle */}
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
-                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500  placeholder-yellow-600"
+                required
+                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
               />
               <div
                 onClick={() => setShowPassword(!showPassword)}
@@ -59,12 +67,12 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Confirm Password Field with Toggle */}
             <div className="relative">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 placeholder="Confirm Password"
-                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500  placeholder-yellow-600"
+                required
+                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
               />
               <div
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}

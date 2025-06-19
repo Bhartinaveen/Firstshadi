@@ -17,7 +17,7 @@ const Signin = () => {
         {/* Image Banner */}
         <div className="w-full max-w-md">
           <img
-            src="./image/s12.png"
+            src="./image/s22.jpg"
             alt="Sign Up Banner"
             className="rounded-md w-full object-cover"
           />

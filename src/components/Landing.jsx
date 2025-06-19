@@ -16,11 +16,11 @@ const Landing = () => {
       }}
     >
       <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center">
-        <div className="text-red-400 text-center px-4 max-w-4xl">
+        <div className="text-red-200 text-center px-4 max-w-4xl">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             The World's No.1 Matchmaking Partner
           </h1>
-          <p className="text-lg md:text-xl mb-6 text-yellow-400">
+          <p className="text-lg md:text-xl mb-6 text-yellow-300">
             Search by City, Profession & Community
           </p>
 
