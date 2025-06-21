@@ -68,7 +68,7 @@ const Boxsc = () => {
 
         {/* 📦 Card */}
         <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">His name</h2>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800"> Name</h2>
           <input
             type="text"
             name="firstName"

@@ -19,7 +19,7 @@ const Register = () => {
       <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 px-4 py-8">
         <div className="w-full max-w-md flex justify-center mb-6">
           <img
-            src="./image/s11.jpg"
+            src="./image/s33.jpg"
             alt="Registration Visual"
             className="w-full rounded-lg shadow-md"
           />

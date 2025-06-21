@@ -10,21 +10,21 @@ const Spcl = () => {
       icon: '📝',
       title: 'Sign Up',
       description: 'Register Your Profile',
-      route: '/box', // ➤ Link to Box.jsx
+      route: '/box',
     },
     {
       id: 2,
       icon: '💑',
       title: 'Connect',
       description: 'Select & Connect with Matches you like',
-      route: '/box', // ➤ Link to Boxsc.jsx
+      route: '/sol',
     },
     {
       id: 3,
       icon: '💬',
       title: 'Interact',
       description: 'Become a Premium Member & Start a Conversation with verified profile',
-      route: '/box', // ➤ Link to Rels.jsx
+      route: '/box',
     },
   ];
 
@@ -37,12 +37,12 @@ const Spcl = () => {
       <h2 className="text-3xl font-semibold text-red-700 mb-12">
         Find Your Soulmate
       </h2>
-      <div className="flex justify-center items-start gap-12 flex-wrap">
+      <div className="flex flex-col sm:flex-row sm:justify-center sm:gap-8 gap-10 items-center px-4">
         {steps.map(({ id, icon, title, description, route }) => (
           <div
             key={id}
-            onClick={() => handleClick(route)} // ➤ Navigate to correct route
-            className="flex flex-col items-center max-w-xs cursor-pointer
+            onClick={() => handleClick(route)}
+            className="flex flex-col items-center w-60 cursor-pointer
               transform transition-transform duration-300 ease-in-out
               hover:scale-105"
           >
@@ -60,10 +60,10 @@ const Spcl = () => {
                 {id}
               </span>
             </div>
-            <h3 className="mt-6 text-red-600 text-xl font-semibold hover:text-red-800">
+            <h3 className="mt-4 text-red-600 text-xl font-semibold hover:text-red-800">
               {title}
             </h3>
-            <p className="mt-2 text-black text-sm px-4 hover:text-yellow-800">
+            <p className="mt-1 text-black text-sm px-4 hover:text-yellow-800">
               {description}
             </p>
           </div>

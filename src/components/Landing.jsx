@@ -84,8 +84,8 @@ const Landing = () => {
                 <option>Buddhist</option>
                 <option>Jewish</option>
                 <option>Parsi</option>
-                <option>No Religion</option>
-                <option>Spiritual</option>
+                {/* <option>No Religion</option>
+                <option>Spiritual</option> */}
                 <option>Other</option>
               </select>
             </div>
@@ -108,13 +108,13 @@ const Landing = () => {
                 <option>Kashmiri</option>
                 <option>Haryanavi</option>
                 <option>Himachali/pahari</option>
-                <option>kanauji</option>
+                {/* <option>kanauji</option> */}
                 <option>Ladakhi</option>
                 <option>Magahi</option>
                 <option>Maithili</option>
                 <option>Malayalam</option>
                 <option>Manipuri</option>
-                <option>Miji</option>
+                {/* <option>Miji</option> */}
                 <option>Rajasthani</option>
                 <option>Sanskrit</option>
                 <option>Santhali</option>

@@ -20,6 +20,8 @@ import Memb from './pages/Memb'
 import Mreg from './pages/Mreg'
 import Gromdtl from './pages/Grmdtl'
 import Regone from './pages/Regone'
+import Sol from './pages/Sol'
+import Car from './pages/Car'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -64,6 +66,9 @@ function App() {
                <Route path="/mreg" element={<Mreg />} />
                 <Route path="/grm" element={<Gromdtl />} />
                 <Route path="/regone" element={<Regone />} />
+                 <Route path="/sol" element={<Sol />} />
+                 <Route path="/car" element={<Car />} />
+
                
       </Routes>
     </Router>
