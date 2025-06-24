@@ -56,18 +56,18 @@ const Fmprof = () => {
 
   return (
     <div>
-      <div className="min-h-screen flex flex-col md:flex-row justify-center items-start bg-gray-100 py-8 px-4 space-y-6 md:space-y-0 md:space-x-6">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 py-8 px-4 space-y-6">
 
-        {/* Image Card */}
-        <div className="w-full md:w-1/3 bg-white shadow-xl rounded-lg overflow-hidden">
+        {/* Image on Top with increased height */}
+        <div className="w-full md:w-2/3 bg-white shadow-xl rounded-lg overflow-hidden">
           <img
             src="/image/s34.jpg"
             alt="Family"
-            className="w-full h-auto object-cover"
+            className="w-full h-[500px] object-cover"
           />
         </div>
 
-        {/* Main Form */}
+        {/* Main Form Below Image */}
         <form
           className="w-full md:w-2/3 bg-white shadow-2xl rounded-lg p-6 md:p-8 space-y-8"
           onSubmit={handleSubmit}
