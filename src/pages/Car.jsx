@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Car = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     country: '',
     state: '',
@@ -10,9 +13,9 @@ const Car = () => {
     employedIn: '',
     occupation: '',
     income: '',
-    familyName: '',
-    familyNumber: '',
-    photo: null,
+    photos: [],
+    hobby: '',
+    about: '',
   });
 
   const handleDropdownChange = (field, value) => {
@@ -24,31 +27,52 @@ const Car = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, photo: file });
+  const handlePhotoChange = (index, file) => {
+    const newPhotos = [...formData.photos];
+    newPhotos[index] = file;
+    setFormData({ ...formData, photos: newPhotos });
+  };
+
+  const addPhotoField = () => {
+    setFormData({ ...formData, photos: [...formData.photos, null] });
+  };
+
+  const removePhotoField = (index) => {
+    const newPhotos = [...formData.photos];
+    newPhotos.splice(index, 1);
+    setFormData({ ...formData, photos: newPhotos });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const hasValidPhoto = formData.photos.some(photo => photo !== null);
+    if (!hasValidPhoto) {
+      alert("Please upload at least one photo.");
+      return;
+    }
+
+    // Redirect silently after validation
+    navigate('/fmprof');
   };
 
   return (
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-        {/* Top Banner Image */}
         <div className="mb-[-50px] z-10">
           <img
             src="/image/s32.jpg"
             alt="Top Banner"
-            className="w-[500px] h-[300px] object-cover rounded-xl shadow-2xl"
+            className="w-[500px] h-[430px] object-cover rounded-xl shadow-2xl"
           />
         </div>
 
-        {/* Main Card */}
         <div className="w-full max-w-xl bg-white shadow-md p-8 rounded-md mt-14">
           <h2 className="text-center text-lg font-medium text-red-700 mb-2">
-            complete your <span className="text-black">First</span> Marriage.com profile.
+            Complete your profile
           </h2>
 
-          <form className="space-y-4">
-            {/* Dropdown & Input Pairs */}
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {[
               {
                 label: 'Country',
@@ -58,17 +82,32 @@ const Car = () => {
               {
                 label: 'State',
                 name: 'state',
-                options: ['Andaman & Nicobar Islands', 'Bihar', 'Delhi', 'Maharashtra' ,'jharkhand','Andhra Pradesh','Arunanchal Pradesh','Assam','Chhattisgarh','Goa','Gujarat','Haryana','Himachal pradesh','Karnataka','Kerala','Madhya Pradesh','Manipur','Meghalaya','Mizoram','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','West bengal'],
+                options: [
+                  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+                  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
+                  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+                  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+                  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+                  'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+                  'Andaman & Nicobar Islands', 'Chandigarh', 'Dadra & Nagar Haveli and Daman & Diu',
+                  'Delhi', 'Jammu & Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry'
+                ],
               },
               {
                 label: 'City living in',
                 name: 'city',
-                options: ['Bambooflat', 'Port Blair', 'Patna', 'Mumbai'],
+                options: [
+                  'Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Kolkata',
+                  'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Surat', 'Kanpur',
+                  'Nagpur', 'Indore', 'Bhopal', 'Patna', 'Vadodara', 'Ludhiana',
+                  'Agra', 'Nashik', 'Faridabad', 'Meerut', 'Rajkot', 'Varanasi',
+                  'Srinagar', 'Amritsar', 'Ranchi', 'Guwahati', 'Noida', 'Thane'
+                ],
               },
               {
                 label: 'Highest Degree',
                 name: 'degree',
-                options: ['B.E./B.Tech', 'M.E./M.Tech', 'B.Sc', 'MBA'],
+                options: ['B.E./B.Tech', 'M.E./M.Tech', 'B.Sc', 'MBA', 'M.Sc', 'PhD']
               },
               {
                 label: 'Employed In',
@@ -78,16 +117,20 @@ const Car = () => {
               {
                 label: 'Occupation',
                 name: 'occupation',
-                options: ['Clerk', 'Engineer', 'Doctor', 'Teacher'],
+                options: [
+                  'Software Engineer', 'Civil Engineer', 'Data Scientist', 'Doctor', 'Teacher',
+                  'Accountant', 'Lawyer', 'Banker', 'Professor', 'Designer',
+                  'Pharmacist', 'Police Officer', 'Army Personnel', 'Sales Executive',
+                  'Marketing Manager', 'HR Specialist', 'Pilot', 'Journalist',
+                  'Architect', 'None',
+                ],
               },
               {
                 label: 'Annual Income',
                 name: 'income',
                 options: [
-                  'Rs. 0 - 1 Lakh',
-                  'Rs. 1 - 2 Lakh',
-                  'Rs. 2 - 5 Lakh',
-                  'Rs. 5 - 10 Lakh',
+                  'Rs. 0 - 1 Lakh', 'Rs. 1 - 2 Lakh', 'Rs. 2 - 5 Lakh',
+                  'Rs. 5 - 10 Lakh', 'Rs. 10 - 20 Lakh', 'Rs. 20 Lakh-Above'
                 ],
               },
             ].map(({ label, name, options }) => (
@@ -102,16 +145,17 @@ const Car = () => {
                     value={formData[name]}
                     onChange={handleInputChange}
                     placeholder={`Enter ${label.toLowerCase()}`}
+                    required
                     className="w-2/3 border border-yellow-600 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-600"
                   />
                   <select
                     className="w-1/3 border border-yellow-600 rounded px-2 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-600"
-                    onChange={(e) => handleDropdownChange(name, e.target.value)}
-                    defaultValue=""
+                    onChange={(e) => {
+                      handleDropdownChange(name, e.target.value);
+                      e.target.selectedIndex = 0;
+                    }}
                   >
-                    <option disabled value="">
-                      Select
-                    </option>
+                    <option disabled selected>Select</option>
                     {options.map((opt) => (
                       <option key={opt} value={opt}>
                         {opt}
@@ -122,52 +166,59 @@ const Car = () => {
               </div>
             ))}
 
-            {/* Family Name */}
+            {/* Hobby Section */}
             <div>
               <label className="block text-sm font-medium text-yellow-600">
-                Family Name <span className="text-red-500">*</span>
+                Hobbies <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                name="familyName"
-                value={formData.familyName}
+                name="hobby"
+                value={formData.hobby}
                 onChange={handleInputChange}
-                placeholder="Enter Family Name"
+                placeholder="E.g., Reading, Traveling, Music"
+                required
                 className="w-full mt-1 border border-yellow-600 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-600"
               />
             </div>
 
-            {/* Family Number */}
+            {/* Photo Upload Section */}
             <div>
-              <label className="block text-sm font-medium text-yellow-600">
-                Family Number <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="familyNumber"
-                value={formData.familyNumber}
-                onChange={handleInputChange}
-                placeholder="Enter Family Contact Number"
-                className="w-full mt-1 border border-yellow-600 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-600"
-              />
-            </div>
-
-            {/* Upload Photo */}
-            <div className="w-1/2">
               <label className="block text-sm font-medium text-yellow-600 mb-1">
-                Upload Photo <span className="text-red-500">*</span>
+                Upload Photo(s) <span className="text-red-500">*</span>
               </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handlePhotoChange}
-                className="block w-full border border-yellow-600 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-yellow-600"
-              />
-              {formData.photo && (
-                <span className="text-sm text-green-600 mt-1 block">
-                  Selected file: <strong>{formData.photo.name}</strong>
-                </span>
-              )}
+              {formData.photos.map((photo, index) => (
+                <div key={index} className="mb-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handlePhotoChange(index, e.target.files[0])}
+                    className="block w-full border border-yellow-600 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-yellow-600"
+                    required
+                  />
+                  {photo && (
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-sm text-green-600">
+                        Selected file: <strong>{photo.name}</strong>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removePhotoField(index)}
+                        className="text-xs text-red-600 hover:underline ml-2"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addPhotoField}
+                className="text-sm mt-2 text-blue-600 hover:underline"
+              >
+                + Add Another Photo
+              </button>
             </div>
 
             {/* Express Yourself */}
@@ -175,13 +226,12 @@ const Car = () => {
               <p className="text-sm font-medium text-yellow-600 mb-2">
                 Here is your chance to make your profile stand out!
               </p>
-              <div className="flex items-center gap-2 text-sm mb-2">
-                <a href="#" className="ml-auto text-xs text-red-700 hover:underline">
-                  Need help writing?
-                </a>
-              </div>
               <textarea
-                placeholder="Express Yourself! *"
+                name="about"
+                value={formData.about}
+                onChange={handleInputChange}
+                required
+                placeholder="Write Yourself! *"
                 className="w-full h-28 border border-yellow-600 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-600"
               ></textarea>
             </div>

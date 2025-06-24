@@ -43,12 +43,14 @@ const Rels = () => {
               onChange={handleChange}
               className="w-full border border-yellow-600 rounded-md px-4 py-2 text-sm sm:text-base"
             >
-              <option value="">Religion</option>
-              <option value="Hindu">Hindu</option>
-              <option value="Muslim">Muslim</option>
-              <option value="Christian">Christian</option>
-              <option value="Sikh">Sikh</option>
-              <option value="Baudh">Baudh</option>
+               <option>Select</option>
+                <option>Hindu</option>
+                <option>Muslim</option>
+                <option>Christian</option>
+                <option>Sikh</option>
+                <option>Buddhist</option>
+                <option>Jewish</option>
+                <option>Parsi</option>
             </select>
           </div>
 

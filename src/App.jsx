@@ -22,6 +22,7 @@ import Gromdtl from './pages/Grmdtl'
 import Regone from './pages/Regone'
 import Sol from './pages/Sol'
 import Car from './pages/Car'
+import Fmprof from './pages/Fmprof'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/regone" element={<Regone />} />
                  <Route path="/sol" element={<Sol />} />
                  <Route path="/car" element={<Car />} />
+                  <Route path="/fmprof" element={<Fmprof />} />
 
                
       </Routes>

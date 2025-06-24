@@ -55,10 +55,24 @@ const Boxsc = () => {
     }
   };
 
+  const months = [
+    { value: '01', name: 'January' },
+    { value: '02', name: 'February' },
+    { value: '03', name: 'March' },
+    { value: '04', name: 'April' },
+    { value: '05', name: 'May' },
+    { value: '06', name: 'June' },
+    { value: '07', name: 'July' },
+    { value: '08', name: 'August' },
+    { value: '09', name: 'September' },
+    { value: '10', name: 'October' },
+    { value: '11', name: 'November' },
+    { value: '12', name: 'December' },
+  ];
+
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4">
-
         {/* 🖼️ Image outside the card */}
         <img
           src="./image/s14.jpg"
@@ -68,7 +82,7 @@ const Boxsc = () => {
 
         {/* 📦 Card */}
         <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800"> Name</h2>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">Name</h2>
           <input
             type="text"
             name="firstName"
@@ -88,7 +102,7 @@ const Boxsc = () => {
             required
           />
 
-          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">Date of birth</h2>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">Date of Birth</h2>
           <div className="flex space-x-2 mb-4">
             <input
               type="text"
@@ -112,14 +126,11 @@ const Boxsc = () => {
               required
             >
               <option value="" className="text-yellow-600">Month</option>
-              {Array.from({ length: 12 }, (_, i) => {
-                const val = (i + 1).toString().padStart(2, '0');
-                return (
-                  <option key={val} value={val} className="text-black">
-                    {val}
-                  </option>
-                );
-              })}
+              {months.map(({ value, name }) => (
+                <option key={value} value={value} className="text-black">
+                  {name}
+                </option>
+              ))}
             </select>
 
             <input
