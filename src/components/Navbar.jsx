@@ -42,7 +42,7 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-6 text-gray-800 font-medium -translate-y-3">
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
-            <Link to="/matches">My Matches</Link>
+            <Link to="/mymatch">My Matches</Link>
             <Link to="/contact">Contact Us</Link>
             <Link to="/signin" className="font-semibold">Sign In</Link>
             <a
@@ -76,7 +76,7 @@ const Navbar = () => {
             </button>
             <Link to="/" onClick={toggleMenu}>🏠 Home</Link>
             <Link to="/about" onClick={toggleMenu}>🧑‍💼 About Us</Link>
-            <Link to="/matches" onClick={toggleMenu}>❤️ My Matches</Link>
+            <Link to="/mymatch" onClick={toggleMenu}>❤️ My Matches</Link>
             <Link to="/contact" onClick={toggleMenu}>📞 Contact Us</Link>
             <Link to="/signin" onClick={toggleMenu} className="font-semibold">🔐 Sign In</Link>
             <a

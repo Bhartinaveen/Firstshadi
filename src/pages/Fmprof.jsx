@@ -1,21 +1,32 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
-const jobs = ['Private Sector', 'Government', 'Business', 'Not Working'];
+const generalJobs = ['Private Sector', 'Government', 'Business', 'Not Working'];
 const occupations = [
-  'Software Engineer', 'Civil Engineer', 'Data Scientist', 'Doctor', 'Teacher',
-  'Accountant', 'Lawyer', 'Banker', 'Professor', 'Designer',
-  'Pharmacist', 'Police Officer', 'Army Personnel', 'Sales Executive',
-  'Marketing Manager', 'HR Specialist', 'Pilot', 'Journalist',
-  'Architect', 'None',
+  'Software Engineer', 'Civil Engineer', 'Mechanical Engineer', 'Electrical Engineer', 'Electronics Engineer',
+  'Data Scientist', 'Doctor', 'Teacher', 'Accountant', 'Lawyer', 'Banker',
+  'Professor', 'Designer', 'Pharmacist', 'Police', 'Army Personnel',
+  'IAS', 'State PCS', 'SSC CGL Officer', 'SSC CHSL Clerk', 'JE (Junior Engineer)', 'AE (Assistant Engineer)',
+  'Marketing Manager', 'Human Resources', 'Pilot', 'Journalist', 'Architect', 'Scientist', 'None',
+];
+const qualifications = [
+  'PhD', 'Postgraduate', 'MCom', 'MA', 'MBA', 'MBBS', 'CA', 'Journalism', 'LLB', 'LLM',
+  'BTech', 'BSc', 'BCom', 'BBA', 'BA', 'B.Ed',
+  'MPharma', 'BPharma', 'Pharmacy', 'Dentist', 'Agriculture',
+  'Hospitality', 'Undergraduate', 'Diploma', 'ITI',
+  'Higher Secondary (12th)', '11th', 'Secondary (10th)', 'None'
 ];
 
+
 const Fmprof = () => {
+  const navigate = useNavigate();
+
   const [family, setFamily] = useState({
-    father: { name: '', job: '', occupation: '' },
-    mother: { name: '', job: '', occupation: '' },
-    brothers: [{ name: '', job: '', occupation: '' }],
-    sisters: [{ name: '', job: '', occupation: '' }],
+    father: { name: '', job: '', occupation: '', qualification: '' },
+    mother: { name: '', job: '', occupation: '', qualification: '' },
+    brothers: [{ name: '', job: '', occupation: '', qualification: '' }],
+    sisters: [{ name: '', job: '', occupation: '', qualification: '' }],
   });
 
   const handleChange = (type, index, field, value) => {
@@ -34,7 +45,7 @@ const Fmprof = () => {
   const addMember = (type) => {
     setFamily({
       ...family,
-      [type]: [...family[type], { name: '', job: '', occupation: '' }],
+      [type]: [...family[type], { name: '', job: '', occupation: '', qualification: '' }],
     });
   };
 
@@ -54,132 +65,171 @@ const Fmprof = () => {
     }
   };
 
-  return (
-    <div>
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 py-8 px-4 space-y-6">
+  const renderFieldWithDropdown = (value, onChange, options, placeholder) => (
+    <div className="flex gap-2 w-full">
+      <input
+        type="text"
+        placeholder={placeholder}
+        className="border border-gray-300 p-2 rounded w-full text-base focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        required
+        value={value}
+        onChange={onChange}
+      />
+      <div className="relative w-full">
+        <select
+          className="border border-gray-300 p-2 pr-10 rounded w-full text-base bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500 appearance-none"
+          onChange={(e) => onChange(e)}
+          value=""
+        >
+          <option value="">Select</option>
+          {options.map((opt, idx) => (
+            <option key={idx} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
 
-        {/* Image on Top with increased height */}
-        <div className="w-full md:w-2/3 bg-white shadow-xl rounded-lg overflow-hidden">
+  const getJobOptions = (role) => {
+    if (role === 'father' || role === 'brothers') return [...generalJobs, 'Farmer'];
+    if (role === 'mother' || role === 'sisters') return [...generalJobs, 'Housewife'];
+    return generalJobs;
+  };
+
+  return (
+    <div className="bg-gray-100 min-h-screen">
+      <div className="flex flex-col items-center py-10 px-4">
+        <div className="w-full md:w-3/4 lg:w-2/3 overflow-hidden rounded-t-lg shadow-lg">
           <img
             src="/image/s34.jpg"
             alt="Family"
-            className="w-full h-[500px] object-cover"
+            className="w-full h-[400px] object-cover rounded-t-lg"
           />
         </div>
 
-        {/* Main Form Below Image */}
         <form
-          className="w-full md:w-2/3 bg-white shadow-2xl rounded-lg p-6 md:p-8 space-y-8"
+          className="w-full md:w-3/4 lg:w-2/3 bg-white shadow-2xl rounded-b-lg p-6 md:p-10 space-y-10"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-2xl font-bold text-red-600 text-center">About Family</h2>
+          <h2 className="text-3xl font-bold text-center text-red-700">About Family</h2>
 
-          {/* Father & Mother */}
           {['father', 'mother'].map((role) => (
             <div key={role}>
-              <h3 className="font-semibold text-lg mb-2 capitalize text-red-800">{role}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <h3 className="text-xl font-semibold text-yellow-800 mb-3 capitalize">{role}'s Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <input
                   type="text"
                   placeholder={`${role.charAt(0).toUpperCase() + role.slice(1)}'s Name`}
-                  className="border border-yellow-600 placeholder-yellow-600 p-2 rounded"
+                  className="border border-gray-300 p-2 rounded w-full text-base focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   required
                   value={family[role].name}
                   onChange={(e) => handleChange(role, null, 'name', e.target.value)}
                 />
-                <input
-                  list="job-options"
-                  placeholder="Job"
-                  className="border border-yellow-600 placeholder-yellow-600 p-2 rounded"
-                  required
-                  value={family[role].job}
-                  onChange={(e) => handleChange(role, null, 'job', e.target.value)}
-                />
-                <input
-                  list="occupation-options"
-                  placeholder="Occupation"
-                  className="border border-yellow-600 placeholder-yellow-600 p-2 rounded"
-                  required
-                  value={family[role].occupation}
-                  onChange={(e) => handleChange(role, null, 'occupation', e.target.value)}
-                />
+                {renderFieldWithDropdown(
+                  family[role].job,
+                  (e) => handleChange(role, null, 'job', e.target.value),
+                  getJobOptions(role),
+                  'Job'
+                )}
+                {renderFieldWithDropdown(
+                  family[role].occupation,
+                  (e) => handleChange(role, null, 'occupation', e.target.value),
+                  occupations,
+                  'Occupation'
+                )}
+                {renderFieldWithDropdown(
+                  family[role].qualification,
+                  (e) => handleChange(role, null, 'qualification', e.target.value),
+                  qualifications,
+                  'Qualification'
+                )}
               </div>
             </div>
           ))}
 
-          {/* Brothers & Sisters */}
           {['brothers', 'sisters'].map((relation) => (
             <div key={relation}>
-              <h3 className="font-semibold text-lg mb-2 capitalize text-red-800">{relation}</h3>
-              <div className="space-y-2">
+              <h3 className="text-xl font-semibold text-yellow-800 mb-3 capitalize">{relation}</h3>
+              <div className="space-y-4">
                 {family[relation].map((person, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center"
+                    className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center bg-gray-50 p-4 rounded shadow-sm"
                   >
                     <input
                       type="text"
                       placeholder={`${relation.slice(0, -1)} ${index + 1} Name`}
-                      className="border border-yellow-600 placeholder-yellow-600 p-2 rounded"
+                      className="border border-gray-300 p-2 rounded w-full text-base focus:outline-none focus:ring-2 focus:ring-yellow-500"
                       required
                       value={person.name}
                       onChange={(e) => handleChange(relation, index, 'name', e.target.value)}
                     />
-                    <input
-                      list="job-options"
-                      placeholder="Job"
-                      className="border border-yellow-600 placeholder-yellow-600 p-2 rounded"
-                      required
-                      value={person.job}
-                      onChange={(e) => handleChange(relation, index, 'job', e.target.value)}
-                    />
-                    <input
-                      list="occupation-options"
-                      placeholder="Occupation"
-                      className="border border-yellow-600 placeholder-yellow-600 p-2 rounded"
-                      required
-                      value={person.occupation}
-                      onChange={(e) => handleChange(relation, index, 'occupation', e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeMember(relation, index)}
-                      className="bg-red-500 text-white px-3 py-1 rounded md:col-span-3 w-fit"
-                      disabled={family[relation].length === 1}
-                    >
-                      - Remove
-                    </button>
+                    {renderFieldWithDropdown(
+                      person.job,
+                      (e) => handleChange(relation, index, 'job', e.target.value),
+                      getJobOptions(relation),
+                      'Job'
+                    )}
+                    {renderFieldWithDropdown(
+                      person.occupation,
+                      (e) => handleChange(relation, index, 'occupation', e.target.value),
+                      occupations,
+                      'Occupation'
+                    )}
+                    {renderFieldWithDropdown(
+                      person.qualification,
+                      (e) => handleChange(relation, index, 'qualification', e.target.value),
+                      qualifications,
+                      'Qualification'
+                    )}
                   </div>
                 ))}
-                <button
-                  type="button"
-                  onClick={() => addMember(relation)}
-                  className="bg-green-500 text-white px-4 py-2 rounded mt-2"
-                >
-                  + Add {relation.slice(0, -1).charAt(0).toUpperCase() + relation.slice(1, -1)}
-                </button>
+
+                <div className="flex gap-2 mt-2">
+                  <button
+                    type="button"
+                    onClick={() => addMember(relation)}
+                    className="bg-green-600 text-white text-sm px-2 py-1 rounded-md hover:bg-green-700 transition"
+                  >
+                    + Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => removeMember(relation, family[relation].length - 1)}
+                    className="bg-red-600 text-white text-sm px-2 py-1 rounded-md hover:bg-red-700 transition"
+                    disabled={family[relation].length === 1}
+                  >
+                    − Remove
+                  </button>
+                </div>
               </div>
             </div>
           ))}
 
-          {/* Dropdown Lists */}
-          <datalist id="job-options">
-            {jobs.map((job, i) => (
-              <option key={i} value={job} />
-            ))}
-          </datalist>
-
-          <datalist id="occupation-options">
-            {occupations.map((occ, i) => (
-              <option key={i} value={occ} />
-            ))}
-          </datalist>
-
-          {/* Continue Button */}
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition"
+            >
+              ← Back
+            </button>
             <button
               type="submit"
-              className="bg-red-900 text-white px-6 py-2 rounded hover:bg-red-800 transition"
+              className="bg-red-800 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition"
             >
               Continue
             </button>

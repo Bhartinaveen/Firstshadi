@@ -55,6 +55,10 @@ const Boxsc = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const months = [
     { value: '01', name: 'January' },
     { value: '02', name: 'February' },
@@ -73,14 +77,12 @@ const Boxsc = () => {
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4">
-        {/* 🖼️ Image outside the card */}
         <img
           src="./image/s14.jpg"
           alt="Banner"
           className="w-85 h-70 object-cover rounded-md mb-4 shadow-lg"
         />
 
-        {/* 📦 Card */}
         <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
           <h2 className="text-lg font-semibold text-gray-700 mb-2 text-red-800">Name</h2>
           <input
@@ -146,15 +148,24 @@ const Boxsc = () => {
             />
           </div>
 
-          <button
-            onClick={handleContinue}
-            disabled={!isFormComplete}
-            className={`w-full bg-gradient-to-r from-red-700 to-red-900 text-white py-2 rounded-full font-semibold transition-all duration-300 ${
-              isFormComplete ? 'hover:opacity-90' : 'opacity-50 cursor-not-allowed'
-            }`}
-          >
-            Continue
-          </button>
+          {/* Buttons Row */}
+          <div className="flex gap-4">
+            <button
+              onClick={handleBack}
+              className="w-1/2 bg-gray-600 text-white py-2 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300"
+            >
+              Back
+            </button>
+            <button
+              onClick={handleContinue}
+              disabled={!isFormComplete}
+              className={`w-1/2 bg-gradient-to-r from-red-700 to-red-900 text-white py-2 rounded-full font-semibold transition-all duration-300 ${
+                isFormComplete ? 'hover:opacity-90' : 'opacity-50 cursor-not-allowed'
+              }`}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
       <Footer />

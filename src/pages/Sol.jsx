@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { BellIcon } from '@heroicons/react/24/outline'; // npm install @heroicons/react
+import { BellIcon } from '@heroicons/react/24/outline';
 import Footer from '../components/Footer';
 
 const userData = [
@@ -80,10 +80,14 @@ const userData = [
 const Sol = () => {
   const [notifications, setNotifications] = useState([]);
   const [requestedUsers, setRequestedUsers] = useState([]);
+  const [hoveredUser, setHoveredUser] = useState(null);
   const [showNotificationPanel, setShowNotificationPanel] = useState(false);
   const notificationRef = useRef(null);
 
   useEffect(() => {
+    const savedRequests = JSON.parse(localStorage.getItem('requestedUsers')) || [];
+    setRequestedUsers(savedRequests.map(user => user.email));
+
     const handleClickOutside = (event) => {
       if (notificationRef.current && !notificationRef.current.contains(event.target)) {
         setShowNotificationPanel(false);
@@ -94,120 +98,138 @@ const Sol = () => {
   }, []);
 
   const handleRequest = (user) => {
-    if (requestedUsers.includes(user.email)) return;
+    const savedRequestData = JSON.parse(localStorage.getItem('requestedUsers')) || [];
+    const alreadyRequested = savedRequestData.some(u => u.email === user.email);
+    if (alreadyRequested) return;
 
+    const updatedRequests = [...requestedUsers, user.email];
+    const newRequestData = [...savedRequestData, user];
+
+    localStorage.setItem('requestedUsers', JSON.stringify(newRequestData));
+    setRequestedUsers(updatedRequests);
     setNotifications((prev) => [...prev, `Request sent to ${user.name}`]);
-    setRequestedUsers((prev) => [...prev, user.email]);
   };
 
   const handleDecline = (user) => {
-    setNotifications((prev) =>
-      prev.filter((note) => !note.includes(user.name))
-    );
-    setRequestedUsers((prev) =>
-      prev.filter((email) => email !== user.email)
-    );
+    const updatedList = requestedUsers.filter((email) => email !== user.email);
+    const updatedData = (JSON.parse(localStorage.getItem('requestedUsers')) || []).filter(u => u.email !== user.email);
+
+    localStorage.setItem('requestedUsers', JSON.stringify(updatedData));
+    setRequestedUsers(updatedList);
+    setNotifications((prev) => prev.filter((note) => !note.includes(user.name)));
   };
 
   return (
     <div>
-    <div className="min-h-screen bg-[#f0ffe0] px-4 py-8 relative">
-      {/* Header */}
-      <div className="flex flex-col items-center justify-center mb-6 relative">
-        <h1 className="text-center text-2xl md:text-4xl font-bold text-black mb-4">
-          Find the Soulmate
-        </h1>
+      <div className="min-h-screen bg-[#f0ffe0] px-4 py-8 relative">
+        <div className="flex flex-col items-center justify-center mb-6 relative">
+          <h1 className="text-center text-2xl md:text-4xl font-bold text-black mb-4">
+            Find the Soulmate
+          </h1>
 
-        {/* Notification Bell */}
-        <div className="absolute right-4 top-0" ref={notificationRef}>
-          <button
-            className="relative p-2 bg-purple-100 rounded-full shadow hover:bg-purple-200"
-            onClick={() => setShowNotificationPanel((prev) => !prev)}
-          >
-            <BellIcon className="h-6 w-6 text-purple-700" />
-            {notifications.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {notifications.length}
-              </span>
-            )}
-          </button>
+          <div className="absolute right-4 top-0" ref={notificationRef}>
+            <button
+              className="relative p-2 bg-purple-100 rounded-full shadow hover:bg-purple-200"
+              onClick={() => setShowNotificationPanel((prev) => !prev)}
+            >
+              <BellIcon className="h-6 w-6 text-purple-700" />
+              {notifications.length > 0 && (
+                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {notifications.length}
+                </span>
+              )}
+            </button>
 
-          {/* Notification Dropdown */}
-          {showNotificationPanel && (
-            <div className="absolute right-0 mt-2 w-64 bg-yellow-100 border border-yellow-300 rounded shadow-lg z-10">
-              <div className="p-3">
-                <h2 className="font-semibold text-sm border-b pb-2 mb-2 text-yellow-900">
-                  Notifications
-                </h2>
-                {notifications.length === 0 ? (
-                  <p className="text-xs text-gray-600">No notifications</p>
-                ) : (
-                  <ul className="text-sm space-y-1 text-yellow-800">
-                    {notifications.map((note, idx) => (
-                      <li key={idx}>{note}</li>
-                    ))}
-                  </ul>
-                )}
+            {showNotificationPanel && (
+              <div className="absolute right-0 mt-2 w-64 bg-yellow-100 border border-yellow-300 rounded shadow-lg z-10">
+                <div className="p-3">
+                  <h2 className="font-semibold text-sm border-b pb-2 mb-2 text-yellow-900">
+                    Notifications
+                  </h2>
+                  {notifications.length === 0 ? (
+                    <p className="text-xs text-gray-600">No notifications</p>
+                  ) : (
+                    <ul className="text-sm space-y-1 text-yellow-800">
+                      {notifications.map((note, idx) => (
+                        <li key={idx}>{note}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* User Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {userData.map((user, index) => (
-          <div
-            key={index}
-            className="bg-[#f5c8b0] w-full h-[320px] max-w-sm mx-auto p-4 rounded shadow-md flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center space-x-4 mb-2">
-                <img
-                  src={user.image}
-                  alt="User"
-                  className="w-16 h-16 rounded-full object-cover"
-                />
+        {/* User Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          {userData.map((user, index) => {
+            const isRequested = requestedUsers.includes(user.email);
+            const isHovered = hoveredUser === user.email;
+
+            return (
+              <div
+                key={index}
+                className="bg-[#f5c8b0] w-full h-[320px] max-w-sm mx-auto p-4 rounded shadow-md flex flex-col justify-between"
+              >
                 <div>
-                  <p className="text-sm font-semibold text-black">Name: {user.name}</p>
-                  <p className="text-sm text-black">📞 {user.phone}</p>
-                  <p className="text-sm text-black">📧 {user.email}</p>
-                  <div className="flex mt-2 space-x-2">
-                    <button
-                      className={`px-2 py-1 text-sm rounded ${
-                        requestedUsers.includes(user.email)
-                          ? 'bg-gray-500 cursor-not-allowed'
-                          : 'bg-green-500'
-                      } text-white`}
-                      disabled={requestedUsers.includes(user.email)}
-                      onClick={() => handleRequest(user)}
-                    >
-                      {requestedUsers.includes(user.email) ? 'Requested' : 'Request'}
-                    </button>
-                    <button
-                      className="px-2 py-1 text-sm rounded bg-red-500 text-white"
-                      onClick={() => handleDecline(user)}
-                    >
-                      Decline
-                    </button>
+                  <div className="flex items-center space-x-4 mb-2">
+                    <img
+                      src={user.image}
+                      alt="User"
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="text-sm font-semibold text-black">Name: {user.name}</p>
+                      <p className="text-sm text-black">📞 {user.phone}</p>
+                      <p className="text-sm text-black">📧 {user.email}</p>
+
+                      <div className="flex mt-2 space-x-2">
+                        <button
+                          disabled={isRequested}
+                          onClick={() => handleRequest(user)}
+                          onMouseEnter={() => setHoveredUser(user.email)}
+                          onMouseLeave={() => setHoveredUser(null)}
+                          className={`px-2 py-1 text-sm rounded text-white transition duration-200 ${
+                            isRequested
+                              ? 'bg-gray-500 cursor-not-allowed'
+                              : isHovered
+                              ? 'bg-green-600'
+                              : 'bg-sky-500 hover:bg-green-600'
+                          }`}
+                        >
+                          {isRequested
+                            ? 'Requested'
+                            : isHovered
+                            ? 'Connect Request'
+                            : 'Connect'}
+                        </button>
+
+                        <button
+                          className="px-2 py-1 text-sm rounded bg-red-500 text-white"
+                          onClick={() => handleDecline(user)}
+                        >
+                          Decline
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-200 p-2 rounded text-sm text-left space-y-1">
+                    <p><strong>Age:</strong> <span className="text-orange-600">{user.age}</span></p>
+                    <p><strong>Family member:</strong> {user.family}</p>
+                    <p><strong>Religion:</strong> {user.religion}</p>
+                    <p><strong>Caste:</strong> {user.caste}</p>
+                    <p><strong>Job:</strong> {user.job}</p>
+                    <p><strong>Hobbies:</strong> {user.hobbies}</p>
                   </div>
                 </div>
               </div>
-
-              <div className="bg-gray-200 p-2 rounded text-sm text-left space-y-1">
-                <p><strong>Age:</strong> <span className="text-orange-600">{user.age}</span></p>
-                <p><strong>Family member:</strong> {user.family}</p>
-                <p><strong>Religion:</strong> {user.religion}</p>
-                <p><strong>Caste:</strong> {user.caste}</p>
-                <p><strong>Job:</strong> {user.job}</p>
-                <p><strong>Hobbies:</strong> {user.hobbies}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+            );
+          })}
+        </div>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </div>
   );
 };

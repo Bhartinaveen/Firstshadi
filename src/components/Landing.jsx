@@ -95,8 +95,8 @@ const Landing = () => {
               <label className="text-sm font-medium">Mother tongue</label>
               <select className="px-3 py-2 rounded border border-red-600 ">
                 <option>Select</option>
-                <option>Hindi</option>
-                <option>English</option>
+                <option>Hindu</option>
+               
                 <option>Bengali</option>
                 <option>Marathi</option>
                 <option>Punjabi</option>
