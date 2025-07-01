@@ -1,8 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
 
 const stories = [
   {
@@ -52,13 +51,9 @@ const Prsn = () => {
 
       <div className="relative">
         <Swiper
-          modules={[Pagination, Autoplay]}
+          modules={[Autoplay]}
           spaceBetween={20}
           slidesPerView={1}
-          pagination={{
-            clickable: true,
-            el: ".custom-pagination",
-          }}
           loop={true}
           autoplay={{
             delay: 4000,
@@ -92,8 +87,6 @@ const Prsn = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        <div className="custom-pagination mt-6 flex justify-center space-x-2" />
       </div>
     </div>
   );

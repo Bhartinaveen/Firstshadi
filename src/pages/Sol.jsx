@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { BellIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import Footer from '../components/Footer';
 
 const userData = [
@@ -13,7 +13,7 @@ const userData = [
     caste: 'Brahmin',
     job: 'Government (SSC)',
     hobbies: 'Cricket',
-    image: '/image/s24.jpg',
+    images: ['/image/s24.jpg', '/image/s41.jpg'],
   },
   {
     name: 'Anjali',
@@ -25,7 +25,7 @@ const userData = [
     caste: 'Kayastha',
     job: 'Teacher',
     hobbies: 'Reading',
-    image: '/image/s25.jpg',
+    images: ['/image/s46.jpg', '/image/s47.jpg'],
   },
   {
     name: 'Rohit',
@@ -37,7 +37,7 @@ const userData = [
     caste: 'Rajput',
     job: 'Engineer',
     hobbies: 'Football',
-    image: '/image/s28.jpg',
+    images: ['/image/s42.jpg', '/image/s28.jpg'],
   },
   {
     name: 'Pooja',
@@ -49,7 +49,7 @@ const userData = [
     caste: 'Yadav',
     job: 'Doctor',
     hobbies: 'Painting',
-    image: '/image/s26.jpg',
+    images: ['/image/s44.jpg', '/image/s45.jpg'],
   },
   {
     name: 'Vikas',
@@ -61,7 +61,7 @@ const userData = [
     caste: 'Kurmi',
     job: 'Banker',
     hobbies: 'Travelling',
-    image: '/image/s31.jpg',
+    images: ['/image/s39.jpg', '/image/s40.jpg'],
   },
   {
     name: 'Aditi',
@@ -73,28 +73,19 @@ const userData = [
     caste: 'Teli',
     job: 'Designer',
     hobbies: 'Dancing',
-    image: '/image/s29.jpg',
+    images: ['/image/s35.jpg', '/image/s36.jpg'],
   },
 ];
 
 const Sol = () => {
-  const [notifications, setNotifications] = useState([]);
   const [requestedUsers, setRequestedUsers] = useState([]);
   const [hoveredUser, setHoveredUser] = useState(null);
-  const [showNotificationPanel, setShowNotificationPanel] = useState(false);
-  const notificationRef = useRef(null);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [modalImages, setModalImages] = useState([]);
 
   useEffect(() => {
     const savedRequests = JSON.parse(localStorage.getItem('requestedUsers')) || [];
     setRequestedUsers(savedRequests.map(user => user.email));
-
-    const handleClickOutside = (event) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setShowNotificationPanel(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleRequest = (user) => {
@@ -107,7 +98,6 @@ const Sol = () => {
 
     localStorage.setItem('requestedUsers', JSON.stringify(newRequestData));
     setRequestedUsers(updatedRequests);
-    setNotifications((prev) => [...prev, `Request sent to ${user.name}`]);
   };
 
   const handleDecline = (user) => {
@@ -116,7 +106,11 @@ const Sol = () => {
 
     localStorage.setItem('requestedUsers', JSON.stringify(updatedData));
     setRequestedUsers(updatedList);
-    setNotifications((prev) => prev.filter((note) => !note.includes(user.name)));
+  };
+
+  const openImageModal = (images) => {
+    setModalImages(images);
+    setShowImageModal(true);
   };
 
   return (
@@ -126,39 +120,6 @@ const Sol = () => {
           <h1 className="text-center text-2xl md:text-4xl font-bold text-black mb-4">
             Find the Soulmate
           </h1>
-
-          <div className="absolute right-4 top-0" ref={notificationRef}>
-            <button
-              className="relative p-2 bg-purple-100 rounded-full shadow hover:bg-purple-200"
-              onClick={() => setShowNotificationPanel((prev) => !prev)}
-            >
-              <BellIcon className="h-6 w-6 text-purple-700" />
-              {notifications.length > 0 && (
-                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {notifications.length}
-                </span>
-              )}
-            </button>
-
-            {showNotificationPanel && (
-              <div className="absolute right-0 mt-2 w-64 bg-yellow-100 border border-yellow-300 rounded shadow-lg z-10">
-                <div className="p-3">
-                  <h2 className="font-semibold text-sm border-b pb-2 mb-2 text-yellow-900">
-                    Notifications
-                  </h2>
-                  {notifications.length === 0 ? (
-                    <p className="text-xs text-gray-600">No notifications</p>
-                  ) : (
-                    <ul className="text-sm space-y-1 text-yellow-800">
-                      {notifications.map((note, idx) => (
-                        <li key={idx}>{note}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* User Cards */}
@@ -175,9 +136,10 @@ const Sol = () => {
                 <div>
                   <div className="flex items-center space-x-4 mb-2">
                     <img
-                      src={user.image}
+                      src={user.images[0]}
                       alt="User"
-                      className="w-16 h-16 rounded-full object-cover"
+                      onClick={() => openImageModal(user.images)}
+                      className="w-16 h-16 rounded-full object-cover cursor-pointer border-2 border-gray-600"
                     />
                     <div>
                       <p className="text-sm font-semibold text-black">Name: {user.name}</p>
@@ -229,6 +191,32 @@ const Sol = () => {
           })}
         </div>
       </div>
+
+      {/* Image Modal */}
+      {showImageModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg max-w-3xl w-full relative">
+            <button
+              className="absolute top-2 right-2 text-gray-700 hover:text-black"
+              onClick={() => setShowImageModal(false)}
+            >
+              <XMarkIcon className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-semibold mb-4 text-center">User Images</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {modalImages.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt={`User ${i}`}
+                  className="w-full h-48 object-cover rounded"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

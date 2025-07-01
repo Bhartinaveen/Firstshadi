@@ -185,7 +185,7 @@ const Car = () => {
               </div>
             ))}
 
-            {/* Height */}
+            Height
             <div>
               <label className="block text-sm font-medium text-yellow-600">Height</label>
               <div className="flex gap-2">
@@ -210,6 +210,60 @@ const Car = () => {
                 </select>
               </div>
             </div>
+             
+               {/* ✅ Weight (New Section) */}
+            <div>
+              <label className="block text-sm font-medium text-yellow-600">Weight</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  name="weight"
+                  value={formData.weight}
+                  onChange={handleInputChange}
+                  className="w-2/3 border border-yellow-600 rounded px-3 py-2"
+                />
+                <select
+                  className="w-1/3 border border-yellow-600 rounded px-2 py-2"
+                  onChange={(e) => {
+                    handleDropdownChange("weight", e.target.value);
+                    e.target.selectedIndex = 0;
+                  }}
+                >
+                  <option disabled selected>Select</option>
+                  {["40kg", "45kg", "50kg", "55kg", "60kg", "65kg", "70kg", "75kg", "80kg", "85kg", "90kg", "95kg", "100kg+"].map(wt => (
+                    <option key={wt} value={wt}>{wt}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            {/* ✅ Manglik Section */}
+<div>
+  <label className="block text-sm font-medium text-yellow-600 mb-1">Manglik</label>
+  <div className="flex gap-6 mt-1">
+    {["Yes", "No", "Don't Know"].map((option) => (
+      <label key={option} className="flex items-center gap-1 cursor-pointer text-sm">
+        <input
+          type="radio"
+          name="manglik"
+          value={option}
+          checked={formData.manglik === option}
+          onChange={handleInputChange}
+          className="accent-yellow-600"
+        />
+        <span>{option}</span>
+        <span>
+          {formData.manglik === option ? (
+            <span className="text-green-600 text-sm ml-1">✔️</span>
+          ) : (
+            <span className="text-red-600 text-sm ml-1">❌</span>
+          )}
+        </span>
+      </label>
+    ))}
+  </div>
+</div>
+
 
             {/* Face Color */}
             <div>
@@ -226,6 +280,53 @@ const Car = () => {
                 ))}
               </select>
             </div>
+            
+            {/* Body Shape */}
+<div>
+  <label className="block text-sm font-medium text-yellow-600">Body Shape</label>
+  <select
+    name="bodyShape"
+    value={formData.bodyShape}
+    onChange={handleInputChange}
+    className="w-full mt-1 border border-yellow-600 rounded px-3 py-2"
+  >
+    <option disabled selected>Select Body Shape</option>
+    {["Slim", "Athletic", "Average", "Heavy", "Curvy", "Muscular"].map(shape => (
+      <option key={shape} value={shape}>{shape}</option>
+    ))}
+  </select>
+</div>
+
+{/* Rashifal */}
+<div>
+  <label className="block text-sm font-medium text-yellow-600">Rashifal (Zodiac Sign)</label>
+  <select
+    name="rashifal"
+    value={formData.rashifal}
+    onChange={handleInputChange}
+    className="w-full mt-1 border border-yellow-600 rounded px-3 py-2"
+  >
+    <option disabled selected>Select Rashifal</option>
+    {[
+      "Mesh (Aries)",
+      "Vrishabh (Taurus)",
+      "Mithun (Gemini)",
+      "Karka (Cancer)",
+      "Simha (Leo)",
+      "Kanya (Virgo)",
+      "Tula (Libra)",
+      "Vrischik (Scorpio)",
+      "Dhanu (Sagittarius)",
+      "Makar (Capricorn)",
+      "Kumbh (Aquarius)",
+      "Meen (Pisces)"
+    ].map(sign => (
+      <option key={sign} value={sign}>{sign}</option>
+    ))}
+  </select>
+</div>
+
+
 
             {/* Blood Group */}
             <div>
