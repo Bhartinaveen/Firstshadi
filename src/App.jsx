@@ -24,6 +24,7 @@ import Sol from './pages/Sol'
 import Car from './pages/Car'
 import Fmprof from './pages/Fmprof'
 import Mymatch from './pages/Mymatch'
+import Filt from './pages/Filt'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -72,6 +73,7 @@ function App() {
                  <Route path="/car" element={<Car />} />
                   <Route path="/fmprof" element={<Fmprof />} />
                    <Route path="/mymatch" element={<Mymatch />} />
+                   <Route path="/filt" element={<Filt />} />
 
                
       </Routes>
