@@ -96,7 +96,7 @@ const Sol = () => {
   const [hoveredUser, setHoveredUser] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
   const [modalImages, setModalImages] = useState([]);
-  const [selectedCaste, setSelectedCaste] = useState(''); // ⬅️ Caste filter state
+  const [selectedCaste, setSelectedCaste] = useState('');
 
   useEffect(() => {
     const savedRequests = JSON.parse(localStorage.getItem('requestedUsers')) || [];
@@ -120,7 +120,6 @@ const Sol = () => {
     setShowImageModal(true);
   };
 
-  // ✅ Filter logic including caste
   const filteredUsers = userData.filter((user) => {
     const userAge = parseInt(user.age);
     const {
@@ -144,123 +143,120 @@ const Sol = () => {
   const uniqueCastes = [...new Set(userData.map((u) => u.caste))];
 
   return (
-    <div className="min-h-screen bg-[#f0ffe0] px-4 py-8 relative">
-      <div className="flex flex-col items-center justify-center mb-4 relative">
-        <h1 className="text-center text-2xl md:text-4xl font-bold text-black mb-2">
-          Find the Soulmate
-        </h1>
+    <div>
+      <div className="min-h-screen bg-[#f0ffe0] px-4 py-8 relative">
+        <div className="flex flex-col items-center justify-center mb-4 relative">
+          <h1 className="text-center text-2xl md:text-4xl font-bold text-black mb-2">
+            Find the Soulmate
+          </h1>
 
-        {/* ✅ Descriptive Paragraph */}
-        <p className="text-center text-gray-700 max-w-2xl mb-4">
-          Welcome to our matchmaking platform. Here, we help you find your perfect life partner 
-          based on your preferences including age, religion, mother tongue, and now caste. Explore 
-          the profiles below and send a request to those you feel a connection with.
-        </p>
+          <p className="text-center text-gray-700 max-w-2xl mb-4">
+            Welcome to our matchmaking platform. Here, we help you find your perfect life partner 
+            based on your preferences including age, religion, mother tongue, and now caste. Explore 
+            the profiles below and send a request to those you feel a connection with.
+          </p>
 
-        {/* ✅ Caste Filter */}
-        <div className="mb-6">
-          <label className="mr-2 font-semibold text-black">Filter by Caste:</label>
-          <select
-            value={selectedCaste}
-            onChange={(e) => setSelectedCaste(e.target.value)}
-            className="border border-gray-400 rounded px-3 py-1"
-          >
-            <option value="">All Castes</option>
-            {uniqueCastes.map((caste, i) => (
-              <option key={i} value={caste}>{caste}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Filtered User Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {filteredUsers.map((user, index) => {
-          const isRequested = requestedUsers.includes(user.email);
-          const isHovered = hoveredUser === user.email;
-
-          return (
-            <div
-              key={index}
-              className="bg-[#f5c8b0] w-full h-[320px] max-w-sm mx-auto p-4 rounded shadow-md flex flex-col justify-between"
+          <div className="mb-6">
+            <label className="mr-2 font-semibold text-black">Filter by Caste:</label>
+            <select
+              value={selectedCaste}
+              onChange={(e) => setSelectedCaste(e.target.value)}
+              className="border border-gray-400 rounded px-3 py-1"
             >
-              <div>
-                <div className="flex items-center space-x-4 mb-2">
-                  <img
-                    src={user.images[0]}
-                    alt="User"
-                    onClick={() => openImageModal(user.images)}
-                    className="w-16 h-16 rounded-full object-cover cursor-pointer border-2 border-gray-600"
-                  />
-                  <div>
-                    <p className="text-sm font-semibold text-black">Name: {user.name}</p>
-                    <p className="text-sm text-black">📞 {user.phone}</p>
-                    <p className="text-sm text-black">📧 {user.email}</p>
-
-                    <div className="flex mt-2 space-x-2">
-                      <button
-                        disabled={isRequested}
-                        onClick={() => handleRequest(user)}
-                        onMouseEnter={() => setHoveredUser(user.email)}
-                        onMouseLeave={() => setHoveredUser(null)}
-                        className={`px-2 py-1 text-sm rounded text-white transition duration-200 ${
-                          isRequested
-                            ? 'bg-gray-500 cursor-not-allowed'
-                            : isHovered
-                            ? 'bg-green-600'
-                            : 'bg-sky-500 hover:bg-green-600'
-                        }`}
-                      >
-                        {isRequested
-                          ? 'Requested'
-                          : isHovered
-                          ? 'Connect Request'
-                          : 'Connect'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gray-200 p-2 rounded text-sm text-left space-y-1">
-                  <p><strong>Age:</strong> <span className="text-orange-600">{user.age}</span></p>
-                  <p><strong>Family:</strong> {user.family}</p>
-                  <p><strong>Religion:</strong> {user.religion}</p>
-                  <p><strong>Caste:</strong> {user.caste}</p>
-                  <p><strong>Mother Tongue:</strong> {user.motherTongue}</p>
-                  <p><strong>Job:</strong> {user.job}</p>
-                  <p><strong>Hobbies:</strong> {user.hobbies}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Image Modal */}
-      {showImageModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-lg max-w-3xl w-full relative">
-            <button
-              className="absolute top-2 right-2 text-gray-700 hover:text-black"
-              onClick={() => setShowImageModal(false)}
-            >
-              <XMarkIcon className="w-6 h-6" />
-            </button>
-            <h2 className="text-lg font-semibold mb-4 text-center">User Images</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {modalImages.map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  alt={`User ${i}`}
-                  className="w-full h-48 object-cover rounded"
-                />
+              <option value="">All Castes</option>
+              {uniqueCastes.map((caste, i) => (
+                <option key={i} value={caste}>{caste}</option>
               ))}
-            </div>
+            </select>
           </div>
         </div>
-      )}
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          {filteredUsers.map((user, index) => {
+            const isRequested = requestedUsers.includes(user.email);
+            const isHovered = hoveredUser === user.email;
+
+            return (
+              <div
+                key={index}
+                className="bg-[#f5c8b0] w-full h-[320px] max-w-sm mx-auto p-4 rounded shadow-md flex flex-col justify-between border-2 border-red-500"
+              >
+                <div>
+                  <div className="flex items-center space-x-4 mb-2">
+                    <img
+                      src={user.images[0]}
+                      alt="User"
+                      onClick={() => openImageModal(user.images)}
+                      className="w-16 h-16 rounded-full object-cover cursor-pointer border-2 border-gray-600"
+                    />
+                    <div>
+                      <p className="text-sm font-semibold text-black">Name: {user.name}</p>
+                      <p className="text-sm text-black">📞 {user.phone}</p>
+                      <p className="text-sm text-black">📧 {user.email}</p>
+
+                      <div className="flex mt-2 space-x-2">
+                        <button
+                          disabled={isRequested}
+                          onClick={() => handleRequest(user)}
+                          onMouseEnter={() => setHoveredUser(user.email)}
+                          onMouseLeave={() => setHoveredUser(null)}
+                          className={`px-2 py-1 text-sm rounded text-white transition duration-200 ${
+                            isRequested
+                              ? 'bg-gray-500 cursor-not-allowed'
+                              : isHovered
+                              ? 'bg-green-600'
+                              : 'bg-sky-500 hover:bg-green-600'
+                          }`}
+                        >
+                          {isRequested
+                            ? 'Requested'
+                            : isHovered
+                            ? 'Connect Request'
+                            : 'Connect'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-200 p-2 rounded text-sm text-left space-y-1">
+                    <p><strong>Age:</strong> <span className="text-orange-600">{user.age}</span></p>
+                    <p><strong>Family:</strong> {user.family}</p>
+                    <p><strong>Religion:</strong> {user.religion}</p>
+                    <p><strong>Caste:</strong> {user.caste}</p>
+                    <p><strong>Mother Tongue:</strong> {user.motherTongue}</p>
+                    <p><strong>Job:</strong> {user.job}</p>
+                    <p><strong>Hobbies:</strong> {user.hobbies}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {showImageModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-4 rounded-lg max-w-3xl w-full relative">
+              <button
+                className="absolute top-2 right-2 text-gray-700 hover:text-black"
+                onClick={() => setShowImageModal(false)}
+              >
+                <XMarkIcon className="w-6 h-6" />
+              </button>
+              <h2 className="text-lg font-semibold mb-4 text-center">User Images</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {modalImages.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`User ${i}`}
+                    className="w-full h-48 object-cover rounded"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <Footer />
     </div>
   );

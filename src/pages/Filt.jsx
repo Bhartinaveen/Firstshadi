@@ -160,7 +160,7 @@ const Filt = () => {
             return (
               <div
                 key={index}
-                className="bg-[#f5c8b0] w-full h-[320px] max-w-sm mx-auto p-4 rounded shadow-md flex flex-col justify-between"
+                className="bg-[#f5c8b0] w-full h-[320px] max-w-sm mx-auto p-4 rounded shadow-md flex flex-col justify-between border-2 border-red-500"
               >
                 <div>
                   <div className="flex items-center space-x-4 mb-2">
