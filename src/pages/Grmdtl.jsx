@@ -1,11 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Grmdtl = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can validate data here before navigating
+    navigate('/paym'); // Navigate to Paym.jsx route
+  };
+
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 py-10 space-y-6">
-
         {/* 🖼️ Plain Image Outside the Form Card */}
         <img
           src="./image/s17.jpg"
@@ -19,7 +27,7 @@ const Grmdtl = () => {
             Hi! You are joining the Best Matchmaking Experience.
           </h2>
 
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Groom's Title + Name */}
             <div>
               <label className="block text-sm font-medium text-red-800 mb-1">
@@ -129,7 +137,7 @@ const Grmdtl = () => {
               />
             </div>
 
-            {/* Submit Button */}
+            {/* Continue Button */}
             <button
               type="submit"
               className="w-full bg-red-900 text-white py-2 rounded-md hover:bg-red-600 transition"

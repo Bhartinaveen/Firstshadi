@@ -6,11 +6,68 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    emailOtp: '',
+    phoneOtp: '',
+  });
+
+  const [emailOtpSent, setEmailOtpSent] = useState('');
+  const [phoneOtpSent, setPhoneOtpSent] = useState('');
+  const [emailOtpVerified, setEmailOtpVerified] = useState(false);
+  const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
+
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+  const sendEmailOtp = () => {
+    const otp = generateOtp();
+    setEmailOtpSent(otp);
+    alert(`Email OTP sent to ${formData.email}: ${otp}`);
+  };
+
+  const sendPhoneOtp = () => {
+    const otp = generateOtp();
+    setPhoneOtpSent(otp);
+    alert(`Phone OTP sent to ${formData.phone}: ${otp}`);
+  };
+
+  const verifyEmailOtp = () => {
+    if (formData.emailOtp === emailOtpSent) {
+      setEmailOtpVerified(true);
+      alert("Email OTP verified successfully");
+    } else {
+      alert("Invalid Email OTP");
+    }
+  };
+
+  const verifyPhoneOtp = () => {
+    if (formData.phoneOtp === phoneOtpSent) {
+      setPhoneOtpVerified(true);
+      alert("Phone OTP verified successfully");
+    } else {
+      alert("Invalid Phone OTP");
+    }
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // You can also add custom validation logic here if needed
+    if (!emailOtpVerified || !phoneOtpVerified) {
+      alert("Please verify both Email and Phone OTPs before proceeding.");
+      return;
+    }
     navigate('/regone');
   };
 
@@ -18,11 +75,7 @@ const Register = () => {
     <div>
       <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 px-4 py-8">
         <div className="w-full max-w-md flex justify-center mb-6">
-          <img
-            src="./image/s33.jpg"
-            alt="Registration Visual"
-            className="w-full rounded-lg shadow-md"
-          />
+          <img src="./image/s33.jpg" alt="Registration Visual" className="w-full rounded-lg shadow-md" />
         </div>
 
         <div className="w-full max-w-md bg-white p-6 rounded-md shadow-md">
@@ -31,29 +84,108 @@ const Register = () => {
           <form className="space-y-4" onSubmit={handleRegister}>
             <input
               type="text"
+              name="name"
               placeholder="Full Name"
               required
-              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              required
-              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              className="w-full border border-yellow-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full border border-yellow-600 px-4 py-2 rounded placeholder-yellow-600 text-black"
             />
 
+            {/* Phone & OTP Section */}
+            <div className="space-y-2">
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full border border-yellow-600 px-4 py-2 rounded placeholder-yellow-600 text-black"
+              />
+
+              {formData.phone && (
+                <>
+                  <div className="flex space-x-2 mt-1">
+                    <button
+                      type="button"
+                      onClick={sendPhoneOtp}
+                      className="bg-yellow-600 text-white px-3 py-1 text-sm rounded hover:bg-yellow-700 transition"
+                    >
+                      Send OTP
+                    </button>
+                    <button
+                      type="button"
+                      onClick={verifyPhoneOtp}
+                      className="bg-green-600 text-white px-3 py-1 text-sm rounded hover:bg-green-700 transition"
+                    >
+                      Verify OTP
+                    </button>
+                  </div>
+                  <input
+                    type="number"
+                    name="phoneOtp"
+                    placeholder="Enter Phone OTP"
+                    value={formData.phoneOtp}
+                    onChange={handleChange}
+                    className="w-full border border-yellow-600 px-4 py-2 rounded placeholder-yellow-600 text-black mt-2"
+                  />
+                </>
+              )}
+            </div>
+
+            {/* Email & OTP Section */}
+            <div className="space-y-2">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border border-yellow-600 px-4 py-2 rounded placeholder-yellow-600 text-black"
+              />
+
+              {formData.email && (
+                <>
+                  <div className="flex space-x-2 mt-1">
+                    <button
+                      type="button"
+                      onClick={sendEmailOtp}
+                      className="bg-yellow-600 text-white px-3 py-1 text-sm rounded hover:bg-yellow-700 transition"
+                    >
+                      Send OTP
+                    </button>
+                    <button
+                      type="button"
+                      onClick={verifyEmailOtp}
+                      className="bg-green-600 text-white px-3 py-1 text-sm rounded hover:bg-green-700 transition"
+                    >
+                      Verify OTP
+                    </button>
+                  </div>
+                  <input
+                    type="number"
+                    name="emailOtp"
+                    placeholder="Enter Email OTP"
+                    value={formData.emailOtp}
+                    onChange={handleChange}
+                    className="w-full border border-yellow-600 px-4 py-2 rounded placeholder-yellow-600 text-black mt-2"
+                  />
+                </>
+              )}
+            </div>
+
+            {/* Password */}
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
+                name="password"
                 placeholder="Password"
                 required
-                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded placeholder-yellow-600 text-black"
               />
               <div
                 onClick={() => setShowPassword(!showPassword)}
@@ -67,12 +199,16 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Confirm Password */}
             <div className="relative">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
+                name="confirmPassword"
                 placeholder="Confirm Password"
                 required
-                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-yellow-600 text-black"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full border border-yellow-600 px-4 py-2 pr-10 rounded placeholder-yellow-600 text-black"
               />
               <div
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
