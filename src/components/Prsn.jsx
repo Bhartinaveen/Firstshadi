@@ -8,13 +8,13 @@ const stories = [
     name: "Shubham & Shruti",
     image: "/image/s1.jpg",
     description:
-      "Shubham and Shruti’s journey from strangers to life partners is a heartwarming tale of modern love facilitated by First marriage.com...",
+      "Shubham and Shruti’s journey from strangers to life partners is a heartwarming tale of modern love facilitated by First marriage...",
   },
   {
     name: "Habeeba & Alikhan",
     image: "/image/s2.jpg",
     description:
-      "I have married with Syed Habeeba from Nellore on 4.7.2024 Thursday, Thank you First marriage.com owner and supporting all staffs.",
+      "I have married with Syed Habeeba from Nellore on 4.7.2024 Thursday, Thank you First marriage owner and supporting all staffs.",
   },
   {
     name: "Pinkey & Nikhil",
@@ -26,19 +26,19 @@ const stories = [
     name: "Ravi & Anjali",
     image: "/image/s4.jpg",
     description:
-      "Our journey started with First marriage.com and ended with us being happily married since 2023.",
+      "Our journey started with First marriage and ended with us being happily married since 2023.",
   },
   {
     name: "Amit & Priya",
     image: "/image/s5.jpg",
     description:
-      "Thanks to First marriage.com, we found each other despite the busy city life.",
+      "Thanks to First marriage, we found each other despite the busy city life.",
   },
   {
     name: "Karan & Meera",
     image: "/image/s6.jpg",
     description:
-      "Thanks to First marriage.com – we highly recommend this platform to anyone looking for companionship.",
+      "Thanks to First marriage – we highly recommend this platform to anyone looking for companionship.",
   },
 ];
 

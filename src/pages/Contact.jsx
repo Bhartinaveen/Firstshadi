@@ -100,9 +100,9 @@ const Contact = () => {
 
         <div className="bg-red-900 text-white p-6 rounded-lg mt-8 w-full max-w-md">
           <h2 className="text-lg font-bold mb-2 text-red-600">Contact Information</h2>
-          <p><strong>Address:</strong> 123 First Marriage.com Street, Cityname, Country</p>
-          <p><strong>Phone:</strong> +1 (294) 984-784</p>
-          <p><strong>Email:</strong> support@firstmarriage.com</p>
+          <p><strong>Address:</strong> BMC Bhawani Mall, Saheed Nagar Bhubaneswar, Odisha-751007</p>
+          <p><strong>Phone:</strong> +91-9040170727</p>
+          <p><strong>Email:</strong> support@firstmarriage.online</p>
           <p><strong>Working Hours:</strong> Mon-Fri: 9 AM - 6 PM</p>
         </div>
       </div>

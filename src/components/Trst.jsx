@@ -13,7 +13,7 @@ const Trst = () => {
       {/* Logo Image */}
       <div className="flex justify-center mb-4">
         <img
-          src="/image/l1.png"
+          src="/image/l2.png"
           alt="firstmarriage Logo"
           className="w-24 h-24 object-contain"
         />
@@ -21,13 +21,13 @@ const Trst = () => {
 
       {/* Title */}
       <h1 className="text-2xl md:text-3xl font-semibold text-[#ff5a60] mb-4">
-        <span className='text-black '>First</span> Marriage.com <span className='text-blue-900'>-Trusted by over 35 Million Members</span>
+        <span className='text-black '>First</span> Marriage <span className='text-blue-900'>-Trusted by over 35 Million Members</span>
       </h1>
 
       {/* Description */}
       <p className="max-w-3xl mx-auto text-gray-600 leading-7 mb-2">
-        First Marriage.com is India’s trusted destination for meaningful matrimonial connections, created with a heartfelt mission — to bring people together in the journey of lifelong companionship.
-        Launched with the vision to simplify the search for a life partner, First Marriage.com offers a modern and secure platform that blends tradition with technology.
+        First Marriage is India’s trusted destination for meaningful matrimonial connections, created with a heartfelt mission — to bring people together in the journey of lifelong companionship.
+        Launched with the vision to simplify the search for a life partner, First Marriage offers a modern and secure platform that blends tradition with technology.
         Since its inception, it has helped thousands find their perfect match by transforming how Indian brides and grooms connect, engage, and build lasting relationships.
       </p>
 

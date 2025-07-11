@@ -32,10 +32,10 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2 -translate-y-4 -translate-x-4">
             <Link to="/">
-              <img src="/image/l1.png" alt="Logo" className="h-21 w-21" />
+              <img src="/image/l2.png" alt="Logo" className="h-21 w-21" />
             </Link>
             <span className=" -translate-x-4 font-bold text-[#0a0a0a]">First</span>
-            <span className=" -translate-x-5 font-bold text-red-700">Marriage.Com</span>
+            <span className=" -translate-x-5 font-bold text-red-700">Marriage</span>
           </div>
 
           {/* Desktop Links */}

@@ -32,7 +32,7 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-3">Help</h3>
           <ul className="space-y-2">
             <li><Link to="/contact">Contact us</Link></li> {/* Updated this line */}
-            <li><a href="#">First Marriage.com</a></li>
+            <li><a href="#">First Marriage</a></li>
           </ul>
         </div>
         
@@ -96,7 +96,7 @@ const Footer = () => {
       <div className="bg-gray-500 py-4 px-6 text-sm">
         <div className="max-w-7xl mx-auto flex justify-center items-center">
           <p className="text-center">
-            Copyright@2025, <span className='text-black font-bold'>First</span> <span className='text-red-900 font-bold'>Marriage.com </span>All rights reserved
+            Copyright@2025, <span className='text-black font-bold'>First</span> <span className='text-red-900 font-bold'>Marriage </span>All rights reserved
           </p>
         </div>
       </div>
