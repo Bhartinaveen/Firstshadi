@@ -43,7 +43,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
             <Link to="/mymatch">My Matches</Link>
-             <Link to="/mymatch">My Profile</Link>
+             <Link to="/myprofile">My Profile</Link>
             <Link to="/contact">Contact Us</Link>
             <Link to="/signin" className="font-semibold">Sign In</Link>
             <a
