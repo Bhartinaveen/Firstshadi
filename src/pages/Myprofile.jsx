@@ -48,9 +48,8 @@ const Myprofile = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
         <div className="bg-white p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-xl font-semibold text-red-800">No Profile Found</h2>
+          <h2 className="text-lg font-semibold text-red-800">No Profile Found</h2>
         </div>
-        {/* <Footer /> */}
       </div>
     );
   }
@@ -59,66 +58,67 @@ const Myprofile = () => {
 
   return (
     <div>
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 px-4 py-6">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        {/* Top Profile Image */}
-        {profile.uploadedImages?.length > 0 && (
-          <div className="flex justify-center mb-4">
-            <img
-              src={profile.uploadedImages[0]}
-              alt="Profile"
-              className="w-32 h-32 object-cover rounded-full border-4 border-red-400 shadow"
-            />
-          </div>
-        )}
-
-        <h1 className="text-2xl font-bold text-center text-red-800 mb-4">My Profile</h1>
-
-        {/* Additional Photos */}
-        {profile.uploadedImages?.length > 1 && (
-          <div className="flex flex-wrap gap-3 justify-center mb-4">
-            {profile.uploadedImages.slice(1).map((src, idx) => (
+      <div className="min-h-screen flex flex-col items-center bg-gray-100 px-4 py-6">
+        <div
+          className="p-4 rounded-lg shadow-lg w-full max-w-md"
+          style={{ backgroundColor: '#FBF5DE' }}
+        >
+          {/* Top Profile Image */}
+          {profile.uploadedImages?.length > 0 && (
+            <div className="flex justify-center mb-3">
               <img
-                key={idx}
-                src={src}
-                alt={`Photo ${idx + 2}`}
-                className="w-16 h-16 object-cover rounded-full border border-gray-300"
+                src={profile.uploadedImages[0]}
+                alt="Profile"
+                className="w-28 h-28 object-cover rounded-full border-4 border-red-400 shadow"
               />
-            ))}
-          </div>
-        )}
-
-        {/* Profile Details */}
-        <div className="bg-gray-50 p-4 rounded-lg shadow-inner space-y-3">
-          {rows.map(({ label, value }, idx) =>
-            value ? (
-              <div
-                key={idx}
-                className="flex justify-between items-start border-b border-dashed pb-1"
-              >
-                <span className="font-medium text-gray-700">{label}:</span>
-                <span className="text-right ml-3 text-gray-800 break-all">
-                  {String(value)}
-                </span>
-              </div>
-            ) : null
+            </div>
           )}
-        </div>
 
-        {/* Delete Button */}
-        <div className="mt-6 text-center">
-          <button
-            onClick={handleDelete}
-            className="px-6 py-2 rounded-full bg-red-600 text-white hover:bg-red-800"
-          >
-            Delete Profile
-          </button>
+          <h1 className="text-lg font-bold text-center text-red-800 mb-3">My Profile</h1>
+
+          {/* Additional Photos */}
+          {profile.uploadedImages?.length > 1 && (
+            <div className="flex flex-wrap gap-2 justify-center mb-3">
+              {profile.uploadedImages.slice(1).map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`Photo ${idx + 2}`}
+                  className="w-14 h-14 object-cover rounded-full border border-gray-300"
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Profile Details */}
+          <div className="bg-red-100 p-3 rounded-lg shadow-inner space-y-2 text-sm">
+            {rows.map(({ label, value }, idx) =>
+              value ? (
+                <div
+                  key={idx}
+                  className="flex justify-between items-start border-b border-dashed pb-1"
+                >
+                  <span className="font-medium text-gray-700">{label}:</span>
+                  <span className="text-right ml-3 text-gray-800 break-words">
+                    {String(value)}
+                  </span>
+                </div>
+              ) : null
+            )}
+          </div>
+
+          {/* Delete Button */}
+          <div className="mt-5 text-center">
+            <button
+              onClick={handleDelete}
+              className="px-5 py-2 rounded-full bg-red-600 text-white hover:bg-red-800 text-sm"
+            >
+              Delete Profile
+            </button>
+          </div>
         </div>
       </div>
-
-     
-    </div>
-     <Footer />
+      <Footer />
     </div>
   );
 };
