@@ -43,6 +43,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
             <Link to="/mymatch">My Matches</Link>
+             <Link to="/mymatch">My Profile</Link>
             <Link to="/contact">Contact Us</Link>
             <Link to="/signin" className="font-semibold">Sign In</Link>
             <a
@@ -66,7 +67,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         <div
           ref={menuRef}
-          className={`fixed top-0 right-0 h-[300px] w-2/4 sm:w-1/2 bg-[#fb9c7c] shadow-lg transform ${
+          className={`fixed top-0 right-0 h-[350px] w-2/4 sm:w-1/2 bg-[#fb9c7c] shadow-lg transform ${
             isOpen ? 'translate-x-0' : 'translate-x-full'
           } transition-transform duration-300 ease-in-out md:hidden z-50`}
         >
@@ -77,6 +78,7 @@ const Navbar = () => {
             <Link to="/" onClick={toggleMenu}>🏠 Home</Link>
             <Link to="/about" onClick={toggleMenu}>🧑‍💼 About Us</Link>
             <Link to="/mymatch" onClick={toggleMenu}>❤️ My Matches</Link>
+             <Link to="/myprofile"> 🧑‍💼 My Profile</Link>
             <Link to="/contact" onClick={toggleMenu}>📞 Contact Us</Link>
             <Link to="/signin" onClick={toggleMenu} className="font-semibold">🔐 Sign In</Link>
             <a

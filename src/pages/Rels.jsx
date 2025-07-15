@@ -1,154 +1,115 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Rels = () => {
-  const navigate = useNavigate();
+  const navigate           = useNavigate();
+  const { state: boxData } = useLocation();          // data gathered in Box
 
+  /* ---------- local state ---------- */
   const [form, setForm] = useState({
-    religion: '',
+    religion : '',
     community: '',
-    caste: '',
+    caste    : ''
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const isComplete = form.religion && form.community && form.caste;
 
-  const isFormComplete = form.religion && form.community && form.caste;
-
+  /* ---------- move forward ---------- */
   const handleContinue = () => {
-    if (isFormComplete) {
-      console.log('Form Submitted:', form);
-      navigate('/car');
-    }
+    if (!isComplete) return;
+    /* send Box + Rels details to Car */
+    navigate('/car', { state: { ...boxData, ...form } });
   };
 
-  const handleBack = () => {
-    navigate(-1);
-  };
+  /* ---------- block direct entry ---------- */
+  useEffect(() => {
+    if (!boxData?.firstName) navigate('/box');
+  }, [boxData, navigate]);
 
+  /* ---------- UI ---------- */
   const casteOptions = [
-    'Brahmin', 'Rajput', 'Kayastha', 'Yadav', 'Kurmi', 'Kushwaha', 'Teli', 'Baniya',
-    'Agarwal', 'Gupta', 'Khatri', 'Sindhi', 'Marwari', 'Maratha', 'Lingayat', 'Chettiar',
-    'Nair', 'Reddy', 'Naidu', 'Ezhava', 'SC - Scheduled Caste', 'ST - Scheduled Tribe',
-    'OBC - Other Backward Class', 'Patel', 'Jat', 'Koli', 'Meena', 'Ahir', 'Chamar',
-    'Bhoi', 'Bheel', 'Gounder', 'Gujjar', 'Kamma', 'Kapu', 'Kharwar', 'Khatik', 'Lodh',
-    'Mahajan', 'Mali', 'Maurya', 'Mochi', 'Mudaliar', 'Nadar', 'Pasi', 'Prajapati', 'Rajbhar',
-    'Ramdasia', 'Sonar', 'Sutar', 'Thakur', 'Tiwari', 'Tyagi', 'Vanniyar', 'Vishwakarma',
-    'Yadav (Ahir)', 'Other'
+    'Brahmin','Rajput','Yadav','SC - Scheduled Caste',
+    'OBC - Other Backward Class','Other'
   ];
 
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 px-4 py-6">
-        <img
-          src="./image/s27.jpg"
-          alt="Banner"
-          className="w-85 h-70 object-cover rounded-md mb-4 shadow-lg"
-        />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <img
+        src="/image/s27.jpg"
+        alt="Banner"
+        className="w-85 h-70 object-cover rounded-md shadow-lg mb-4"
+      />
 
-        <div className="bg-white shadow-lg p-6 sm:p-8 rounded-xl w-full max-w-md relative">
-          {/* Religion */}
-          <div className="mb-4">
-            <label className="block font-semibold mb-1 text-sm sm:text-base text-red-800">Religion</label>
-            <select
-              name="religion"
-              value={form.religion}
-              onChange={handleChange}
-              className="w-full border border-yellow-600 rounded-md px-4 py-2 text-sm sm:text-base"
-            >
-              <option value="">Select</option>
-              <option>Hindu</option>
-              <option>Muslim</option>
-              <option>Christian</option>
-              <option>Sikh</option>
-              <option>Buddhist</option>
-              <option>Jewish</option>
-              <option>Parsi</option>
-            </select>
-          </div>
+      <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
+        {/* Religion */}
+        <label className="block font-semibold text-red-800 mb-1">Religion</label>
+        <select
+          name="religion"
+          value={form.religion}
+          onChange={(e) => setForm({ ...form, religion: e.target.value })}
+          className="w-full mb-4 border border-yellow-600 p-2 rounded"
+        >
+          <option value="">Select</option>
+          <option>Hindu</option>
+          <option>Muslim</option>
+          <option>Christian</option>
+          <option>Sikh</option>
+          <option>Other</option>
+        </select>
 
-          {/* Community */}
-          <div className="mb-4">
-            <label className="block font-semibold mb-1 text-sm sm:text-base text-red-800">Community</label>
-            <select
-              name="community"
-              value={form.community}
-              onChange={handleChange}
-              className="w-full border border-yellow-600 rounded-md px-4 py-2 text-sm sm:text-base"
-            >
-              <option value="">Select</option>
-              
-                <option>Hindu</option>
-               
-                <option>Bengali</option>
-                <option>Marathi</option>
-                <option>Punjabi</option>
-                <option>Assamese</option>
-                <option>Tamil</option>
-                <option>Gujarati</option>
-                <option>Telugu</option>
-                <option>Kannada</option>
-                <option>Kashmiri</option>
-                <option>Haryanavi</option>
-                <option>Himachali/pahari</option>
-                {/* <option>kanauji</option> */}
-                <option>Ladakhi</option>
-                <option>Magahi</option>
-                <option>Maithili</option>
-                <option>Malayalam</option>
-                <option>Manipuri</option>
-                {/* <option>Miji</option> */}
-                <option>Rajasthani</option>
-                <option>Sanskrit</option>
-                <option>Santhali</option>
-                <option>Urdu</option>
-                <option>Bhojpuri</option>
-                <option>Odia</option>
-                <option>Arunachali</option>
-                <option>Other</option>
-            </select>
-          </div>
+        {/* Community */}
+        <label className="block font-semibold text-red-800 mb-1">Community</label>
+        <select
+          name="community"
+          value={form.community}
+          onChange={(e) => setForm({ ...form, community: e.target.value })}
+          className="w-full mb-4 border border-yellow-600 p-2 rounded"
+        >
+          <option value="">Select</option>
+          <option>Hindi</option>
+          <option>Bengali</option>
+          <option>Punjabi</option>
+          <option>Marathi</option>
+          <option>Other</option>
+        </select>
 
-          {/* Caste (replacing Country) */}
-          <div className="mb-6">
-            <label className="block font-semibold mb-1 text-sm sm:text-base text-red-800">Caste</label>
-            <select
-              name="caste"
-              value={form.caste}
-              onChange={handleChange}
-              className="w-full border border-yellow-600 rounded-md px-4 py-2 text-sm sm:text-base"
-            >
-              <option value="">Select Caste</option>
-              {casteOptions.map((caste) => (
-                <option key={caste} value={caste}>{caste}</option>
-              ))}
-            </select>
-          </div>
+        {/* Caste */}
+        <label className="block font-semibold text-red-800 mb-1">Caste</label>
+        <select
+          name="caste"
+          value={form.caste}
+          onChange={(e) => setForm({ ...form, caste: e.target.value })}
+          className="w-full mb-6 border border-yellow-600 p-2 rounded"
+        >
+          <option value="">Select Caste</option>
+          {casteOptions.map((c) => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
 
-          {/* Buttons Row */}
-          <div className="flex gap-4">
-            <button
-              onClick={handleBack}
-              className="w-1/2 py-2 rounded-full bg-gray-600 text-white font-semibold text-sm sm:text-base hover:bg-gray-800 transition"
-            >
-              Back
-            </button>
-            <button
-              onClick={handleContinue}
-              disabled={!isFormComplete}
-              className={`w-1/2 py-2 rounded-full text-white font-semibold text-sm sm:text-base transition ${
-                isFormComplete
-                  ? 'bg-gradient-to-r from-red-700 to-red-900 hover:opacity-90'
-                  : 'bg-red-300 cursor-not-allowed opacity-50'
-              }`}
-            >
-              Continue
-            </button>
-          </div>
+        {/* Buttons */}
+        <div className="flex gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="w-1/2 bg-gray-600 text-white py-2 rounded-full"
+          >
+            Back
+          </button>
+          <button
+            onClick={handleContinue}
+            disabled={!isComplete}
+            className={`w-1/2 py-2 rounded-full text-white ${
+              isComplete
+                ? 'bg-red-700 hover:bg-red-900'
+                : 'bg-red-400 cursor-not-allowed opacity-50'
+            }`}
+          >
+            Continue
+          </button>
         </div>
       </div>
+
       <Footer />
     </div>
   );
