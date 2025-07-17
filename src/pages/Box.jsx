@@ -24,6 +24,7 @@ const Box = () => {
   };
 
   return (
+    <div>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
       <img
         src="./image/s18.jpg"
@@ -97,6 +98,9 @@ const Box = () => {
           </button>
         </div>
       </div>
+
+     
+    </div>
 
       <Footer />
     </div>
