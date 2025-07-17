@@ -226,7 +226,7 @@ const Myprofile = () => {
                 </button>
                 <button
                   onClick={handleSaveToConnect}
-                  className="px-5 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-800 text-sm"
+                  className="px-5 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-800 text-sm translate-y-1"
                 >
                   Save to Connect
                 </button>
