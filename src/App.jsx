@@ -28,6 +28,7 @@ import Filt from './pages/Filt'
 import Preview from'./pages/Preview'
 import Paym from'./pages/Paym'
 import Myprofile from './pages/Myprofile'
+import Ncon from './pages/Ncon'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -80,6 +81,7 @@ function App() {
                    <Route path="/preview" element={<Preview />} />
                    <Route path="/paym" element={<Paym />} />
                       <Route path="/myprofile" element={<Myprofile />} />
+                       <Route path="/ncon" element={<Ncon />} />
                    
                    
                

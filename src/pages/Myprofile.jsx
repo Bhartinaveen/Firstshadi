@@ -1,8 +1,8 @@
-// src/pages/Myprofile.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
+/* ─── helpers ─── */
 const prettify = (str) =>
   str
     .replace(/([A-Z])/g, ' $1')
@@ -11,12 +11,17 @@ const prettify = (str) =>
 
 const flatten = (data, path = '') => {
   const rows = [];
-  if (data == null || ['string', 'number', 'boolean'].includes(typeof data)) {
+  if (
+    data == null ||
+    ['string', 'number', 'boolean'].includes(typeof data)
+  ) {
     rows.push({ label: prettify(path.trim()), value: data });
     return rows;
   }
   if (Array.isArray(data)) {
-    data.forEach((item, i) => rows.push(...flatten(item, `${path} ${i + 1}`)));
+    data.forEach((item, i) =>
+      rows.push(...flatten(item, `${path} ${i + 1}`))
+    );
     return rows;
   }
   Object.entries(data).forEach(([k, v]) =>
@@ -25,6 +30,7 @@ const flatten = (data, path = '') => {
   return rows;
 };
 
+/* ─── component ─── */
 const Myprofile = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -33,28 +39,47 @@ const Myprofile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
 
+  /* load once */
   useEffect(() => {
     const stored = localStorage.getItem('myProfile');
     if (stored) {
-      const parsedProfile = JSON.parse(stored);
-      setProfile(parsedProfile);
-      setEditedProfile(parsedProfile);
+      const parsed = JSON.parse(stored);
+      setProfile(parsed);
+      setEditedProfile(parsed);
     }
   }, []);
 
+  /* ─── handlers ─── */
+  /* delete profile AND its copy in savedConnections */
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete your profile?")) {
-      localStorage.removeItem('myProfile');
-      navigate('/');
-    }
+    if (
+      !window.confirm('Are you sure you want to delete your profile?')
+    )
+      return;
+
+    /* A. remove main profile key */
+    localStorage.removeItem('myProfile');
+
+    /* B. also remove from savedConnections */
+    const saved = JSON.parse(
+      localStorage.getItem('savedConnections') || '[]'
+    );
+    const filtered = saved.filter(
+      (p) => JSON.stringify(p) !== JSON.stringify(profile)
+    );
+    localStorage.setItem('savedConnections', JSON.stringify(filtered));
+
+    navigate('/');
   };
 
   const handleEdit = () => setIsEditing(true);
+
   const handleSave = () => {
     localStorage.setItem('myProfile', JSON.stringify(editedProfile));
     setProfile(editedProfile);
     setIsEditing(false);
   };
+
   const handleCancel = () => {
     setEditedProfile(profile);
     setIsEditing(false);
@@ -62,7 +87,7 @@ const Myprofile = () => {
 
   const handleChange = (label, value) => {
     const updated = { ...editedProfile };
-    const keys = label.split(' ').map(k => k.toLowerCase());
+    const keys = label.split(' ').map((k) => k.toLowerCase());
     let current = updated;
     for (let i = 0; i < keys.length - 1; i++) {
       if (!current[keys[i]]) current[keys[i]] = {};
@@ -72,25 +97,19 @@ const Myprofile = () => {
     setEditedProfile(updated);
   };
 
+  /* avatar */
   const handleImageClick = () => {
     if (isEditing) fileInputRef.current.click();
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onloadend = () => {
-      const newImage = reader.result;
-      const updatedImages = [...(editedProfile.uploadedImages || [])];
-      updatedImages[0] = newImage;
-
-      const updated = {
-        ...editedProfile,
-        uploadedImages: updatedImages,
-      };
-
+      const newImg = reader.result;
+      const imgs = [...(editedProfile.uploadedImages || [])];
+      imgs[0] = newImg;
+      const updated = { ...editedProfile, uploadedImages: imgs };
       setEditedProfile(updated);
       if (!isEditing) {
         setProfile(updated);
@@ -100,26 +119,33 @@ const Myprofile = () => {
     reader.readAsDataURL(file);
   };
 
+  /* Save to Connect */
   const handleSaveToConnect = () => {
-    const saved = JSON.parse(localStorage.getItem('savedConnections') || '[]');
-    const isAlreadySaved = saved.some(
+    const saved = JSON.parse(
+      localStorage.getItem('savedConnections') || '[]'
+    );
+    const exists = saved.some(
       (p) => JSON.stringify(p) === JSON.stringify(profile)
     );
 
-    if (isAlreadySaved) {
+    if (exists) {
       alert('Profile already saved to connect.');
     } else {
       saved.push(profile);
       localStorage.setItem('savedConnections', JSON.stringify(saved));
       alert('Profile saved to connect successfully.');
     }
+    navigate('/connections'); // jump to list
   };
 
+  /* early exit if nothing to show */
   if (!profile) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
         <div className="bg-white p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-lg font-semibold text-red-800">No Profile Found</h2>
+          <h2 className="text-lg font-semibold text-red-800">
+            No Profile Found
+          </h2>
         </div>
       </div>
     );
@@ -128,19 +154,25 @@ const Myprofile = () => {
   const displayProfile = isEditing ? editedProfile : profile;
   const rows = flatten({ ...displayProfile, uploadedImages: undefined });
 
+  /* ─── UI ─── */
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center bg-gray-100 px-4 py-6">
-        <div className="p-4 rounded-lg shadow-lg w-full max-w-md" style={{ backgroundColor: '#FBF5DE' }}>
-          
-          {/* 👤 Profile Image Section */}
+        <div
+          className="p-4 rounded-lg shadow-lg w-full max-w-md"
+          style={{ backgroundColor: '#FBF5DE' }}
+        >
+          {/* avatar */}
           <div className="flex justify-center mb-3 relative">
             <img
-              src={displayProfile.uploadedImages?.[0] || '/default-avatar.png'}
+              src={
+                displayProfile.uploadedImages?.[0] ||
+                '/default-avatar.png'
+              }
               alt="Profile"
               className="w-28 h-28 object-cover rounded-full border-4 border-red-400 shadow cursor-pointer"
               onClick={handleImageClick}
-              title={isEditing ? "Click to change profile image" : ""}
+              title={isEditing ? 'Click to change profile image' : ''}
             />
             <input
               ref={fileInputRef}
@@ -151,9 +183,11 @@ const Myprofile = () => {
             />
           </div>
 
-          <h1 className="text-lg font-bold text-center text-red-800 mb-3">My Profile</h1>
+          <h1 className="text-lg font-bold text-center text-red-800 mb-3">
+            My Profile
+          </h1>
 
-          {/* Additional Photos */}
+          {/* extra photos */}
           {displayProfile.uploadedImages?.length > 1 && (
             <div className="flex flex-wrap gap-2 justify-center mb-3">
               {displayProfile.uploadedImages.slice(1).map((src, idx) => (
@@ -167,7 +201,7 @@ const Myprofile = () => {
             </div>
           )}
 
-          {/* Profile Details */}
+          {/* details */}
           <div className="bg-red-100 p-3 rounded-lg shadow-inner space-y-2 text-sm">
             {rows.map(({ label, value }, idx) =>
               value ? (
@@ -175,12 +209,16 @@ const Myprofile = () => {
                   key={idx}
                   className="flex justify-between items-start border-b border-dashed pb-1"
                 >
-                  <span className="font-medium text-gray-700">{label}:</span>
+                  <span className="font-medium text-gray-700">
+                    {label}:
+                  </span>
                   {isEditing ? (
                     <input
                       type="text"
                       value={String(value)}
-                      onChange={(e) => handleChange(label, e.target.value)}
+                      onChange={(e) =>
+                        handleChange(label, e.target.value)
+                      }
                       className="ml-3 p-1 border rounded text-gray-800 w-1/2"
                     />
                   ) : (
@@ -193,7 +231,7 @@ const Myprofile = () => {
             )}
           </div>
 
-          {/* Action Buttons */}
+          {/* buttons */}
           <div className="mt-5 text-center space-x-3">
             {isEditing ? (
               <>
