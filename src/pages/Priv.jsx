@@ -121,7 +121,7 @@ const PrivacyPolicy = () => {
             <div className="bg-gray-50 p-5 rounded-lg border border-gray-200">
               <h2 className="text-1xl font-semibold text-blue-900 mb-1">9. Contact Us</h2>
               <p className="text-gray-900">
-                If you have questions about this Privacy Policy or your personal data, please contact our Data Protection Officer at <span className="text-indigo-600">privacy@firstmarriage.com</span>.
+                If you have questions about this Privacy Policy or your personal data, please contact our Data Protection Officer at <span className="text-indigo-600">privacy@firstmarriage.online</span>.
               </p>
             </div>
           </div>
