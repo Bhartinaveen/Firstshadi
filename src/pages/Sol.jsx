@@ -90,6 +90,15 @@ const userData = [
   },
 ];
 
+const casteOptions = [
+  "Brahmin", "Rajput", "Kayastha", "Yadav", "Kurmi", "Teli", "Agarwal", "Jat",
+  "Kshatriya", "Vaishya", "Baniya", "Gupta", "Kumar", "Thakur", "Chamar", "Nai",
+  "Lohar", "Kumbhar", "Bania", "Bhumihar", "Sahu", "Mali", "Kahar", "Vishwakarma",
+  "Soni", "Kushwaha", "Sonar", "Bairagi", "SC", "ST", "OBC", "General", "Muslim",
+  "Ansari", "Sheikh", "Pathan", "Syed", "Qureshi", "Khan", "Christian", "Sikh",
+  "Other"
+];
+
 const Sol = () => {
   const { state } = useLocation();
   const [requestedUsers, setRequestedUsers] = useState([]);
@@ -140,8 +149,6 @@ const Sol = () => {
     );
   });
 
-  const uniqueCastes = [...new Set(userData.map((u) => u.caste))];
-
   return (
     <div>
       <div className="min-h-screen bg-[#f0ffe0] px-4 py-8 relative">
@@ -164,7 +171,7 @@ const Sol = () => {
               className="border border-gray-400 rounded px-3 py-1"
             >
               <option value="">All Castes</option>
-              {uniqueCastes.map((caste, i) => (
+              {casteOptions.map((caste, i) => (
                 <option key={i} value={caste}>{caste}</option>
               ))}
             </select>
