@@ -1,3 +1,4 @@
+// Myprofile.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -30,7 +31,6 @@ const flatten = (data, path = '') => {
   return rows;
 };
 
-/* ─── component ─── */
 const Myprofile = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -39,7 +39,6 @@ const Myprofile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
 
-  /* load once */
   useEffect(() => {
     const stored = localStorage.getItem('myProfile');
     if (stored) {
@@ -49,24 +48,13 @@ const Myprofile = () => {
     }
   }, []);
 
-  /* ─── handlers ─── */
-  /* delete profile AND its copy in savedConnections */
   const handleDelete = () => {
-    if (
-      !window.confirm('Are you sure you want to delete your profile?')
-    )
-      return;
+    if (!window.confirm('Are you sure you want to delete your profile?')) return;
 
-    /* A. remove main profile key */
     localStorage.removeItem('myProfile');
 
-    /* B. also remove from savedConnections */
-    const saved = JSON.parse(
-      localStorage.getItem('savedConnections') || '[]'
-    );
-    const filtered = saved.filter(
-      (p) => JSON.stringify(p) !== JSON.stringify(profile)
-    );
+    const saved = JSON.parse(localStorage.getItem('savedConnections') || '[]');
+    const filtered = saved.filter(p => JSON.stringify(p) !== JSON.stringify(profile));
     localStorage.setItem('savedConnections', JSON.stringify(filtered));
 
     navigate('/');
@@ -97,10 +85,10 @@ const Myprofile = () => {
     setEditedProfile(updated);
   };
 
-  /* avatar */
   const handleImageClick = () => {
     if (isEditing) fileInputRef.current.click();
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -119,14 +107,9 @@ const Myprofile = () => {
     reader.readAsDataURL(file);
   };
 
-  /* Save to Connect */
   const handleSaveToConnect = () => {
-    const saved = JSON.parse(
-      localStorage.getItem('savedConnections') || '[]'
-    );
-    const exists = saved.some(
-      (p) => JSON.stringify(p) === JSON.stringify(profile)
-    );
+    const saved = JSON.parse(localStorage.getItem('savedConnections') || '[]');
+    const exists = saved.some(p => JSON.stringify(p) === JSON.stringify(profile));
 
     if (exists) {
       alert('Profile already saved to connect.');
@@ -135,10 +118,11 @@ const Myprofile = () => {
       localStorage.setItem('savedConnections', JSON.stringify(saved));
       alert('Profile saved to connect successfully.');
     }
-    navigate('/connections'); // jump to list
+
+    window.dispatchEvent(new Event('connections-updated')); // ✅ Notify Ncon
+    navigate('/connections');
   };
 
-  /* early exit if nothing to show */
   if (!profile) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
@@ -154,21 +138,13 @@ const Myprofile = () => {
   const displayProfile = isEditing ? editedProfile : profile;
   const rows = flatten({ ...displayProfile, uploadedImages: undefined });
 
-  /* ─── UI ─── */
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center bg-gray-100 px-4 py-6">
-        <div
-          className="p-4 rounded-lg shadow-lg w-full max-w-md"
-          style={{ backgroundColor: '#FBF5DE' }}
-        >
-          {/* avatar */}
+        <div className="p-4 rounded-lg shadow-lg w-full max-w-md" style={{ backgroundColor: '#FBF5DE' }}>
           <div className="flex justify-center mb-3 relative">
             <img
-              src={
-                displayProfile.uploadedImages?.[0] ||
-                '/default-avatar.png'
-              }
+              src={displayProfile.uploadedImages?.[0] || '/default-avatar.png'}
               alt="Profile"
               className="w-28 h-28 object-cover rounded-full border-4 border-red-400 shadow cursor-pointer"
               onClick={handleImageClick}
@@ -187,7 +163,6 @@ const Myprofile = () => {
             My Profile
           </h1>
 
-          {/* extra photos */}
           {displayProfile.uploadedImages?.length > 1 && (
             <div className="flex flex-wrap gap-2 justify-center mb-3">
               {displayProfile.uploadedImages.slice(1).map((src, idx) => (
@@ -201,7 +176,6 @@ const Myprofile = () => {
             </div>
           )}
 
-          {/* details */}
           <div className="bg-red-100 p-3 rounded-lg shadow-inner space-y-2 text-sm">
             {rows.map(({ label, value }, idx) =>
               value ? (
@@ -216,9 +190,7 @@ const Myprofile = () => {
                     <input
                       type="text"
                       value={String(value)}
-                      onChange={(e) =>
-                        handleChange(label, e.target.value)
-                      }
+                      onChange={(e) => handleChange(label, e.target.value)}
                       className="ml-3 p-1 border rounded text-gray-800 w-1/2"
                     />
                   ) : (
@@ -231,43 +203,17 @@ const Myprofile = () => {
             )}
           </div>
 
-          {/* buttons */}
           <div className="mt-5 text-center space-x-3">
             {isEditing ? (
               <>
-                <button
-                  onClick={handleSave}
-                  className="px-5 py-2 rounded-full bg-green-600 text-white hover:bg-green-800 text-sm"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={handleCancel}
-                  className="px-5 py-2 rounded-full bg-gray-600 text-white hover:bg-gray-800 text-sm"
-                >
-                  Cancel
-                </button>
+                <button onClick={handleSave} className="px-5 py-2 rounded-full bg-green-600 text-white hover:bg-green-800 text-sm">Save</button>
+                <button onClick={handleCancel} className="px-5 py-2 rounded-full bg-gray-600 text-white hover:bg-gray-800 text-sm">Cancel</button>
               </>
             ) : (
               <>
-                <button
-                  onClick={handleEdit}
-                  className="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-800 text-sm"
-                >
-                  Edit Profile
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="px-5 py-2 rounded-full bg-red-600 text-white hover:bg-red-800 text-sm"
-                >
-                  Delete Profile
-                </button>
-                <button
-                  onClick={handleSaveToConnect}
-                  className="px-5 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-800 text-sm translate-y-1"
-                >
-                  Save to Connect
-                </button>
+                <button onClick={handleEdit} className="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-800 text-sm">Edit Profile</button>
+                <button onClick={handleDelete} className="px-5 py-2 rounded-full bg-red-600 text-white hover:bg-red-800 text-sm">Delete Profile</button>
+                <button onClick={handleSaveToConnect} className="px-5 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-800 text-sm translate-y-1">Save to Connect</button>
               </>
             )}
           </div>
