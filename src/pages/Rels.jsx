@@ -75,7 +75,7 @@ const Rels = () => {
     'Brahmin', 'Rajput', 'Bania', 'Kayastha', 'Khatri', 'Maratha', 'Patidar', 'Reddy', 'Vellalar', 'Nair', 
     
     // OBC Castes
-    'Yadav', 'Kurmi', 'Lodh', 'Gurjar', 'Jat', 'Ahir', 'Kamma', 'Naidu', 'Vokkaliga', 'Lingayat', 
+    'Yadav', 'Kurmi', 'Lodh', 'Gurjar', 'Jat', 'Ahir', 'Kamma', 'Naidu', 'Vokkaliga', 'Lingayat', 'sonar',
     
     // SC Castes
     'Chamar', 'Dhobi', 'Valmiki', 'Pasi', 'Mahar', 'Mala', 'Madiga', 'Pulaya', 'Paraiyar', 
