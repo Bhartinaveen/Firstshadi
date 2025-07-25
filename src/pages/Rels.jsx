@@ -78,7 +78,7 @@ const Rels = () => {
     'Yadav', 'Kurmi', 'Lodh', 'Gurjar', 'Jat', 'Ahir', 'Kamma', 'Naidu', 'Vokkaliga', 'Lingayat', 'sonar',
     
     // SC Castes
-    'Chamar', 'Dhobi', 'Valmiki', 'Pasi', 'Mahar', 'Mala', 'Madiga', 'Pulaya', 'Paraiyar', 
+    'Chamar', 'Dhobi', 'Valmiki', 'Pasi', 'Mahar', 'Mala', 'Madiga', 'Pulaya', 'Paraiyar', 'Valmiki',
     
     // ST Castes
     'Gond', 'Bhil', 'Santhal', 'Munda', 'Ho', 'Khasi', 'Naga', 'Mizo', 'Bodo', 

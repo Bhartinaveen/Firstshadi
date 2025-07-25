@@ -71,6 +71,11 @@ const Car = () => {
         'Mumbai','Delhi','Bengaluru','Hyderabad','Chennai','Kolkata','Pune','Ahmedabad','Jaipur','Lucknow',
         'Surat','Kanpur','Nagpur','Indore','Bhopal','Patna','Vadodara','Ludhiana','Agra','Nashik','Faridabad',
         'Meerut','Rajkot','Varanasi','Srinagar','Amritsar','Ranchi','Guwahati','Noida','Thane'
+
+         // Odisha cities
+    ,'Bhubaneswar','Cuttack','Rourkela','Berhampur','Sambalpur','Balasore','Puri','Bhadrak','Baripada',
+    'Angul','Dhenkanal','Jharsuguda','Kendrapara','Jeypore','Rayagada','Koraput','Bargarh','Kalahandi',
+    'Jagatsinghpur','Nabarangpur','Sundargarh','Talcher','Phulbani','Kendujhar','Paradip','Malkangiri'
       ]},
     { label: 'Qualification', name: 'degree', options: [
         'PhD','Postgraduate','MCom','MA','MBA','MBBS','CA','Journalism','LLB','LLM','BTech','BSc','BCom','BBA',
