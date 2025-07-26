@@ -29,6 +29,7 @@ import Preview from'./pages/Preview'
 import Paym from'./pages/Paym'
 import Myprofile from './pages/Myprofile'
 import Ncon from './pages/Ncon'
+import Intrect from './pages/Intrect'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -82,6 +83,7 @@ function App() {
                    <Route path="/paym" element={<Paym />} />
                       <Route path="/myprofile" element={<Myprofile />} />
                        <Route path="/ncon" element={<Ncon />} />
+                       <Route path="/int" element={<Intrect />} />
                    
                    
                

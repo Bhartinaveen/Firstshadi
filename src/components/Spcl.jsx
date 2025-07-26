@@ -24,7 +24,7 @@ const Spcl = () => {
       icon: '💬',
       title: 'Interact',
       description: 'Become a Premium Member & Start a Conversation with verified profile',
-      route: '/box',
+      route: '/int',
     },
   ];
 
