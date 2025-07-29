@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // npm install react-icons if not installed
 
 const ALL_CASTES = [
   'Brahmin', 'Rajput', 'Kayastha', 'Bania', 'Yadav', 'Kshatriya', 'Jatav',
@@ -17,60 +18,80 @@ const ALL_RELIGIONS = [
 const userData = [
   {
     name: 'Naveen',
-    email: 'bharti9@gmail.com',
+    mobile: '9876543210',
     caste: 'Brahmin',
     religion: 'Hindu',
     images: ['/image/s24.jpg']
   },
   {
     name: 'Anjali',
-    email: 'anjali@gmail.com',
+    mobile: '9123456789',
     caste: 'Kayastha',
     religion: 'Hindu',
     images: ['/image/s46.jpg']
   },
   {
     name: 'Pooja',
-    email: 'pooja@gmail.com',
+    mobile: '9988776655',
     caste: 'Yadav',
     religion: 'Hindu',
     images: ['/image/s44.jpg']
   },
   {
     name: 'Rohit',
-    email: 'rohit@gmail.com',
+    mobile: '9012345678',
     caste: 'Rajput',
     religion: 'Hindu',
     images: ['/image/s42.jpg']
   },
   {
     name: 'Vikas',
-    email: 'vikas@gmail.com',
+    mobile: '9876501234',
     caste: 'Kurmi',
     religion: 'Hindu',
     images: ['/image/s39.jpg']
   },
   {
     name: 'Aditi',
-    email: 'aditi@gmail.com',
+    mobile: '9234567890',
     caste: 'Teli',
     religion: 'Hindu',
     images: ['/image/s35.jpg']
   }
 ];
 
+// Helper to dedupe array by key
 const dedupe = (arr, key = 'email') => {
   const m = new Map();
-  arr.forEach(i => m.set(i[key], i));
+  arr.forEach(i => {
+    if (i[key]) m.set(i[key], i);
+  });
   return [...m.values()];
 };
 
-const ProfileCard = ({ profile, hoveredEmail, setHoveredEmail, isRequested, handleRequest, onImageClick }) => {
+const ProfileCard = ({
+  profile,
+  hoveredEmail,
+  setHoveredEmail,
+  isRequested,
+  handleRequest,
+  onImageClick
+}) => {
+  const [showMobile, setShowMobile] = useState(false);
+
+  const maskMobile = (mobile = '') => {
+    if (mobile.length < 5) return mobile;
+    const first2 = mobile.slice(0, 2);
+    const last3 = mobile.slice(-3);
+    const masked = 'X'.repeat(mobile.length - 5);
+    return `${first2}${masked}${last3}`;
+  };
+
   const btnText = isRequested
     ? 'Request Sent'
     : hoveredEmail === profile.email
-      ? 'Send Request'
-      : 'Connect';
+    ? 'Send Request'
+    : 'Connect';
 
   const btnClasses = isRequested
     ? 'bg-gray-200 text-gray-600 cursor-not-allowed'
@@ -86,7 +107,22 @@ const ProfileCard = ({ profile, hoveredEmail, setHoveredEmail, isRequested, hand
       />
       <div className="text-sm space-y-1 mb-4">
         <p><strong>Name:</strong> {profile.name || profile.fullName}</p>
-        <p><strong>Email:</strong> {profile.email}</p>
+
+        {/* Mobile number with toggle */}
+        <p className="flex items-center justify-center gap-2">
+          <strong>Mobile:</strong> 
+          <span className="font-mono">{showMobile ? profile.mobile : maskMobile(profile.mobile)}</span>
+          <button 
+            type="button" 
+            onClick={() => setShowMobile(!showMobile)} 
+            aria-label={showMobile ? "Hide mobile number" : "Show mobile number"}
+            className="focus:outline-none text-blue-600"
+            title={showMobile ? "Hide mobile number" : "Show mobile number"}
+          >
+            {showMobile ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </p>
+
         <p><strong>Caste:</strong> {profile.caste}</p>
         <p><strong>Religion:</strong> {profile.religion}</p>
       </div>
@@ -107,7 +143,10 @@ const ImageModal = ({ imageUrl, onClose }) => {
   if (!imageUrl) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" onClick={onClose}>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+      onClick={onClose}
+    >
       <img
         src={imageUrl}
         alt="Full view"
@@ -117,6 +156,7 @@ const ImageModal = ({ imageUrl, onClose }) => {
       <button
         onClick={onClose}
         className="absolute top-4 right-4 text-white text-3xl font-bold"
+        aria-label="Close image modal"
       >
         &times;
       </button>
@@ -139,10 +179,11 @@ const Ncon = () => {
     setRequestedEmails(req.map(u => u.email));
   }, []);
 
-  const handleRequest = profile => {
+  const handleRequest = (profile) => {
     const user = {
       name: profile.name || profile.fullName || '',
       email: profile.email,
+      mobile: profile.mobile || '',
       image: profile.uploadedImages?.[0] || profile.images?.[0] || '/default-avatar.png',
       caste: profile.caste,
       religion: profile.religion
@@ -167,6 +208,7 @@ const Ncon = () => {
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow bg-[#eaffee] px-4 py-6">
         <h1 className="text-3xl font-bold text-center text-red-800 mb-8">Connections</h1>
+
         {connections.length > 0 && (
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-10 max-w-4xl mx-auto">
             <input
@@ -176,30 +218,55 @@ const Ncon = () => {
               onChange={e => setSearchText(e.target.value)}
               className="flex-1 p-2 rounded border border-gray-400"
             />
-            <select value={selectedCaste} onChange={e => setSelectedCaste(e.target.value)} className="p-2 rounded border border-gray-400">
+            <select
+              value={selectedCaste}
+              onChange={e => setSelectedCaste(e.target.value)}
+              className="p-2 rounded border border-gray-400"
+            >
               <option value="">All castes</option>
-              {ALL_CASTES.map(cs => <option key={cs} value={cs}>{cs}</option>)}
+              {ALL_CASTES.map(cs => (
+                <option key={cs} value={cs}>{cs}</option>
+              ))}
             </select>
-            <select value={selectedReligion} onChange={e => setSelectedReligion(e.target.value)} className="p-2 rounded border border-gray-400">
+            <select
+              value={selectedReligion}
+              onChange={e => setSelectedReligion(e.target.value)}
+              className="p-2 rounded border border-gray-400"
+            >
               <option value="">All religions</option>
-              {ALL_RELIGIONS.map(r => <option key={r} value={r}>{r}</option>)}
+              {ALL_RELIGIONS.map(r => (
+                <option key={r} value={r}>{r}</option>
+              ))}
             </select>
             {(searchText || selectedCaste || selectedReligion) && (
-              <button onClick={() => {
-                setSearchText('');
-                setSelectedCaste('');
-                setSelectedReligion('');
-              }} className="px-3 py-2 bg-gray-300 rounded hover:bg-gray-400 text-sm">Clear</button>
+              <button
+                onClick={() => {
+                  setSearchText('');
+                  setSelectedCaste('');
+                  setSelectedReligion('');
+                }}
+                className="px-3 py-2 bg-gray-300 rounded hover:bg-gray-400 text-sm"
+              >
+                Clear
+              </button>
             )}
           </div>
         )}
+
         <h2 className="text-xl font-semibold text-center text-gray-700 mb-4">Saved Connections</h2>
-        {connections.length === 0 && <p className="text-center text-gray-600 mb-8">No profiles saved yet.</p>}
-        {connections.length > 0 && filteredConnections.length === 0 && <p className="text-center text-gray-600 mb-8">No profiles match your filters.</p>}
+
+        {connections.length === 0 && (
+          <p className="text-center text-gray-600 mb-8">No profiles saved yet.</p>
+        )}
+
+        {connections.length > 0 && filteredConnections.length === 0 && (
+          <p className="text-center text-gray-600 mb-8">No profiles match your filters.</p>
+        )}
+
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-2 mb-12">
           {filteredConnections.map(profile => (
             <ProfileCard
-              key={profile.email}
+              key={profile.email || profile.mobile}  // fallback key if email missing
               profile={profile}
               hoveredEmail={hoveredEmail}
               setHoveredEmail={setHoveredEmail}
@@ -209,6 +276,7 @@ const Ncon = () => {
             />
           ))}
         </div>
+
         <h2 className="text-xl font-semibold text-center text-gray-700 mb-6">Sample Users</h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto px-4">
           {userData.map(u => (
@@ -224,6 +292,7 @@ const Ncon = () => {
           ))}
         </div>
       </div>
+
       <Footer />
       <ImageModal imageUrl={modalImage} onClose={() => setModalImage(null)} />
     </div>

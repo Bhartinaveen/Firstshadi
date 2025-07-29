@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Car = () => {
-  const navigate                 = useNavigate();
-  const { state: prevState = {} } = useLocation();   // Box + Rels data
+  const navigate                   = useNavigate();
+  const { state: prevState = {} }  = useLocation();   // Box + Rels data
 
   /* ----------- local state ----------- */
   const [formData, setFormData] = useState({
@@ -23,6 +23,7 @@ const Car = () => {
     bloodGroup: '', manglik: '',
     /* more personal */
     currentAddress: '', permanentAddress: '',
+    mobileNo: '',            // <-- NEW FIELD
     dob: '', birthPlace: ''
   });
 
@@ -34,8 +35,8 @@ const Car = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handlePhotoChange = (idx, file) => {
-    const photos   = [...formData.photos];
-    photos[idx]    = file;
+    const photos = [...formData.photos];
+    photos[idx]  = file;
     setFormData({ ...formData, photos });
   };
 
@@ -53,7 +54,6 @@ const Car = () => {
       alert('Please upload at least one photo.');
       return;
     }
-    /* forward everything to Fmprof step */
     navigate('/fmprof', { state: { ...prevState, ...formData } });
   };
 
@@ -70,12 +70,11 @@ const Car = () => {
     { label: 'City living in', name: 'city', options: [
         'Mumbai','Delhi','Bengaluru','Hyderabad','Chennai','Kolkata','Pune','Ahmedabad','Jaipur','Lucknow',
         'Surat','Kanpur','Nagpur','Indore','Bhopal','Patna','Vadodara','Ludhiana','Agra','Nashik','Faridabad',
-        'Meerut','Rajkot','Varanasi','Srinagar','Amritsar','Ranchi','Guwahati','Noida','Thane'
-
-         // Odisha cities
-    ,'Bhubaneswar','Cuttack','Rourkela','Berhampur','Sambalpur','Balasore','Puri','Bhadrak','Baripada',
-    'Angul','Dhenkanal','Jharsuguda','Kendrapara','Jeypore','Rayagada','Koraput','Bargarh','Kalahandi',
-    'Jagatsinghpur','Nabarangpur','Sundargarh','Talcher','Phulbani','Kendujhar','Paradip','Malkangiri'
+        'Meerut','Rajkot','Varanasi','Srinagar','Amritsar','Ranchi','Guwahati','Noida','Thane',
+        // Odisha cities
+        'Bhubaneswar','Cuttack','Rourkela','Berhampur','Sambalpur','Balasore','Puri','Bhadrak','Baripada',
+        'Angul','Dhenkanal','Jharsuguda','Kendrapara','Jeypore','Rayagada','Koraput','Bargarh','Kalahandi',
+        'Jagatsinghpur','Nabarangpur','Sundargarh','Talcher','Phulbani','Kendujhar','Paradip','Malkangiri'
       ]},
     { label: 'Qualification', name: 'degree', options: [
         'PhD','Postgraduate','MCom','MA','MBA','MBBS','CA','Journalism','LLB','LLM','BTech','BSc','BCom','BBA',
@@ -96,7 +95,6 @@ const Car = () => {
 
   /* ----------- UI ----------- */
   return (
-    
     <div>
       <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
         {/* banner */}
@@ -146,6 +144,24 @@ const Car = () => {
                 </div>
               </div>
             ))}
+
+            {/* --- NEW Mobile No field --- */}
+            <div>
+              <label className="block text-sm font-medium text-yellow-600">
+                Mobile No <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="tel"
+                name="mobileNo"
+                value={formData.mobileNo}
+                onChange={handleInputChange}
+                required
+                pattern="[0-9]{10}"
+                maxLength={10}
+                placeholder="Enter 10-digit mobile number"
+                className="w-full mt-1 border border-yellow-600 rounded px-3 py-2"
+              />
+            </div>
 
             {/* current/permanent address, DOB, birth place */}
             {[

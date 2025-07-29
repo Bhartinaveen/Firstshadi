@@ -1,4 +1,3 @@
-// Myprofile.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -30,6 +29,7 @@ const flatten = (data, path = '') => {
   );
   return rows;
 };
+
 
 const Myprofile = () => {
   const navigate = useNavigate();
@@ -119,7 +119,8 @@ const Myprofile = () => {
       alert('Profile saved to connect successfully.');
     }
 
-    window.dispatchEvent(new Event('connections-updated')); // ✅ Notify Ncon
+    // Notify connections page for updates
+    window.dispatchEvent(new Event('connections-updated'));
     navigate('/connections');
   };
 
