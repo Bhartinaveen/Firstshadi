@@ -10,6 +10,7 @@ const Mymatch = () => {
   const [declined,  setDeclined]  = useState([]);
   const [selectedTab, setSelectedTab] = useState('request');
 
+
   /* central reader ------------------------------------------------*/
   const readBuckets = () => {
     setRequested(JSON.parse(localStorage.getItem('requestedUsers')) || []);
@@ -17,9 +18,10 @@ const Mymatch = () => {
     setDeclined (JSON.parse(localStorage.getItem('declinedUsers'))  || []);
   };
 
+
   /* mount + event listeners --------------------------------------*/
   useEffect(() => {
-    readBuckets();                                // initial load
+    readBuckets();                         // initial load
 
     window.addEventListener('connections-updated', readBuckets);
     window.addEventListener('focus', readBuckets); // refresh when tab regains focus
@@ -29,6 +31,7 @@ const Mymatch = () => {
     };
   }, []);
 
+
   /* helpers ------------------------------------------------------*/
   const save = (key, data) => localStorage.setItem(key, JSON.stringify(data));
   const uniq = (arr, key = 'email') => {
@@ -36,6 +39,7 @@ const Mymatch = () => {
     arr.forEach(i => m.set(i[key], i));
     return [...m.values()];
   };
+
 
   /* moves --------------------------------------------------------*/
   const moveToAccepted = user => {
@@ -48,6 +52,7 @@ const Mymatch = () => {
     setAccepted(acc);  save('acceptedUsers',  acc);
   };
 
+
   const moveToDeclined = user => {
     const req = requested.filter(u => u.email !== user.email);
     const acc = accepted .filter(u => u.email !== user.email);
@@ -57,6 +62,7 @@ const Mymatch = () => {
     setAccepted(acc);  save('acceptedUsers',  acc);
     setDeclined(dec);  save('declinedUsers',  dec);
   };
+
 
   /* renderer -----------------------------------------------------*/
   const renderUsers = (users, actions) => (
@@ -117,6 +123,7 @@ const Mymatch = () => {
       )}
     </div>
   );
+
 
   /* --------------------------- UI ------------------------------*/
   return (

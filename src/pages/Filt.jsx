@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // npm install react-icons if not installed
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const ALL_CASTES = [
   'Brahmin', 'Rajput', 'Kayastha', 'Bania', 'Yadav', 'Kshatriya', 'Jatav',
@@ -9,64 +9,27 @@ const ALL_CASTES = [
   'Thakur', 'Ahir', 'Koli', 'Valmiki', 'Pandit', 'Ravidasia',
   'Scheduled Caste', 'Scheduled Tribe', 'OBC', 'General'
 ];
-
 const ALL_RELIGIONS = [
   'Hindu', 'Muslim', 'Christian', 'Sikh', 'Buddhist', 'Jain', 'Parsi',
   'Jewish', 'Other'
 ];
 
 const userData = [
-  {
-    name: 'Naveen',
-    mobile: '9876543210',
-    caste: 'Brahmin',
-    religion: 'Hindu',
-    images: ['/image/s24.jpg']
-  },
-  {
-    name: 'Anjali',
-    mobile: '9123456789',
-    caste: 'Kayastha',
-    religion: 'Hindu',
-    images: ['/image/s46.jpg']
-  },
-  {
-    name: 'Pooja',
-    mobile: '9988776655',
-    caste: 'Yadav',
-    religion: 'Hindu',
-    images: ['/image/s44.jpg']
-  },
-  {
-    name: 'Rohit',
-    mobile: '9012345678',
-    caste: 'Rajput',
-    religion: 'Hindu',
-    images: ['/image/s42.jpg']
-  },
-  {
-    name: 'Vikas',
-    mobile: '9876501234',
-    caste: 'Kurmi',
-    religion: 'Hindu',
-    images: ['/image/s39.jpg']
-  },
-  {
-    name: 'Aditi',
-    mobile: '9234567890',
-    caste: 'Teli',
-    religion: 'Hindu',
-    images: ['/image/s35.jpg']
-  }
+  { name: 'Naveen', mobile: '9876543210', caste: 'Brahmin', religion: 'Hindu', images: ['/image/s24.jpg'], email: 'naveen@example.com' },
+  { name: 'Anjali', mobile: '9123456789', caste: 'Kayastha', religion: 'Hindu', images: ['/image/s46.jpg'], email: 'anjali@example.com' },
+  { name: 'Pooja', mobile: '9988776655', caste: 'Yadav', religion: 'Hindu', images: ['/image/s44.jpg'], email: 'pooja@example.com' },
+  { name: 'Rohit', mobile: '9012345678', caste: 'Rajput', religion: 'Hindu', images: ['/image/s42.jpg'], email: 'rohit@example.com' },
+  { name: 'Vikas', mobile: '9876501234', caste: 'Kurmi', religion: 'Hindu', images: ['/image/s39.jpg'], email: 'vikas@example.com' },
+  { name: 'Aditi', mobile: '9234567890', caste: 'Teli', religion: 'Hindu', images: ['/image/s35.jpg'], email: 'aditi@example.com' }
 ];
 
-// Helper to dedupe array by key
+// Helper to dedupe by email
 const dedupe = (arr, key = 'email') => {
-  const m = new Map();
-  arr.forEach(i => {
-    if (i[key]) m.set(i[key], i);
+  const map = new Map();
+  arr.forEach(item => {
+    if (item[key]) map.set(item[key], item);
   });
-  return [...m.values()];
+  return [...map.values()];
 };
 
 const ProfileCard = ({
@@ -104,17 +67,16 @@ const ProfileCard = ({
         alt="avatar"
         className="w-24 h-24 rounded-full object-cover border border-gray-300 mb-4 cursor-pointer"
         onClick={() => onImageClick(profile.uploadedImages?.[0] || profile.images?.[0])}
+        style={{ touchAction: 'manipulation' }}
       />
       <div className="text-sm space-y-1 mb-4">
         <p><strong>Name:</strong> {profile.name || profile.fullName}</p>
-
-        {/* Mobile number with toggle */}
         <p className="flex items-center justify-center gap-2">
-          <strong>Mobile:</strong> 
+          <strong>Mobile:</strong>
           <span className="font-mono">{showMobile ? profile.mobile : maskMobile(profile.mobile)}</span>
-          <button 
-            type="button" 
-            onClick={() => setShowMobile(!showMobile)} 
+          <button
+            type="button"
+            onClick={() => setShowMobile(!showMobile)}
             aria-label={showMobile ? "Hide mobile number" : "Show mobile number"}
             className="focus:outline-none text-blue-600"
             title={showMobile ? "Hide mobile number" : "Show mobile number"}
@@ -122,7 +84,6 @@ const ProfileCard = ({
             {showMobile ? <FaEyeSlash /> : <FaEye />}
           </button>
         </p>
-
         <p><strong>Caste:</strong> {profile.caste}</p>
         <p><strong>Religion:</strong> {profile.religion}</p>
       </div>
@@ -131,7 +92,8 @@ const ProfileCard = ({
         onClick={() => !isRequested && handleRequest(profile)}
         onMouseEnter={() => setHoveredEmail(profile.email)}
         onMouseLeave={() => setHoveredEmail(null)}
-        className={`${btnClasses} px-5 py-2 rounded-full text-sm font-semibold`}
+        className={`${btnClasses} px-5 py-2 rounded-full text-sm font-semibold transition-all active:scale-95`}
+        style={{ touchAction: 'manipulation' }}
       >
         {btnText}
       </button>
@@ -141,7 +103,6 @@ const ProfileCard = ({
 
 const ImageModal = ({ imageUrl, onClose }) => {
   if (!imageUrl) return null;
-
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
@@ -174,9 +135,27 @@ const Ncon = () => {
   const [modalImage, setModalImage] = useState(null);
 
   useEffect(() => {
-    setConnections(JSON.parse(localStorage.getItem('savedConnections') || '[]'));
-    const req = JSON.parse(localStorage.getItem('requestedUsers') || '[]');
-    setRequestedEmails(req.map(u => u.email));
+    // Load savedConnections, if none, save userData
+    const savedConnections = JSON.parse(localStorage.getItem('savedConnections') || 'null');
+    if (savedConnections && savedConnections.length > 0) {
+      setConnections(savedConnections);
+    } else {
+      localStorage.setItem('savedConnections', JSON.stringify(userData));
+      setConnections(userData);
+    }
+
+    // Load requested emails
+    const fetchRequested = () => {
+      const req = JSON.parse(localStorage.getItem('requestedUsers') || '[]');
+      setRequestedEmails(req.map(u => u.email));
+    };
+    fetchRequested();
+
+    // Listen to update event
+    const handleUpdate = () => fetchRequested();
+    window.addEventListener('connections-updated', handleUpdate);
+
+    return () => window.removeEventListener('connections-updated', handleUpdate);
   }, []);
 
   const handleRequest = (profile) => {
@@ -186,14 +165,17 @@ const Ncon = () => {
       mobile: profile.mobile || '',
       image: profile.uploadedImages?.[0] || profile.images?.[0] || '/default-avatar.png',
       caste: profile.caste,
-      religion: profile.religion
+      religion: profile.religion,
     };
+
     let requested = JSON.parse(localStorage.getItem('requestedUsers') || '[]');
     requested = requested.filter(u => u.email !== user.email);
     requested.push(user);
     requested = dedupe(requested);
     localStorage.setItem('requestedUsers', JSON.stringify(requested));
+
     setRequestedEmails(prev => dedupe([...prev, user.email]));
+
     window.dispatchEvent(new Event('connections-updated'));
   };
 
@@ -224,9 +206,7 @@ const Ncon = () => {
               className="p-2 rounded border border-gray-400"
             >
               <option value="">All castes</option>
-              {ALL_CASTES.map(cs => (
-                <option key={cs} value={cs}>{cs}</option>
-              ))}
+              {ALL_CASTES.map(cs => <option key={cs} value={cs}>{cs}</option>)}
             </select>
             <select
               value={selectedReligion}
@@ -234,9 +214,7 @@ const Ncon = () => {
               className="p-2 rounded border border-gray-400"
             >
               <option value="">All religions</option>
-              {ALL_RELIGIONS.map(r => (
-                <option key={r} value={r}>{r}</option>
-              ))}
+              {ALL_RELIGIONS.map(r => <option key={r} value={r}>{r}</option>)}
             </select>
             {(searchText || selectedCaste || selectedReligion) && (
               <button
@@ -254,11 +232,9 @@ const Ncon = () => {
         )}
 
         <h2 className="text-xl font-semibold text-center text-gray-700 mb-4">Saved Connections</h2>
-
         {connections.length === 0 && (
           <p className="text-center text-gray-600 mb-8">No profiles saved yet.</p>
         )}
-
         {connections.length > 0 && filteredConnections.length === 0 && (
           <p className="text-center text-gray-600 mb-8">No profiles match your filters.</p>
         )}
@@ -266,7 +242,7 @@ const Ncon = () => {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-2 mb-12">
           {filteredConnections.map(profile => (
             <ProfileCard
-              key={profile.email || profile.mobile}  // fallback key if email missing
+              key={profile.email || profile.mobile}
               profile={profile}
               hoveredEmail={hoveredEmail}
               setHoveredEmail={setHoveredEmail}
@@ -279,9 +255,9 @@ const Ncon = () => {
 
         <h2 className="text-xl font-semibold text-center text-gray-700 mb-6">Sample Users</h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto px-4">
-          {userData.map(u => (
+          {userData.map((u, i) => (
             <ProfileCard
-              key={u.email}
+              key={u.email || u.mobile || i}
               profile={u}
               hoveredEmail={hoveredEmail}
               setHoveredEmail={setHoveredEmail}
@@ -292,7 +268,6 @@ const Ncon = () => {
           ))}
         </div>
       </div>
-
       <Footer />
       <ImageModal imageUrl={modalImage} onClose={() => setModalImage(null)} />
     </div>

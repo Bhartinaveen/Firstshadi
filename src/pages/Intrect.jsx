@@ -63,6 +63,20 @@ const getBotResponse = (message) => {
   return "I'm not sure about that, but I'm happy to chat! 💬";
 };
 
+// Green chat icon SVG component
+const GreenChatIcon = ({ className = 'w-5 h-5' }) => (
+  <svg
+    className={className}
+    fill="green"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Simple chat bubble */}
+    <path d="M2 2v16l4-4h14V2H2z" />
+  </svg>
+);
+
 const Intrect = () => {
   const [chatUser, setChatUser] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
@@ -169,11 +183,18 @@ const Intrect = () => {
 
                 <div>
                   <p><strong>Name:</strong> {profile.name}</p>
-                  <p
-                    className="cursor-pointer text-pink-600 hover:underline"
-                    onClick={() => openChat(profile)}
-                  >
-                    📞 {profile.phone}
+                  <p className="flex items-center gap-2">
+                    <span>📞 {profile.phone}</span>
+                    {/* Green chat button */}
+                    <button
+                      onClick={() => openChat(profile)}
+                      aria-label={`Chat with ${profile.name}`}
+                      className="flex items-center gap-1 text-green-600 hover:text-green-800 focus:outline-none"
+                      style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0, fontWeight: '600' }}
+                    >
+                      <GreenChatIcon className="w-5 h-5" />
+                      <span>Chat</span>
+                    </button>
                   </p>
                   <p>📧 {profile.email}</p>
                 </div>
