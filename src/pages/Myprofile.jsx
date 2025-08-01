@@ -4,7 +4,10 @@ import Footer from '../components/Footer';
 
 // Format keys for display
 const prettify = (str) =>
-  str.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase()).replace('Dob', 'Date of Birth');
+  str
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (c) => c.toUpperCase())
+    .replace('Dob', 'Date of Birth');
 
 // Flatten nested object to label-value pairs for display/edit
 const flatten = (data, path = '') => {
@@ -17,7 +20,9 @@ const flatten = (data, path = '') => {
     data.forEach((item, i) => rows.push(...flatten(item, `${path} ${i + 1}`)));
     return rows;
   }
-  Object.entries(data).forEach(([k, v]) => rows.push(...flatten(v, `${path} ${prettify(k)}`)));
+  Object.entries(data).forEach(([k, v]) =>
+    rows.push(...flatten(v, `${path} ${prettify(k)}`))
+  );
   return rows;
 };
 
@@ -42,9 +47,10 @@ const Myprofile = () => {
     if (!window.confirm('Are you sure you want to delete your profile?')) return;
     localStorage.removeItem('myProfile');
     const saved = JSON.parse(localStorage.getItem('savedConnections') || '[]');
-    // Remove from savedConnections if exists
-    const filtered = saved.filter(p =>
-      (p.email && profile.email) ? p.email !== profile.email : JSON.stringify(p) !== JSON.stringify(profile)
+    const filtered = saved.filter((p) =>
+      p.email && profile?.email
+        ? p.email !== profile.email
+        : JSON.stringify(p) !== JSON.stringify(profile)
     );
     localStorage.setItem('savedConnections', JSON.stringify(filtered));
     navigate('/');
@@ -66,7 +72,10 @@ const Myprofile = () => {
   // Update nested editedProfile state by flat label
   const handleChange = (label, value) => {
     const updated = { ...editedProfile };
-    const keys = label.split(' ').map(k => k.trim().toLowerCase());
+    const keys = label
+      .split(' ')
+      .map((k) => k.trim().toLowerCase())
+      .filter((k) => k.length > 0);
     let current = updated;
     for (let i = 0; i < keys.length - 1; i++) {
       if (!current[keys[i]]) current[keys[i]] = {};
@@ -80,7 +89,7 @@ const Myprofile = () => {
     if (isEditing && fileInputRef.current) fileInputRef.current.click();
   };
 
-  const handleImageChange = e => {
+  const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
@@ -98,35 +107,27 @@ const Myprofile = () => {
     reader.readAsDataURL(file);
   };
 
-  // Save current profile into savedConnections (deduplicated by email)
+  // Save entire profile object into savedConnections (deduplicate by email if exists)
   const handleSaveToConnect = () => {
     if (!profile) return;
+
     const saved = JSON.parse(localStorage.getItem('savedConnections') || '[]');
+
+    // Check duplicate by email or full JSON string match
     const exists = profile.email
-      ? saved.some(p => p.email === profile.email)
-      : saved.some(p => JSON.stringify(p) === JSON.stringify(profile));
+      ? saved.some((p) => p.email === profile.email)
+      : saved.some((p) => JSON.stringify(p) === JSON.stringify(profile));
 
     if (exists) {
       alert('Profile already saved to connect.');
       return;
     }
 
-    // Store only minimal necessary fields for connection display
-    const minimal = {
-      ...profile,
-      email: profile.email,
-      mobile: profile.mobile,
-      name: profile.name || profile.fullName,
-      caste: profile.caste,
-      religion: profile.religion,
-      uploadedImages: profile.uploadedImages || [],
-    };
-
-    saved.push(minimal);
+    saved.push(profile);
     localStorage.setItem('savedConnections', JSON.stringify(saved));
     alert('Profile saved to connect successfully.');
-    window.dispatchEvent(new Event('connections-updated')); // Let Ncon know to refresh
-    navigate('/connections');
+    window.dispatchEvent(new Event('connections-updated'));
+    navigate('/connections'); // Navigate to connections list page
   };
 
   if (!profile) {
@@ -140,7 +141,6 @@ const Myprofile = () => {
   }
 
   const displayProfile = isEditing ? editedProfile : profile;
-  // Flatten profile excluding uploadedImages for form display
   const rows = flatten({ ...displayProfile, uploadedImages: undefined });
 
   return (
@@ -164,7 +164,9 @@ const Myprofile = () => {
           />
         </div>
 
-        <h1 className="text-lg font-bold text-center text-red-800 mb-3">My Profile</h1>
+        <h1 className="text-lg font-bold text-center text-red-800 mb-3">
+          My Profile
+        </h1>
 
         {displayProfile.uploadedImages?.length > 1 && (
           <div className="flex flex-wrap gap-2 justify-center mb-3">
@@ -182,17 +184,22 @@ const Myprofile = () => {
         <div className="bg-red-100 p-3 rounded-lg shadow-inner space-y-2 text-sm">
           {rows.map(({ label, value }, idx) =>
             value !== null && value !== undefined ? (
-              <div key={idx} className="flex justify-between items-start border-b border-dashed pb-1">
+              <div
+                key={idx}
+                className="flex justify-between items-start border-b border-dashed pb-1"
+              >
                 <span className="font-medium text-gray-700">{label}:</span>
                 {isEditing ? (
                   <input
                     type="text"
                     value={String(value)}
-                    onChange={e => handleChange(label, e.target.value)}
+                    onChange={(e) => handleChange(label, e.target.value)}
                     className="ml-3 p-1 border rounded text-gray-800 w-1/2"
                   />
                 ) : (
-                  <span className="text-right ml-3 text-gray-800 break-words">{String(value)}</span>
+                  <span className="text-right ml-3 text-gray-800 break-words">
+                    {String(value)}
+                  </span>
                 )}
               </div>
             ) : null

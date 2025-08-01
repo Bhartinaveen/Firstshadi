@@ -17,7 +17,7 @@ const Spcl = () => {
       icon: '💑',
       title: 'Connect',
       description: 'Select & Connect with Matches you like',
-      route: '/filt',
+      route: '/ncon',
     },
     {
       id: 3,

@@ -27,7 +27,7 @@ const flatten = (data, path = '') => {
   }
 
   if (Array.isArray(data)) {
-    if (data.length && isFile(data[0])) return rows;
+    if (data.length && isFile(data[0])) return rows; // skip displaying file data in list
     data.forEach((item, i) => rows.push(...flatten(item, `${path} ${i + 1}`)));
     return rows;
   }
@@ -41,39 +41,78 @@ const flatten = (data, path = '') => {
 const Preview = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [thumbs, setThumbs] = useState([]);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!state?.firstName) navigate('/box');
   }, [state, navigate]);
 
-  if (!state?.firstName) return null;
-
-  const [thumbs, setThumbs] = useState([]);
   useEffect(() => {
+    // Create blob URLs for image previews
     const files = Array.isArray(state.photos) ? state.photos.filter(Boolean) : [];
     const urls = files.map((f) => URL.createObjectURL(f));
     setThumbs(urls);
     return () => urls.forEach((u) => URL.revokeObjectURL(u));
   }, [state.photos]);
 
-  const handleConfirm = () => {
-    const fileReaders = (state.photos || []).filter(Boolean).map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result); // base64 image string
-        reader.readAsDataURL(file);
-      });
-    });
+  if (!state?.firstName) return null;
 
-    Promise.all(fileReaders).then((photoBase64List) => {
-      const finalProfile = {
-        ...state,
-        photos: [], // clear File data
-        uploadedImages: photoBase64List,
-      };
-      localStorage.setItem('myProfile', JSON.stringify(finalProfile));
-      navigate('/myprofile');
-    });
+  const handleConfirm = () => {
+    if (saving) return; // prevent double clicks
+
+    if (!window.FileReader) {
+      alert('FileReader API is not supported in your browser.');
+      return;
+    }
+
+    setSaving(true);
+
+    const fileReaders = (state.photos || [])
+      .filter(Boolean)
+      .map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => {
+              console.error('Error reading file', file.name);
+              reject(new Error('File reading error'));
+            };
+            reader.readAsDataURL(file);
+          })
+      );
+
+    Promise.all(fileReaders)
+      .then((photoBase64List) => {
+        const finalProfile = {
+          ...state,
+          photos: [], // Remove actual File objects
+          uploadedImages: photoBase64List,
+        };
+
+        try {
+          localStorage.setItem('myProfile', JSON.stringify(finalProfile));
+          console.log('Profile saved to localStorage:', finalProfile);
+          navigate('/myprofile');
+        } catch (e) {
+          if (e.name === 'QuotaExceededError') {
+            alert(
+              'Storage quota exceeded! Please remove some photos or use smaller images.'
+            );
+            console.error('QuotaExceededError:', e);
+          } else {
+            alert('Failed to save profile. Please try again.');
+            console.error(e);
+          }
+          setSaving(false);
+        }
+      })
+      .catch((error) => {
+        console.error('Error processing files:', error);
+        alert('Failed to save profile photos. Please try again.');
+        setSaving(false);
+      });
   };
 
   const rows = flatten({ ...state, photos: undefined });
@@ -113,14 +152,16 @@ const Preview = () => {
           <button
             onClick={() => navigate(-1)}
             className="w-1/2 py-2 rounded-full text-white bg-gray-600 hover:bg-gray-800"
+            disabled={saving}
           >
             Edit
           </button>
           <button
             onClick={handleConfirm}
-            className="w-1/2 py-2 rounded-full text-white bg-red-700 hover:bg-red-900"
+            className="w-1/2 py-2 rounded-full text-white bg-red-700 hover:bg-red-900 disabled:opacity-50"
+            disabled={saving}
           >
-            Save
+            {saving ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>

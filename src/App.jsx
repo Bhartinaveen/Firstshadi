@@ -24,7 +24,7 @@ import Sol from './pages/Sol'
 import Car from './pages/Car'
 import Fmprof from './pages/Fmprof'
 import Mymatch from './pages/Mymatch'
-import Filt from './pages/Filt'
+// import Filt from './pages/Filt'
 import Preview from'./pages/Preview'
 import Paym from'./pages/Paym'
 import Myprofile from './pages/Myprofile'
@@ -78,7 +78,7 @@ function App() {
                  <Route path="/car" element={<Car />} />
                   <Route path="/fmprof" element={<Fmprof />} />
                    <Route path="/mymatch" element={<Mymatch />} />
-                   <Route path="/filt" element={<Filt />} />
+                   {/* <Route path="/filt" element={<Filt />} /> */}
                    <Route path="/preview" element={<Preview />} />
                    <Route path="/paym" element={<Paym />} />
                       <Route path="/myprofile" element={<Myprofile />} />

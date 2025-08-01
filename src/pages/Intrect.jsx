@@ -43,7 +43,6 @@ const profiles = [
   },
 ];
 
-// Full caste list
 const ALL_CASTES = [
   "Brahmin", "Rajput", "Kayastha", "Yadav", "Kurmi", "Teli", "Agarwal", "Jat",
   "Kshatriya", "Vaishya", "Baniya", "Gupta", "Kumar", "Thakur", "Chamar", "Nai",
@@ -63,7 +62,6 @@ const getBotResponse = (message) => {
   return "I'm not sure about that, but I'm happy to chat! 💬";
 };
 
-// Green chat icon SVG component
 const GreenChatIcon = ({ className = 'w-5 h-5' }) => (
   <svg
     className={className}
@@ -72,7 +70,6 @@ const GreenChatIcon = ({ className = 'w-5 h-5' }) => (
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
   >
-    {/* Simple chat bubble */}
     <path d="M2 2v16l4-4h14V2H2z" />
   </svg>
 );
@@ -108,9 +105,13 @@ const Intrect = () => {
 
   const sendConnectionRequest = (user) => {
     if (connectionRequests.includes(user.email)) return;
-    const updated = [...connectionRequests, user.email];
-    localStorage.setItem('requestedUsers', JSON.stringify([...JSON.parse(localStorage.getItem('requestedUsers') || '[]'), user]));
-    setConnectionRequests(updated);
+    const newRequestUser = { ...user, verified: true }; // mark as verified
+    const updatedStoredUsers = [
+      ...JSON.parse(localStorage.getItem('requestedUsers') || '[]'),
+      newRequestUser
+    ];
+    localStorage.setItem('requestedUsers', JSON.stringify(updatedStoredUsers));
+    setConnectionRequests(updatedStoredUsers.map((u) => u.email));
     window.dispatchEvent(new Event('connections-updated'));
   };
 
@@ -185,7 +186,6 @@ const Intrect = () => {
                   <p><strong>Name:</strong> {profile.name}</p>
                   <p className="flex items-center gap-2">
                     <span>📞 {profile.phone}</span>
-                    {/* Green chat button */}
                     <button
                       onClick={() => openChat(profile)}
                       aria-label={`Chat with ${profile.name}`}
@@ -197,7 +197,13 @@ const Intrect = () => {
                     </button>
                   </p>
                   <p>📧 {profile.email}</p>
+
+                  {/* Verified Profile label in blue if request sent */}
+                  {connectionRequests.includes(profile.email) && (
+                    <p className="text-blue-600 font-semibold mt-1">Verified Profile</p>
+                  )}
                 </div>
+
                 <div className="bg-gray-100 p-3 rounded my-2">
                   <p><strong>Age:</strong> {profile.age} years</p>
                   <p><strong>Family:</strong> {profile.family}</p>
@@ -207,6 +213,7 @@ const Intrect = () => {
                   <p><strong>Job:</strong> {profile.job}</p>
                   <p><strong>Hobbies:</strong> {profile.hobbies}</p>
                 </div>
+
                 <button
                   onClick={() => sendConnectionRequest(profile)}
                   disabled={connectionRequests.includes(profile.email)}

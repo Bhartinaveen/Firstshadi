@@ -1,232 +1,278 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
-const ALL_CASTES = [
-  'Brahmin', 'Rajput', 'Kayastha', 'Bania', 'Yadav', 'Kshatriya', 'Jatav',
-  'Gupta', 'Kumhar', 'Kurmi', 'Nai', 'Khatik', 'Chamar', 'Teli',
-  'Maurya', 'Sonar', 'Jat', 'Agarwal', 'Mali', 'Vishwakarma',
-  'Thakur', 'Ahir', 'Koli', 'Valmiki', 'Pandit', 'Ravidasia',
-  'Scheduled Caste', 'Scheduled Tribe', 'OBC', 'General'
-];
-
-const ALL_RELIGIONS = [
-  'Hindu', 'Muslim', 'Christian', 'Sikh', 'Buddhist', 'Jain', 'Parsi',
-  'Jewish', 'Other'
-];
-
-// Static sample user data
-const userData = [
+const staticProfiles = [
   {
-    name: 'Naveen',
-    gender: 'Man',
-    phone: '9276898567',
-    email: 'bharti9@gmail.com',
-    age: '27 years',
-    family: '4 (mother, father, 1 brother, 1 sister)',
+    name: 'Rajesh Kumar',
+    email: 'rajesh.kumar@example.com',
+    mobile: '9876543210',
     religion: 'Hindu',
-    motherTongue: 'Hindi',
     caste: 'Brahmin',
-    job: 'Government (SSC)',
-    hobbies: 'Cricket',
-    images: ['/image/s24.jpg'],
+    dateOfBirth: '1990-01-15',
+    uploadedImages: ['/images/profile1.jpg'],
   },
   {
-    name: 'Anjali',
-    gender: 'Woman',
-    phone: '7896541230',
-    email: 'anjali@gmail.com',
-    age: '24 years',
-    family: '5 (mother, father, 2 sisters)',
+    name: 'Sneha Patel',
+    email: 'sneha.patel@example.com',
+    mobile: '9123456789',
     religion: 'Hindu',
-    motherTongue: 'Maithili',
-    caste: 'Kayastha',
-    job: 'Teacher',
-    hobbies: 'Reading',
-    images: ['/image/s46.jpg'],
+    caste: 'Patel',
+    dateOfBirth: '1992-05-20',
+    uploadedImages: ['/images/profile2.jpg'],
   },
   {
-    name: 'Rohit',
-    gender: 'Man',
-    phone: '9988776655',
-    email: 'rohit@gmail.com',
-    age: '29 years',
-    family: '3 (mother, father)',
+    name: 'Amit Sharma',
+    email: 'amit.sharma@example.com',
+    mobile: '9988776655',
     religion: 'Hindu',
-    motherTongue: 'Bhojpuri',
     caste: 'Rajput',
-    job: 'Engineer',
-    hobbies: 'Football',
-    images: ['/image/s42.jpg'],
+    dateOfBirth: '1989-12-05',
+    uploadedImages: ['/images/profile3.jpg'],
   },
   {
-    name: 'Pooja',
-    gender: 'Woman',
-    phone: '9080706050',
-    email: 'pooja@gmail.com',
-    age: '25 years',
-    family: '4 (mother, father, 1 brother)',
+    name: 'Neha Singh',
+    email: 'neha.singh@example.com',
+    mobile: '9812345670',
     religion: 'Hindu',
-    motherTongue: 'Hindi',
-    caste: 'Yadav',
-    job: 'Doctor',
-    hobbies: 'Painting',
-    images: ['/image/s44.jpg'],
+    caste: 'Rajput',
+    dateOfBirth: '1994-07-18',
+    uploadedImages: ['/images/profile4.jpg'],
   },
   {
-    name: 'Vikas',
-    gender: 'Man',
-    phone: '8123456789',
-    email: 'vikas@gmail.com',
-    age: '30 years',
-    family: '6 (parents, 2 brothers, 1 sister)',
+    name: 'Vikram Joshi',
+    email: 'vikram.joshi@example.com',
+    mobile: '9876123456',
     religion: 'Hindu',
-    motherTongue: 'Magahi',
-    caste: 'Kurmi',
-    job: 'Banker',
-    hobbies: 'Travelling',
-    images: ['/image/s39.jpg'],
+    caste: 'Kayastha',
+    dateOfBirth: '1988-11-30',
+    uploadedImages: ['/images/profile5.jpg'],
   },
   {
-    name: 'Aditi',
-    gender: 'Woman',
-    phone: '9012345678',
-    email: 'aditi@gmail.com',
-    age: '26 years',
-    family: '3 (mother, father)',
+    name: 'Pooja Mehta',
+    email: 'pooja.mehta@example.com',
+    mobile: '9876501234',
     religion: 'Hindu',
-    motherTongue: 'Hindi',
-    caste: 'Teli',
-    job: 'Designer',
-    hobbies: 'Dancing',
-    images: ['/image/s35.jpg'],
+    caste: 'Gupta',
+    dateOfBirth: '1993-04-12',
+    uploadedImages: ['/images/profile6.jpg'],
+  },
+  {
+    name: 'Rohan Verma',
+    email: 'rohan.verma@example.com',
+    mobile: '9123478560',
+    religion: 'Hindu',
+    caste: 'Jat',
+    dateOfBirth: '1991-09-25',
+    uploadedImages: ['/images/profile7.jpg'],
+  },
+  {
+    name: 'Anjali Deshmukh',
+    email: 'anjali.deshmukh@example.com',
+    mobile: '9812345698',
+    religion: 'Hindu',
+    caste: 'Maratha',
+    dateOfBirth: '1992-02-14',
+    uploadedImages: ['/images/profile8.jpg'],
   },
 ];
+
+// Helper function to mask mobile number: show first 2 and last 2 digits only
+const maskMobile = (mobile) => {
+  if (!mobile || mobile.length < 4) return mobile;
+  const len = mobile.length;
+  const visibleStart = mobile.slice(0, 2);
+  const visibleEnd = mobile.slice(len - 2);
+  const maskedSection = 'X'.repeat(len - 4);
+  return visibleStart + maskedSection + visibleEnd;
+};
+
+// Eye icon component: shows open or closed eye based on 'open' prop
+const EyeIcon = ({ open }) => (
+  open ? (
+    // Eye open icon (filled)
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="w-5 h-5 text-blue-600"
+      aria-hidden="true"
+    >
+      <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z" />
+      <circle cx="12" cy="12" r="3" fill="white" />
+    </svg>
+  ) : (
+    // Eye closed icon (outline with slash)
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-5 h-5 text-gray-500"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M17.94 17.94A10.005 10.005 0 0112 19c-7 0-10-7-10-7a19.824 19.824 0 013.08-4.45M9.88 9.88a3 3 0 104.24 4.24M1 1l22 22" />
+    </svg>
+  )
+);
 
 const Ncon = () => {
   const [connections, setConnections] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [selectedCaste, setSelectedCaste] = useState('');
-  const [selectedReligion, setSelectedReligion] = useState('');
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [requestedIndices, setRequestedIndices] = useState([]);
+  
+  // Track which indices currently show full mobile number
+  const [showFullMobileIndices, setShowFullMobileIndices] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setConnections(JSON.parse(localStorage.getItem('savedConnections') || '[]'));
+    const saved = JSON.parse(localStorage.getItem('savedConnections') || 'null');
+    const profiles = saved && saved.length > 0 ? saved : staticProfiles;
+    setConnections(profiles);
+
+    const requestedUsers = JSON.parse(localStorage.getItem('requestedUsers') || '[]');
+    const requestedIdxs = profiles.reduce((acc, user, index) => {
+      if (requestedUsers.some((u) => u.email === user.email)) acc.push(index);
+      return acc;
+    }, []);
+    setRequestedIndices(requestedIdxs);
   }, []);
 
-  const filtered = connections.filter(p => {
-    const textOk = !searchText || (p.name || p.fullName || '')
-      .toLowerCase().includes(searchText.trim().toLowerCase());
-    const casteOk = selectedCaste ? p.caste === selectedCaste : true;
-    const religionOk = selectedReligion ? p.religion === selectedReligion : true;
-    return textOk && casteOk && religionOk;
-  });
+  const handleSendRequest = (profile, idx) => {
+    const requestedUsers = JSON.parse(localStorage.getItem('requestedUsers') || '[]');
+    const isAlreadyRequested = requestedUsers.some((u) => u.email === profile.email);
+    if (!isAlreadyRequested) {
+      const updatedRequested = [...requestedUsers, profile];
+      localStorage.setItem('requestedUsers', JSON.stringify(updatedRequested));
+    }
+    setRequestedIndices((prev) => [...prev, idx]);
+
+    window.dispatchEvent(new Event('connections-updated'));
+
+    navigate('/mymatch');
+  };
+
+  // Toggle showing full mobile number for a profile index
+  const toggleMobileVisibility = (idx) => {
+    setShowFullMobileIndices((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
+
+  if (connections.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
+        <div className="bg-white p-6 rounded-lg shadow-md text-center max-w-md w-full">
+          <h2 className="text-lg font-semibold text-red-800 mb-4">
+            No Saved Connections Found
+          </h2>
+          <p className="text-gray-700">You have not saved any profiles to connect yet.</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col min-h-screen bg-green-50">
-      <div className="flex-grow px-4 py-6">
-        <h1 className="text-3xl font-bold text-center text-red-800 mb-8">
-          Saved Connections
-        </h1>
+    <div>
+      <div className="min-h-screen bg-gray-100 px-4 py-6">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-2xl font-bold text-center text-red-800 mb-6">
+            Saved Connections
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {connections.map((profile, idx) => {
+              const name = profile.name || profile.fullName || 'N/A';
+              const religion = profile.religion || 'N/A';
+              const caste = profile.caste || 'N/A';
+              const dateOfBirth =
+                profile.dateOfBirth ||
+                profile.dob ||
+                profile.dateofbirth ||
+                profile['date of birth'] ||
+                'N/A';
 
-        {connections.length > 0 && (
-          <div className="flex flex-col sm:flex-row items-center gap-4 mb-10 max-w-4xl mx-auto">
-            <input
-              type="text"
-              placeholder="Search by name"
-              value={searchText}
-              onChange={e => setSearchText(e.target.value)}
-              className="flex-1 p-2 rounded border border-gray-400"
-            />
-            <select
-              value={selectedCaste}
-              onChange={e => setSelectedCaste(e.target.value)}
-              className="p-2 rounded border border-gray-400"
-            >
-              <option value="">All castes</option>
-              {ALL_CASTES.map(cs => <option key={cs} value={cs}>{cs}</option>)}
-            </select>
-            <select
-              value={selectedReligion}
-              onChange={e => setSelectedReligion(e.target.value)}
-              className="p-2 rounded border border-gray-400"
-            >
-              <option value="">All religions</option>
-              {ALL_RELIGIONS.map(r => <option key={r} value={r}>{r}</option>)}
-            </select>
-            {(searchText || selectedCaste || selectedReligion) && (
-              <button
-                onClick={() => {
-                  setSearchText('');
-                  setSelectedCaste('');
-                  setSelectedReligion('');
-                }}
-                className="px-3 py-2 bg-gray-300 rounded hover:bg-gray-400 text-sm"
-              >
-                Clear
-              </button>
-            )}
+              const isHovered = hoveredIndex === idx;
+              const isRequested = requestedIndices.includes(idx);
+
+              const mobile = profile.mobile || 'N/A';
+              const isFullMobileShown = showFullMobileIndices.includes(idx);
+              const displayedMobile = isFullMobileShown ? mobile : maskMobile(mobile);
+
+              return (
+                <div
+                  key={idx}
+                  className="bg-[#FBF5DE] rounded-lg shadow p-4 flex flex-col items-center"
+                >
+                  <img
+                    src={profile.uploadedImages?.[0] || '/default-avatar.png'}
+                    alt={name}
+                    className="w-24 h-24 object-cover rounded-full border-4 border-red-400 mb-4"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/default-avatar.png'; // fallback
+                    }}
+                  />
+                  <div className="text-center space-y-1 text-sm text-gray-800 mb-4 w-full max-w-xs">
+                    <div>
+                      <strong>Name:</strong> {name}
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                      <strong>Mobile:</strong>
+                      <span className="font-mono select-text">{displayedMobile}</span>
+                      {mobile && mobile.length >= 4 && mobile !== 'N/A' && (
+                        <button
+                          type="button"
+                          aria-label={
+                            isFullMobileShown
+                              ? 'Hide full mobile number'
+                              : 'Show full mobile number'
+                          }
+                          onClick={() => toggleMobileVisibility(idx)}
+                          className="focus:outline-none"
+                          title={isFullMobileShown ? 'Hide full number' : 'Show full number'}
+                        >
+                          <EyeIcon open={isFullMobileShown} />
+                        </button>
+                      )}
+                    </div>
+                    <div>
+                      <strong>Religion:</strong> {religion}
+                    </div>
+                    <div>
+                      <strong>Caste:</strong> {caste}
+                    </div>
+                    <div>
+                      <strong>Date of Birth:</strong> {dateOfBirth}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onMouseEnter={() => setHoveredIndex(idx)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    onClick={() => !isRequested && handleSendRequest(profile, idx)}
+                    disabled={isRequested}
+                    className={`px-4 py-2 rounded-md text-white font-semibold transition-colors duration-200 ${
+                      isRequested
+                        ? 'bg-green-500 cursor-not-allowed'
+                        : isHovered
+                        ? 'bg-blue-600'
+                        : 'bg-blue-400'
+                    }`}
+                  >
+                    {isRequested ? 'Request Sent' : isHovered ? 'Send Request' : 'Connect'}
+                  </button>
+                </div>
+              );
+            })}
           </div>
-        )}
-
-        {/* Filtered Connections */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-2 mb-12">
-          {filtered.map((p, idx) => (
-            <div key={idx} className="flex flex-col bg-white shadow-lg rounded-xl p-6">
-              <div className="flex items-center mb-4">
-                <img
-                  src={p.uploadedImages?.[0] || '/default-avatar.png'}
-                  alt="avatar"
-                  className="w-20 h-20 rounded-full object-cover border border-gray-300 mr-4"
-                />
-                <div className="text-sm space-y-1">
-                  <p><strong>Name:</strong> {p.name || p.fullName}</p>
-                  <p><strong>Email:</strong> {p.email}</p>
-                  <p><strong>Caste:</strong> {p.caste}</p>
-                  <p><strong>Religion:</strong> {p.religion}</p>
-                </div>
-              </div>
-              <button
-                className="self-start px-4 py-2 rounded-full bg-green-600 text-white text-sm font-semibold hover:bg-green-700"
-              >
-                Connect
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* Static User Cards */}
-        <h2 className="text-xl font-bold text-center text-gray-800 mb-6">Sample Users</h2>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto px-4">
-          {userData.map((user, idx) => (
-            <div key={idx} className="bg-orange-100 border border-red-500 rounded-lg shadow-md p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <img
-                  src={user.images[0]}
-                  alt={user.name}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-bold text-lg">Name: {user.name}</p>
-                  <p className="text-sm text-pink-800">📞 {user.phone}</p>
-                  <p className="text-sm text-indigo-800">📧 {user.email}</p>
-                </div>
-              </div>
-              <button className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-1 rounded mb-4">
-                Connect
-              </button>
-              <div className="bg-gray-100 p-3 rounded text-sm">
-                <p><strong>Age:</strong> <span className="text-red-600">{user.age}</span></p>
-                <p><strong>Family:</strong> {user.family}</p>
-                <p><strong>Religion:</strong> {user.religion}</p>
-                <p><strong>Caste:</strong> {user.caste}</p>
-                <p><strong>Mother Tongue:</strong> {user.motherTongue}</p>
-                <p><strong>Job:</strong> {user.job}</p>
-                <p><strong>Hobbies:</strong> {user.hobbies}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );
