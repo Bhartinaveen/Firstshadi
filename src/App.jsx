@@ -30,6 +30,9 @@ import Paym from'./pages/Paym'
 import Myprofile from './pages/Myprofile'
 import Ncon from './pages/Ncon'
 import Intrect from './pages/Intrect'
+import Notif from './pages/Notif'
+
+
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -84,6 +87,7 @@ function App() {
                       <Route path="/myprofile" element={<Myprofile />} />
                        <Route path="/ncon" element={<Ncon />} />
                        <Route path="/int" element={<Intrect />} />
+                       <Route path="/notifications" element={<Notif />} />
                    
                    
                

@@ -1,70 +1,105 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import navigate hook
+import { useNavigate } from 'react-router-dom';
+import { HeartIcon, ShieldCheckIcon, UserGroupIcon } from '@heroicons/react/24/solid';
 
 const Trst = () => {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleMembershipClick = () => {
-    navigate('/memb'); // Navigate to Memb.jsx (make sure route is defined)
+    navigate('/memb'); // Navigates to the membership page route
   };
 
+  // Feature items for easy mapping
+  const features = [
+    {
+      // MODIFIED: Reduced icon size
+      icon: <HeartIcon className="w-8 h-8 mb-2 text-rose-500" />,
+      title: 'Best Matches',
+      description: 'AI-powered matchmaking to find your ideal partner.',
+    },
+    {
+      // MODIFIED: Reduced icon size
+      icon: <ShieldCheckIcon className="w-8 h-8 mb-2 text-sky-500" />,
+      title: 'Verified Profiles',
+      description: 'Manually verified profiles for your safety and trust.',
+    },
+    {
+      // MODIFIED: Reduced icon size
+      icon: <UserGroupIcon className="w-8 h-8 mb-2 text-indigo-500" />,
+      title: '35M+ Members',
+      description: 'Join a vast community of members seeking true love.',
+    },
+  ];
+
   return (
-    <div className="bg-[#fefefe] text-center px-4 py-10">
-      {/* Logo Image */}
-      <div className="flex justify-center mb-4">
-        <img
-          src="/image/l2.png"
-          alt="firstmarriage Logo"
-          className="w-24 h-24 object-contain"
-        />
-      </div>
-
-      {/* Title */}
-      <h1 className="text-2xl md:text-3xl font-semibold text-[#ff5a60] mb-4">
-        <span className='text-black '>First</span> Marriage <span className='text-blue-900'>-Trusted by over 35 Million Members</span>
-      </h1>
-
-      {/* Description */}
-      <p className="max-w-3xl mx-auto text-gray-600 leading-7 mb-2">
-        First Marriage is India’s trusted destination for meaningful matrimonial connections, created with a heartfelt mission — to bring people together in the journey of lifelong companionship.
-        Launched with the vision to simplify the search for a life partner, First Marriage offers a modern and secure platform that blends tradition with technology.
-        Since its inception, it has helped thousands find their perfect match by transforming how Indian brides and grooms connect, engage, and build lasting relationships.
-      </p>
-
-      {/* Country Links */}
-      <div className="text-blue-900 space-x-2 mt-4 mb-8">
-        <a href="#" className="hover:underline">India</a>|
-        <a href="#" className="hover:underline">USA</a>|
-        <a href="#" className="hover:underline">Canada</a>|
-        <a href="#" className="hover:underline">UK</a>|
-        <a href="#" className="hover:underline">Singapore</a>|
-        <a href="#" className="hover:underline">UAE</a>|
-        <a href="#" className="hover:underline">NRI Matrimonials ▸</a>
-      </div>
-
-      {/* Button */}
-      <div className="flex justify-center mb-8">
-        <button
-          onClick={handleMembershipClick}
-          className="bg-blue-900 text-white px-6 py-2 rounded font-semibold hover:bg-[#1e3437] transition"
-        >
-          Get Membership plans
-        </button>
-      </div>
-
-      {/* Bottom Icons */}
-      <div className="flex justify-center space-x-12 mt-6 text-gray-600 text-sm">
-        <div className="flex items-center space-x-2">
-          <span className="text-2xl">💍</span>
-          <span>Best Matches</span>
+    // Main container with a subtle gradient background
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-sky-100 flex items-center justify-center p-4">
+      
+      {/* MODIFIED: Increased max-width to 7xl and reduced padding further */}
+      <div className="w-full max-w-7xl bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg p-4 md:p-6 text-center">
+        
+        {/* Logo */}
+        <div className="flex justify-center mb-2">
+          <img
+            src="/image/l2.png" // Ensure this path is correct in your project
+            alt="FirstMarriage Logo"
+            // MODIFIED: Reduced logo size
+            className="w-20 h-20 object-contain drop-shadow-md"
+          />
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-2xl">✅</span>
-          <span>Verified Profiles</span>
+
+        {/* Main Title with Gradient Text */}
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-rose-500 to-indigo-600 bg-clip-text text-transparent mb-1">
+          First Marriage
+        </h1>
+
+        {/* Subtitle */}
+        <p className="text-lg text-gray-600 font-medium mb-3"> {/* Reduced margin-bottom */}
+          India's Most Trusted Matrimony Service
+        </p>
+
+        {/* Description */}
+        <p className="max-w-3xl mx-auto text-gray-700 leading-relaxed mb-4"> {/* Reduced margin-bottom */}
+          Created with a heartfelt mission to unite individuals in the sacred journey of lifelong companionship. We blend tradition with modern technology on a secure, user-friendly platform, helping thousands find their perfect match.
+        </p>
+
+        {/* Enhanced Call-to-Action Button */}
+        <div className="mb-6"> {/* Reduced margin-bottom */}
+          <button
+            onClick={handleMembershipClick}
+            className="text-white font-bold py-3 px-8 rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Explore Membership Plans
+          </button>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-2xl">🔒</span>
-          <span>100% Privacy</span>
+
+        {/* Features Section with Professional Icons */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-gray-200 pt-4"> {/* Reduced gap and padding-top */}
+          {features.map((feature, index) => (
+            <div key={index} className="flex flex-col items-center">
+              {feature.icon}
+              <h3 className="text-lg font-semibold text-gray-800">{feature.title}</h3>
+              <p className="text-sm text-gray-600">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Country Links */}
+        <div className="mt-6 text-sm text-gray-500"> {/* Reduced margin-top */}
+          <p className="mb-2 font-semibold">Find Matches from:</p>
+          <div className="flex justify-center flex-wrap gap-x-4 gap-y-2">
+            <a href="#" className="hover:text-rose-500 transition">India</a>
+            <span className="text-gray-300">|</span>
+            <a href="#" className="hover:text-rose-500 transition">USA</a>
+            <span className="text-gray-300">|</span>
+            <a href="#" className="hover:text-rose-500 transition">UK</a>
+            <span className="text-gray-300">|</span>
+            <a href="#" className="hover:text-rose-500 transition">Canada</a>
+            <span className="text-gray-300">|</span>
+            <a href="#" className="hover:text-rose-500 transition">UAE</a>
+            <span className="text-gray-300">|</span>
+            <a href="#" className="hover:text-rose-500 transition font-bold">More ▸</a>
+          </div>
         </div>
       </div>
     </div>

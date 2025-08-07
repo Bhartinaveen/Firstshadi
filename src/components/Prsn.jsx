@@ -1,8 +1,10 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { FaQuoteLeft } from "react-icons/fa"; // Icon import karein
 import "swiper/css";
 
+// Success stories ka data
 const stories = [
   {
     name: "Shubham & Shruti",
@@ -44,15 +46,21 @@ const stories = [
 
 const Prsn = () => {
   return (
-    <div className="py-10 px-4 md:px-20 bg-white">
-      <h2 className="text-3xl font-bold text-center text-red-500 mb-10">
-        5 Million Success Stories
-      </h2>
+    // Section ke liye halka gulabi background aur zyada padding
+    <div className="py-16 px-4 md:px-20 bg-rose-50">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-extrabold text-gray-800">
+          5 Million Success Stories 💖
+        </h2>
+        <p className="text-lg text-gray-600 mt-2">
+          Hear from our happy couples who found their soulmates.
+        </p>
+      </div>
 
       <div className="relative">
         <Swiper
           modules={[Autoplay]}
-          spaceBetween={20}
+          spaceBetween={30} // Cards ke beech thoda zyada space
           slidesPerView={1}
           loop={true}
           autoplay={{
@@ -71,17 +79,23 @@ const Prsn = () => {
         >
           {stories.map((story, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-white shadow rounded-lg overflow-hidden border h-[350px]">
+              {/* Card ke liye behtar styling aur hover effect */}
+              <div className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 h-[420px] flex flex-col">
                 <img
                   src={story.image}
                   alt={story.name}
-                  className="w-full h-40 object-cover"
+                  className="w-full h-48 object-cover"
                 />
-                <div className="p-3">
-                  <h3 className="text-lg font-semibold mb-1">{story.name}</h3>
-                  <p className="text-gray-700 text-sm line-clamp-4">
-                    {story.description}
-                  </p>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold text-rose-600 mb-3">
+                    {story.name}
+                  </h3>
+                  <div className="flex text-gray-600">
+                    <FaQuoteLeft className="text-rose-200 text-2xl flex-shrink-0 mr-3 mt-1" />
+                    <p className="text-sm line-clamp-4">
+                      {story.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </SwiperSlide>
