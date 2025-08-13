@@ -1,91 +1,114 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, X, Bell } from 'lucide-react';
+import { Menu, X, Bell, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(0); 
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! How can I help you today?' }]);
+  const [input, setInput] = useState('');
   const menuRef = useRef(null);
+  const chatEndRef = useRef(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleChat = () => setIsChatOpen(!isChatOpen);
 
-  // This effect simulates receiving new notifications.
-  // The logic here remains the same.
   useEffect(() => {
     const interval = setInterval(() => {
-      setNotificationCount(prevCount => prevCount + 1);
-    }, 4000); 
-
+      setNotificationCount((prevCount) => prevCount + 1);
+    }, 4000);
     return () => clearInterval(interval);
-  }, []); 
+  }, []);
 
-  // This effect handles closing the menu when clicking outside.
-  // No changes needed here.
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
 
+  const sendMessage = () => {
+    if (!input.trim()) return;
+
+    const userMessage = { sender: 'user', text: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput('');
+
+    setTimeout(() => {
+      const botMessage = {
+        sender: 'bot',
+        text: `You said: "${userMessage.text}". How else can I help?`
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    }, 800);
+  };
+
+  // --- CHANGE START: The requestPersonalAssistant function has been removed. ---
+  // --- CHANGE END ---
+
   return (
     <>
-      <nav className="fixed h-18 top-0 left-0 w-full bg-[#f5fdd5] px-6 py-2 shadow-md z-50">
+      <nav className="fixed h-18 top-0 left-0 w-full bg-gradient-to-r from-orange-500 to-red-600 px-6 py-2 shadow-md z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center space-x-2 -translate-y-4 -translate-x-4">
             <Link to="/">
               <img src="/image/l2.png" alt="Logo" className="h-21 w-21" />
             </Link>
-            <span className="-translate-x-4 font-bold text-[#0a0a0a]">First</span>
-            <span className="-translate-x-5 font-bold text-red-700">Marriage</span>
+            <span className="-translate-x-4 font-bold text-white">First</span>
+            <span className="-translate-x-5 font-bold text-white">Marriage</span>
           </div>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-6 text-gray-800 font-medium -translate-y-3">
+          <div className="hidden md:flex items-center space-x-6 text-white font-medium -translate-y-3">
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
             <Link to="/mymatch">My Matches</Link>
             <Link to="/myprofile">My Profile</Link>
             <Link to="/contact">Contact Us</Link>
-            
-            {/* --- MODIFIED NOTIFICATION ICON (Desktop) --- */}
+
             <Link to="/notifications" className="relative">
               <Bell className="h-6 w-6" />
               {notificationCount > 0 && (
-                // This span now renders a simple dot instead of the count.
-                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-600 ring-2 ring-[#f5fdd5]" />
+                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-blue-600 ring-2 ring-white" />
               )}
             </Link>
-            
-            <Link to="/signin" className="font-semibold">Sign In</Link>
-            <a
-              href="https://wa.me/+919040170727"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-800 font-semibold"
-            >
-              Chat
-            </a>
+
+            <Link to="/signin" className="font-semibold">
+              Sign In
+            </Link>
+
+            <div className="relative group">
+              <button
+                onClick={toggleChat}
+                className="font-semibold flex items-center gap-1 text-green-300"
+              >
+                <MessageCircle className="h-5 w-5" /> Chat
+              </button>
+              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-max px-2 py-1 bg-red-500 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Get Personal Assistant
+              </span>
+            </div>
+
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center space-x-4 -translate-y-4">
-             {/* --- MODIFIED NOTIFICATION ICON (Mobile) --- */}
-             <Link to="/notifications" className="relative">
+          <div className="md:hidden flex items-center space-x-4 -translate-y-4 text-white">
+            <Link to="/notifications" className="relative">
               <Bell className="h-6 w-6" />
               {notificationCount > 0 && (
-                 // This span also renders a simple dot.
-                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-600 ring-2 ring-[#f5fdd5]" />
+                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-blue-600 ring-2 ring-white" />
               )}
             </Link>
             <button onClick={toggleMenu}>
@@ -94,7 +117,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <div
           ref={menuRef}
           className={`fixed top-0 right-0 h-[400px] w-2/4 sm:w-1/2 bg-[#fb9c7c] shadow-lg transform ${
@@ -112,20 +134,79 @@ const Navbar = () => {
             <Link to="/notifications" onClick={toggleMenu}>🔔 Notifications</Link>
             <Link to="/contact" onClick={toggleMenu}>📞 Contact Us</Link>
             <Link to="/signin" onClick={toggleMenu} className="font-semibold">🔐 Sign In</Link>
-            <a
-              href="https://wa.me/+919040170727"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={toggleMenu}
-            >
-              ❓ Chat
-            </a>
+            
+            <div className="relative group">
+                <button
+                    onClick={() => {
+                    toggleChat();
+                    toggleMenu();
+                    }}
+                    className="flex items-center gap-1 text-green-900 font-bold"
+                >
+                    💬 Chat
+                </button>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    Get Personal Assistant
+                </span>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Push content below the fixed navbar */}
       <div className="pt-18" />
+
+      {isChatOpen && (
+        <div className="fixed inset-0 flex justify-end z-50">
+          <div className="bg-white w-80 h-full flex flex-col shadow-lg">
+            <div className="p-4 bg-[#fb9c7c] flex justify-between items-center">
+              <h2 className="font-bold text-white">Chat Support</h2>
+              <button onClick={toggleChat}>
+                <X className="text-white" />
+              </button>
+            </div>
+
+            <div className="flex-1 p-3 overflow-y-auto text-sm text-gray-700">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`mb-2 flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`px-3 py-2 rounded-lg max-w-[75%] ${
+                      msg.sender === 'user'
+                        ? 'bg-[#fb9c7c] text-white'
+                        : 'bg-gray-200 text-gray-800'
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+              <div ref={chatEndRef} />
+            </div>
+
+            {/* --- CHANGE START: Chat footer updated to remove the button --- */}
+            <div className="p-3 border-t flex gap-2">
+              <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-1 border rounded px-2 py-1 text-sm"
+                  onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+              />
+              <button
+                  onClick={sendMessage}
+                  className="bg-[#fb9c7c] text-white px-3 py-1 rounded"
+              >
+                  Send
+              </button>
+            </div>
+            {/* --- CHANGE END --- */}
+
+          </div>
+        </div>
+      )}
     </>
   );
 };

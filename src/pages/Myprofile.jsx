@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Footer from '../components/Footer';
 
-// --- Helper Components ---
-const Footer = () => (
-  <footer className="w-full text-center p-4 mt-8 text-gray-500 text-sm">
-    <p>&copy; {new Date().getFullYear()} Your Company. All Rights Reserved.</p>
-  </footer>
-);
 
 // --- SVG Icons ---
 const EditIcon = () => (
@@ -240,6 +235,8 @@ const Myprofile = () => {
   const profileName = `${displayProfile.name?.first || ''} ${displayProfile.name?.last || ''}`.trim() || 'My Profile';
 
   return (
+
+    <div>
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 transition-all">
         {/* Profile Header */}
@@ -318,7 +315,9 @@ const Myprofile = () => {
           </div>
         </div>
       </div>
-      <Footer />
+     
+    </div>
+ <Footer />
     </div>
   );
 };

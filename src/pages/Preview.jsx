@@ -2,15 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { UserCircleIcon, ArrowUturnLeftIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 
+// Helper function to format field labels nicely
 const prettify = (str) =>
   str
     .replace(/([A-Z])/g, ' $1')
     .replace(/^./, (c) => c.toUpperCase())
     .replace('Dob', 'Date of Birth');
 
+// Helper to check if a value is a File object
 const isFile = (v) => typeof File !== 'undefined' && v instanceof File;
 
+// Flattens the nested state object into an array of { label, value } for rendering
 const flatten = (data, path = '') => {
   const rows = [];
 
@@ -27,7 +31,7 @@ const flatten = (data, path = '') => {
   }
 
   if (Array.isArray(data)) {
-    if (data.length && isFile(data[0])) return rows; // skip displaying file data in list
+    if (data.length && isFile(data[0])) return rows; // skip displaying file data
     data.forEach((item, i) => rows.push(...flatten(item, `${path} ${i + 1}`)));
     return rows;
   }
@@ -38,6 +42,7 @@ const flatten = (data, path = '') => {
   return rows;
 };
 
+
 const Preview = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -45,24 +50,28 @@ const Preview = () => {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
+    // Redirect if no state is passed
     if (!state?.firstName) navigate('/box');
   }, [state, navigate]);
 
   useEffect(() => {
     // Create blob URLs for image previews
-    const files = Array.isArray(state.photos) ? state.photos.filter(Boolean) : [];
-    const urls = files.map((f) => URL.createObjectURL(f));
-    setThumbs(urls);
-    return () => urls.forEach((u) => URL.revokeObjectURL(u));
-  }, [state.photos]);
+    if (state?.photos) {
+      const files = Array.isArray(state.photos) ? state.photos.filter(Boolean) : [];
+      const urls = files.map((f) => URL.createObjectURL(f));
+      setThumbs(urls);
+      // Clean up blob URLs on component unmount
+      return () => urls.forEach((u) => URL.revokeObjectURL(u));
+    }
+  }, [state?.photos]);
 
   if (!state?.firstName) return null;
 
   const handleConfirm = () => {
-    if (saving) return; // prevent double clicks
+    if (saving) return; // Prevent double clicks
 
     if (!window.FileReader) {
-      alert('FileReader API is not supported in your browser.');
+      alert('Your browser does not support the FileReader API.');
       return;
     }
 
@@ -87,7 +96,7 @@ const Preview = () => {
       .then((photoBase64List) => {
         const finalProfile = {
           ...state,
-          photos: [], // Remove actual File objects
+          photos: [], // Remove File objects to avoid serialization issues
           uploadedImages: photoBase64List,
         };
 
@@ -118,55 +127,86 @@ const Preview = () => {
   const rows = flatten({ ...state, photos: undefined });
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-6">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-xl font-semibold text-center text-red-800 mb-6">
-          Preview Your Profile
-        </h1>
 
+    <div>
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4 py-10">
+      <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200/60 w-full max-w-2xl">
+
+        {/* Header */}
+        <div className="flex flex-col items-center text-center mb-8">
+          <UserCircleIcon className="h-16 w-16 text-indigo-500 mb-3" />
+          <h1 className="text-3xl font-bold text-slate-800">Confirm Your Profile</h1>
+          <p className="text-slate-500 mt-2">Please review your information below before saving.</p>
+        </div>
+
+        {/* Photo Gallery */}
         {thumbs.length > 0 && (
-          <div className="flex flex-wrap gap-3 justify-center mb-6">
-            {thumbs.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                alt={`Photo ${idx + 1}`}
-                className="w-24 h-24 object-cover rounded border"
-              />
-            ))}
-          </div>
+          <>
+            <div className="border-t border-slate-200 my-6"></div>
+            <h2 className="text-lg font-semibold text-slate-700 mb-4">Your Photos</h2>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 mb-8">
+              {thumbs.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`Photo Preview ${idx + 1}`}
+                  className="w-full h-24 object-cover rounded-lg shadow-md border border-slate-200 hover:opacity-90 transition-opacity"
+                />
+              ))}
+            </div>
+          </>
         )}
 
-        <div className="space-y-3 text-gray-800">
+        {/* Details Section */}
+        <div className="border-t border-slate-200 my-6"></div>
+        <div className="space-y-4">
           {rows.map(({ label, value }, idx) =>
             value ? (
-              <div key={idx} className="flex justify-between border-b pb-1">
-                <span className="font-medium">{label}:</span>
-                <span className="text-right ml-3 break-all">{String(value)}</span>
+              <div key={idx} className="grid grid-cols-3 gap-4 items-start">
+                <span className="col-span-1 font-medium text-slate-500">{label}:</span>
+                <span className="col-span-2 font-semibold text-slate-800 break-words">{String(value)}</span>
               </div>
             ) : null
           )}
         </div>
 
-        <div className="flex gap-4 mt-8">
+        {/* Action Buttons */}
+        <div className="border-t border-slate-200 mt-8 pt-6 flex flex-col sm:flex-row gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="w-1/2 py-2 rounded-full text-white bg-gray-600 hover:bg-gray-800"
+            className="flex items-center justify-center w-full sm:w-1/2 py-3 px-4 rounded-lg text-slate-700 font-semibold border border-slate-300 hover:bg-slate-100 transition-colors disabled:opacity-50"
             disabled={saving}
           >
-            Edit
+            <ArrowUturnLeftIcon className="h-5 w-5 mr-2" />
+            Back
           </button>
           <button
             onClick={handleConfirm}
-            className="w-1/2 py-2 rounded-full text-white bg-red-700 hover:bg-red-900 disabled:opacity-50"
+            className="flex items-center justify-center w-full sm:w-1/2 py-3 px-4 rounded-lg text-white font-semibold bg-red-800 hover:bg-red-900 transition-colors disabled:bg-red-400 disabled:cursor-not-allowed"
             disabled={saving}
           >
-            {saving ? 'Saving...' : 'Save'}
+            {saving ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Saving...
+              </>
+            ) : (
+              <>
+                <CheckCircleIcon className="h-5 w-5 mr-2" />
+                Save & Continue
+              </>
+            )}
           </button>
         </div>
       </div>
+     
+    </div>
 
-      <Footer />
+ <Footer />
+
     </div>
   );
 };
