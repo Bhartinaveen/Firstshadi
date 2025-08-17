@@ -57,58 +57,58 @@ const Navbar = () => {
     }, 800);
   };
 
-  // --- CHANGE START: The requestPersonalAssistant function has been removed. ---
-  // --- CHANGE END ---
-
   return (
     <>
-      <nav className="fixed h-18 top-0 left-0 w-full bg-gradient-to-r from-orange-500 to-red-600 px-6 py-2 shadow-md z-50">
+      {/* --- CHANGE: Navbar color changed to the very light off-white from the image --- */}
+      <nav className="fixed h-18 top-0 left-0 w-full bg-[#fff5ee] px-6 py-2 shadow-md z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2 -translate-y-4 -translate-x-4">
             <Link to="/">
               <img src="/image/l2.png" alt="Logo" className="h-21 w-21" />
             </Link>
-            <span className="-translate-x-4 font-bold text-white">First</span>
-            <span className="-translate-x-5 font-bold text-white">Marriage</span>
+            {/* --- CHANGE: Text color changed to dark slate for readability --- */}
+            <span className="-translate-x-4 font-bold text-slate-700">First</span>
+            <span className="-translate-x-5 font-bold text-slate-700">Marriage</span>
           </div>
 
-          <div className="hidden md:flex items-center space-x-6 text-white font-medium -translate-y-3">
-            <Link to="/">Home</Link>
-            <Link to="/about">About Us</Link>
-            <Link to="/mymatch">My Matches</Link>
-            <Link to="/myprofile">My Profile</Link>
-            <Link to="/contact">Contact Us</Link>
+          <div className="hidden md:flex items-center space-x-6 text-slate-700 font-medium -translate-y-3">
+            <Link to="/" className="hover:text-orange-500">Home</Link>
+            <Link to="/about" className="hover:text-orange-500">About Us</Link>
+            <Link to="/mymatch" className="hover:text-orange-500">My Matches</Link>
+            <Link to="/myprofile" className="hover:text-orange-500">My Profile</Link>
+            <Link to="/contact" className="hover:text-orange-500">Contact Us</Link>
 
             <Link to="/notifications" className="relative">
               <Bell className="h-6 w-6" />
+              {/* --- CHANGE: Notification dot color changed for contrast --- */}
               {notificationCount > 0 && (
-                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-blue-600 ring-2 ring-white" />
+                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white" />
               )}
             </Link>
 
-            <Link to="/signin" className="font-semibold">
+            <Link to="/signin" className="font-semibold hover:text-orange-500">
               Sign In
             </Link>
 
             <div className="relative group">
+              {/* --- CHANGE: Chat button text color updated to be a colorful accent --- */}
               <button
                 onClick={toggleChat}
-                className="font-semibold flex items-center gap-1 text-green-300"
+                className="font-semibold flex items-center gap-1 text-orange-500 hover:text-orange-600"
               >
                 <MessageCircle className="h-5 w-5" /> Chat
               </button>
-              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-max px-2 py-1 bg-red-500 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                 Get Personal Assistant
               </span>
             </div>
-
           </div>
 
-          <div className="md:hidden flex items-center space-x-4 -translate-y-4 text-white">
+          <div className="md:hidden flex items-center space-x-4 -translate-y-4 text-slate-700">
             <Link to="/notifications" className="relative">
               <Bell className="h-6 w-6" />
               {notificationCount > 0 && (
-                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-blue-600 ring-2 ring-white" />
+                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white" />
               )}
             </Link>
             <button onClick={toggleMenu}>
@@ -117,14 +117,15 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* --- CHANGE: Mobile menu background is now white for clear separation --- */}
         <div
           ref={menuRef}
-          className={`fixed top-0 right-0 h-[400px] w-2/4 sm:w-1/2 bg-[#fb9c7c] shadow-lg transform ${
+          className={`fixed top-0 right-0 h-auto pb-4 w-2/4 sm:w-1/2 bg-white shadow-lg transform ${
             isOpen ? 'translate-x-0' : 'translate-x-full'
           } transition-transform duration-300 ease-in-out md:hidden z-50`}
         >
           <div className="flex flex-col items-start p-6 space-y-4 text-gray-800 font-medium">
-            <button onClick={toggleMenu} className="self-end">
+            <button onClick={toggleMenu} className="self-end text-gray-600">
               <X className="h-6 w-6" />
             </button>
             <Link to="/" onClick={toggleMenu}>🏠 Home</Link>
@@ -135,19 +136,20 @@ const Navbar = () => {
             <Link to="/contact" onClick={toggleMenu}>📞 Contact Us</Link>
             <Link to="/signin" onClick={toggleMenu} className="font-semibold">🔐 Sign In</Link>
             
-            <div className="relative group">
-                <button
-                    onClick={() => {
-                    toggleChat();
-                    toggleMenu();
-                    }}
-                    className="flex items-center gap-1 text-green-900 font-bold"
-                >
-                    💬 Chat
-                </button>
-                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    Get Personal Assistant
-                </span>
+            <div className="relative group pt-2">
+              <button
+                onClick={() => {
+                  toggleChat();
+                  toggleMenu();
+                }}
+                 // --- CHANGE: Mobile chat button color changed to an accent color ---
+                className="flex items-center gap-1 text-orange-500 font-bold"
+              >
+                💬 Chat
+              </button>
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Get Personal Assistant
+              </span>
             </div>
           </div>
         </div>
@@ -158,6 +160,7 @@ const Navbar = () => {
       {isChatOpen && (
         <div className="fixed inset-0 flex justify-end z-50">
           <div className="bg-white w-80 h-full flex flex-col shadow-lg">
+            {/* --- CHANGE: Chat components now use a coral color as a warm accent --- */}
             <div className="p-4 bg-[#fb9c7c] flex justify-between items-center">
               <h2 className="font-bold text-white">Chat Support</h2>
               <button onClick={toggleChat}>
@@ -185,25 +188,22 @@ const Navbar = () => {
               <div ref={chatEndRef} />
             </div>
 
-            {/* --- CHANGE START: Chat footer updated to remove the button --- */}
             <div className="p-3 border-t flex gap-2">
               <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1 border rounded px-2 py-1 text-sm"
-                  onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                className="flex-1 border rounded px-2 py-1 text-sm focus:ring-[#fb9c7c] focus:border-[#fb9c7c]"
+                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               />
               <button
-                  onClick={sendMessage}
-                  className="bg-[#fb9c7c] text-white px-3 py-1 rounded"
+                onClick={sendMessage}
+                className="bg-[#fb9c7c] text-white px-3 py-1 rounded hover:opacity-90"
               >
-                  Send
+                Send
               </button>
             </div>
-            {/* --- CHANGE END --- */}
-
           </div>
         </div>
       )}

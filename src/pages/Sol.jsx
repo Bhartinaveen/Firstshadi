@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     CakeIcon,
     UsersIcon,
@@ -68,7 +69,7 @@ const userData = [
     images: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop'],
     isPremium: false,
   },
-   {
+  {
     name: 'Rohit',
     gender: 'Man',
     phone: '9988776655',
@@ -182,7 +183,6 @@ const CrownIcon = (props) => (
         <path d="M256 0L176 128h-112l-16 64h400l-16-64h-112L256 0zM48 224l-32 256h480l-32-256H48z" fill="url(#gold-gradient)" style={{filter: 'url(#glow)'}}/>
     </svg>
 );
-
 
 // --- Gallery Modal (Carousel) ---
 const GalleryModal = ({ images, onClose }) => {
@@ -368,17 +368,11 @@ const MembershipModal = ({ onClose }) => {
     );
 };
 
-
 // --- Main Component ---
 function Sol() {
-  const mockLocationState = {
-    minAge: 18,
-    maxAge: 35,
-    gender: null,
-    religion: 'Hindu',
-    motherTongue: null,
-  };
-
+  const location = useLocation();
+  const searchParams = location.state || {};
+  
   const [requestedUsers, setRequestedUsers] = useState([]);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
@@ -441,204 +435,205 @@ function Sol() {
 
   const filteredUsers = userData.filter((user) => {
     const userAge = parseInt(user.age);
-    const { minAge, maxAge, gender, religion, motherTongue } = mockLocationState || {};
+    const { minAge, maxAge, gender, religion, motherTongue } = searchParams || {};
 
     const nameMatch = !searchName || user.name.toLowerCase().includes(searchName.toLowerCase());
     const genderMatch = !gender || user.gender === gender;
     const religionMatch = !religion || user.religion === religion;
     const tongueMatch = !motherTongue || user.motherTongue === motherTongue;
     const casteMatch = !selectedCaste || user.caste === selectedCaste;
-    const ageMatch = !minAge || !maxAge || (userAge >= minAge && userAge <= maxAge);
+    const ageMatch = (!minAge && !maxAge) || 
+                    (minAge && !maxAge && userAge >= minAge) || 
+                    (!minAge && maxAge && userAge <= maxAge) || 
+                    (minAge && maxAge && userAge >= minAge && userAge <= maxAge);
 
     return nameMatch && genderMatch && religionMatch && tongueMatch && casteMatch && ageMatch;
   });
 
   return (
+    <div>
+      <div className="font-sans bg-gradient-to-br from-orange-100 to-red-100 text-slate-800">
+        <div className="min-h-screen container mx-auto px-4 py-16">
+          {/* --- Header Section --- */}
+          <div className="text-center mb-14">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 mb-4 tracking-tight">
+              Find Your Soulmate
+            </h1>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+              Browse through profiles on our elegantly designed platform. Your journey to finding love starts now.
+            </p>
+          </div>
 
-      <div>
-
-    <div className="font-sans bg-gradient-to-br from-orange-100 to-red-100 text-slate-800">
-      <div className="min-h-screen container mx-auto px-4 py-16">
-        {/* --- Header Section --- */}
-        <div className="text-center mb-14">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 mb-4 tracking-tight">
-            Find Your Soulmate
-          </h1>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Browse through profiles on our elegantly designed platform. Your journey to finding love starts now.
-          </p>
-        </div>
-
-        {/* --- Filter Section --- */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-14">
-            {/* Name Filter */}
-            <div className="relative">
-                <input
-                    type="text"
-                    placeholder="Search by name..."
-                    value={searchName}
-                    onChange={(e) => setSearchName(e.target.value)}
-                    className="w-64 bg-white border border-gray-300 rounded-full px-5 py-3 pl-12 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 shadow-sm text-slate-700 placeholder-slate-500"
-                />
-                <MagnifyingGlassIcon className="h-6 w-6 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            </div>
-
-            {/* Caste Filter */}
-            <div className="relative">
-                <select
-                    id="caste-filter"
-                    value={selectedCaste}
-                    onChange={(e) => setSelectedCaste(e.target.value)}
-                    className="w-64 appearance-none bg-white border border-gray-300 rounded-full px-5 py-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 text-slate-700"
-                >
-                    <option value="">All Castes</option>
-                    {casteOptions.map((caste, i) => (
-                        <option key={i} value={caste} className="bg-white text-slate-700">{caste}</option>
-                    ))}
-                </select>
-            </div>
-        </div>
-
-        {/* --- Profile Cards Grid --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {filteredUsers.map((user) => {
-            const isRequested = requestedUsers.includes(user.email);
-            return (
-              <div
-                key={user.email}
-                className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-500 group hover:shadow-orange-500/20 hover:border-orange-400/50 flex flex-col"
-              >
-                {/* --- Card Image with Hover Effect and Gallery Indicator --- */}
-                <div className="relative overflow-hidden">
-                    <img
-                        src={user.images[0]}
-                        alt={user.name}
-                        onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found'; }}
-                        className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                     {user.isPremium && (
-                        <div className="absolute top-4 left-4 transform -rotate-12">
-                            <CrownIcon className="w-8 h-8" />
-                        </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 p-5">
-                        <h2 className="text-3xl font-bold text-white tracking-tight">{user.name}</h2>
-                        <p className="text-md text-orange-300 font-medium">{user.job}</p>
-                    </div>
-                    <div className="absolute top-4 right-4 flex items-center space-x-2">
-                        {user.images.length > 1 && (
-                            <button
-                                onClick={() => openGallery(user.images)}
-                                className="flex items-center space-x-2 bg-black/40 text-white text-xs font-semibold pl-2 pr-3 py-1.5 rounded-full cursor-pointer hover:bg-black/60 transition-colors backdrop-blur-sm"
-                                title="View Photos"
-                            >
-                                <PhotoIcon className="h-4 w-4" />
-                                <span>{user.images.length} Photos</span>
-                            </button>
-                        )}
-                        <button
-                            onClick={() => openProfileModal(user)}
-                            className="flex items-center justify-center bg-white/80 text-orange-600 w-8 h-8 rounded-full cursor-pointer hover:bg-white transition-colors backdrop-blur-sm shadow-md"
-                            title="View Full Profile"
-                        >
-                            <EyeIcon className="h-5 w-5" />
-                        </button>
-                    </div>
-                </div>
-                
-                <div className="p-6 space-y-5 flex-grow">
-                  {/* Key Info Row */}
-                  <div className="flex justify-around text-center border-b border-gray-200 pb-4">
-                      <div className="flex flex-col items-center">
-                          <CakeIcon className="h-6 w-6 text-orange-500 mb-1" />
-                          <span className="text-sm font-semibold text-slate-800">{user.age}</span>
-                          <span className="text-xs text-slate-500">Years</span>
-                      </div>
-                       <div className="flex flex-col items-center">
-                          <MapPinIcon className="h-6 w-6 text-green-500 mb-1" />
-                          <span className="text-sm font-semibold text-slate-800" title={user.location}>{user.location}</span>
-                          <span className="text-xs text-slate-500">Location</span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                          <HeartIcon className="h-6 w-6 text-red-500 mb-1" />
-                          <span className="text-sm font-semibold text-slate-800">{user.religion}</span>
-                          <span className="text-xs text-slate-500">Religion</span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                          <AcademicCapIcon className="h-6 w-6 text-amber-600 mb-1" />
-                          <span className="text-sm font-semibold text-slate-800">{user.caste}</span>
-                          <span className="text-xs text-slate-500">Caste</span>
-                      </div>
-                  </div>
-                  {/* Other Details */}
-                  <div className="space-y-3 text-slate-600 text-sm pt-4">
-                      <div className="flex items-start space-x-3">
-                          <UsersIcon className="h-5 w-5 text-slate-400 mt-0.5 shrink-0" />
-                          <p><span className="font-semibold text-slate-700">Family: </span>{user.family}</p>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                          <ChatBubbleLeftRightIcon className="h-5 w-5 text-slate-400" />
-                          <p><span className="font-semibold text-slate-700">Speaks: </span>{user.motherTongue}</p>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                            <DevicePhoneMobileIcon className="h-5 w-5 text-slate-400" />
-                            <p className="flex-grow">
-                                <span className="font-semibold text-slate-700">Phone: </span>
-                                {formatPhoneNumber(user.phone)}
-                            </p>
-                            <button onClick={handlePhoneViewClick} className="text-slate-500 hover:text-slate-700">
-                                <EyeIcon className="h-5 w-5" />
-                            </button>
-                        </div>
-                  </div>
-                </div>
-
-                {/* --- Action Button --- */}
-                <div className="px-6 pb-6 pt-2">
-                  <button
-                    disabled={isRequested}
-                    onClick={() => handleRequest(user)}
-                    className={`w-full flex items-center justify-center px-4 py-3 text-base font-bold rounded-xl transition-all duration-300 transform
-                      ${isRequested
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-orange-500/40 focus:outline-none focus:ring-4 focus:ring-orange-300 hover:-translate-y-0.5'
-                      }`}
-                  >
-                    {isRequested ? (
-                      <>
-                        <CheckCircleIcon className="h-6 w-6 mr-2" />
-                        Request Sent
-                      </>
-                    ) : (
-                      <>
-                        <PlusCircleIcon className="h-6 w-6 mr-2" />
-                        Send Request
-                      </>
-                    )}
-                  </button>
-                </div>
+          {/* --- Filter Section --- */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-14">
+              {/* Name Filter */}
+              <div className="relative">
+                  <input
+                      type="text"
+                      placeholder="Search by name..."
+                      value={searchName}
+                      onChange={(e) => setSearchName(e.target.value)}
+                      className="w-64 bg-white border border-gray-300 rounded-full px-5 py-3 pl-12 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 shadow-sm text-slate-700 placeholder-slate-500"
+                  />
+                  <MagnifyingGlassIcon className="h-6 w-6 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
               </div>
-            );
-          })}
+
+              {/* Caste Filter */}
+              <div className="relative">
+                  <select
+                      id="caste-filter"
+                      value={selectedCaste}
+                      onChange={(e) => setSelectedCaste(e.target.value)}
+                      className="w-64 appearance-none bg-white border border-gray-300 rounded-full px-5 py-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 text-slate-700"
+                  >
+                      <option value="">All Castes</option>
+                      {casteOptions.map((caste, i) => (
+                          <option key={i} value={caste} className="bg-white text-slate-700">{caste}</option>
+                      ))}
+                  </select>
+              </div>
+          </div>
+
+          {/* --- Profile Cards Grid --- */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {filteredUsers.map((user) => {
+              const isRequested = requestedUsers.includes(user.email);
+              return (
+                <div
+                  key={user.email}
+                  className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-500 group hover:shadow-orange-500/20 hover:border-orange-400/50 flex flex-col"
+                >
+                  {/* --- Card Image with Hover Effect and Gallery Indicator --- */}
+                  <div className="relative overflow-hidden">
+                      <img
+                          src={user.images[0]}
+                          alt={user.name}
+                          onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found'; }}
+                          className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      {user.isPremium && (
+                          <div className="absolute top-4 left-4 transform -rotate-12">
+                              <CrownIcon className="w-8 h-8" />
+                          </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      <div className="absolute bottom-0 left-0 p-5">
+                          <h2 className="text-3xl font-bold text-white tracking-tight">{user.name}</h2>
+                          <p className="text-md text-orange-300 font-medium">{user.job}</p>
+                      </div>
+                      <div className="absolute top-4 right-4 flex items-center space-x-2">
+                          {user.images.length > 1 && (
+                              <button
+                                  onClick={() => openGallery(user.images)}
+                                  className="flex items-center space-x-2 bg-black/40 text-white text-xs font-semibold pl-2 pr-3 py-1.5 rounded-full cursor-pointer hover:bg-black/60 transition-colors backdrop-blur-sm"
+                                  title="View Photos"
+                              >
+                                  <PhotoIcon className="h-4 w-4" />
+                                  <span>{user.images.length} Photos</span>
+                              </button>
+                          )}
+                          <button
+                              onClick={() => openProfileModal(user)}
+                              className="flex items-center justify-center bg-white/80 text-orange-600 w-8 h-8 rounded-full cursor-pointer hover:bg-white transition-colors backdrop-blur-sm shadow-md"
+                              title="View Full Profile"
+                          >
+                              <EyeIcon className="h-5 w-5" />
+                          </button>
+                      </div>
+                  </div>
+                  
+                  <div className="p-6 space-y-5 flex-grow">
+                    {/* Key Info Row */}
+                    <div className="flex justify-around text-center border-b border-gray-200 pb-4">
+                        <div className="flex flex-col items-center">
+                            <CakeIcon className="h-6 w-6 text-orange-500 mb-1" />
+                            <span className="text-sm font-semibold text-slate-800">{user.age}</span>
+                            <span className="text-xs text-slate-500">Years</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <MapPinIcon className="h-6 w-6 text-green-500 mb-1" />
+                            <span className="text-sm font-semibold text-slate-800" title={user.location}>{user.location}</span>
+                            <span className="text-xs text-slate-500">Location</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <HeartIcon className="h-6 w-6 text-red-500 mb-1" />
+                            <span className="text-sm font-semibold text-slate-800">{user.religion}</span>
+                            <span className="text-xs text-slate-500">Religion</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <AcademicCapIcon className="h-6 w-6 text-amber-600 mb-1" />
+                            <span className="text-sm font-semibold text-slate-800">{user.caste}</span>
+                            <span className="text-xs text-slate-500">Caste</span>
+                        </div>
+                    </div>
+                    {/* Other Details */}
+                    <div className="space-y-3 text-slate-600 text-sm pt-4">
+                        <div className="flex items-start space-x-3">
+                            <UsersIcon className="h-5 w-5 text-slate-400 mt-0.5 shrink-0" />
+                            <p><span className="font-semibold text-slate-700">Family: </span>{user.family}</p>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                            <ChatBubbleLeftRightIcon className="h-5 w-5 text-slate-400" />
+                            <p><span className="font-semibold text-slate-700">Speaks: </span>{user.motherTongue}</p>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                              <DevicePhoneMobileIcon className="h-5 w-5 text-slate-400" />
+                              <p className="flex-grow">
+                                  <span className="font-semibold text-slate-700">Phone: </span>
+                                  {formatPhoneNumber(user.phone)}
+                              </p>
+                              <button onClick={handlePhoneViewClick} className="text-slate-500 hover:text-slate-700">
+                                  <EyeIcon className="h-5 w-5" />
+                              </button>
+                          </div>
+                    </div>
+                  </div>
+
+                  {/* --- Action Button --- */}
+                  <div className="px-6 pb-6 pt-2">
+                    <button
+                      disabled={isRequested}
+                      onClick={() => handleRequest(user)}
+                      className={`w-full flex items-center justify-center px-4 py-3 text-base font-bold rounded-xl transition-all duration-300 transform
+                        ${isRequested
+                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-orange-500/40 focus:outline-none focus:ring-4 focus:ring-orange-300 hover:-translate-y-0.5'
+                        }`}
+                    >
+                      {isRequested ? (
+                        <>
+                          <CheckCircleIcon className="h-6 w-6 mr-2" />
+                          Request Sent
+                        </>
+                      ) : (
+                        <>
+                          <PlusCircleIcon className="h-6 w-6 mr-2" />
+                          Send Request
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* --- No Results Message --- */}
+          {filteredUsers.length === 0 && (
+              <div className="text-center col-span-full py-24">
+                  <h3 className="text-3xl font-semibold text-slate-600">No Profiles Found</h3>
+                  <p className="text-slate-500 mt-3">Try adjusting your filters to discover more people.</p>
+              </div>
+          )}
         </div>
-        
-        {/* --- No Results Message --- */}
-        {filteredUsers.length === 0 && (
-            <div className="text-center col-span-full py-24">
-                <h3 className="text-3xl font-semibold text-slate-600">No Profiles Found</h3>
-                <p className="text-slate-500 mt-3">Try adjusting your filters to discover more people.</p>
-            </div>
-        )}
+
+        {/* --- Modals --- */}
+        {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
+        {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
+        {showMembershipModal && <MembershipModal onClose={() => setShowMembershipModal(false)} />}
       </div>
 
-      {/* --- Modals --- */}
-      {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
-      {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
-      {showMembershipModal && <MembershipModal onClose={() => setShowMembershipModal(false)} />}
-    </div>
-
-<Footer/>
+      <Footer/>
     </div>
   );
 }

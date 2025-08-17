@@ -20,9 +20,15 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     StarIcon,
-    LockClosedIcon
+    LockClosedIcon,
+    FilmIcon,
+    MusicalNoteIcon,
+    PaintBrushIcon,
+    SparklesIcon,
+    ShieldCheckIcon,
+    ArrowsUpDownIcon,
+    ScaleIcon
 } from '@heroicons/react/24/solid';
-import Footer from '../components/Footer';
 
 // --- Mock Data with more details ---
 const userData = [
@@ -46,6 +52,13 @@ const userData = [
         location: 'Patna, Bihar',
         images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1921&auto=format&fit=crop'],
         isPremium: true,
+        height: "5' 10\"",
+        weight: "75 kg",
+        favoriteMovies: "3 Idiots, Lagaan",
+        favoriteColor: "Blue",
+        favoriteSong: "Tum Hi Ho",
+        zodiac: "Leo",
+        manglik: "No",
     },
     {
         name: 'Anjali',
@@ -67,6 +80,13 @@ const userData = [
         location: 'Muzaffarpur, Bihar',
         images: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop'],
         isPremium: false,
+        height: "5' 4\"",
+        weight: "58 kg",
+        favoriteMovies: "Queen, Dilwale Dulhania Le Jayenge",
+        favoriteColor: "Pink",
+        favoriteSong: "Lag Jaa Gale",
+        zodiac: "Cancer",
+        manglik: "Yes",
     },
     {
         name: 'Rohit',
@@ -88,6 +108,13 @@ const userData = [
         location: 'Ranchi, Jharkhand',
         images: ['https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop'],
         isPremium: true,
+        height: "6' 0\"",
+        weight: "82 kg",
+        favoriteMovies: "Gangs of Wasseypur, Sholay",
+        favoriteColor: "Black",
+        favoriteSong: "Chaiyya Chaiyya",
+        zodiac: "Scorpio",
+        manglik: "No",
     },
     {
         name: 'Pooja',
@@ -109,6 +136,13 @@ const userData = [
         location: 'Gaya, Bihar',
         images: ['https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop', 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop'],
         isPremium: false,
+        height: "5' 6\"",
+        weight: "60 kg",
+        favoriteMovies: "Barfi!, English Vinglish",
+        favoriteColor: "Yellow",
+        favoriteSong: "Raabta",
+        zodiac: "Virgo",
+        manglik: "No",
     },
     {
         name: 'Vikram',
@@ -130,6 +164,13 @@ const userData = [
         location: 'Varanasi, UP',
         images: ['https://images.unsplash.com/photo-1528231171436-1b39a318a183?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1618151313441-374b6e5436a1?q=80&w=1887&auto=format&fit=crop'],
         isPremium: true,
+        height: "5' 11\"",
+        weight: "78 kg",
+        favoriteMovies: "Rockstar, Swades",
+        favoriteColor: "Maroon",
+        favoriteSong: "Kun Faya Kun",
+        zodiac: "Aries",
+        manglik: "Yes",
     },
     {
         name: 'Priya',
@@ -151,6 +192,13 @@ const userData = [
         location: 'Lucknow, UP',
         images: ['https://images.unsplash.com/photo-1557555185-1367c24d3654?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1601288496920-b6154fe3626a?q=80&w=1887&auto=format&fit=crop'],
         isPremium: false,
+        height: "5' 5\"",
+        weight: "62 kg",
+        favoriteMovies: "Zindagi Na Milegi Dobara, Wake Up Sid",
+        favoriteColor: "Teal",
+        favoriteSong: "Iktara",
+        zodiac: "Taurus",
+        manglik: "No",
     },
 ];
 
@@ -164,22 +212,20 @@ const casteOptions = [
 ];
 
 const CrownIcon = (props) => (
-    <svg width="48" height="48" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" {...props}>
         <defs>
-            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#FFD700', stopOpacity: 1 }} />
-                <stop offset="50%" style={{ stopColor: '#FFA500', stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: '#FFD700', stopOpacity: 1 }} />
+            <linearGradient id="crown-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style={{ stopColor: '#FFD700' }} />
+                <stop offset="100%" style={{ stopColor: '#FDB813' }} />
             </linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                </feMerge>
-            </filter>
         </defs>
-        <path d="M256 0L176 128h-112l-16 64h400l-16-64h-112L256 0zM48 224l-32 256h480l-32-256H48z" fill="url(#gold-gradient)" style={{ filter: 'url(#glow)' }} />
+        <g>
+            <path d="M10 30 L15 70 L85 70 L90 30 L65 50 L50 30 L35 50 Z" fill="url(#crown-gradient)" />
+            <circle cx="25" cy="45" r="5" fill="#FFF700" />
+            <circle cx="50" cy="40" r="5" fill="#FFF700" />
+            <circle cx="75" cy="45" r="5" fill="#FFF700" />
+            <rect x="15" y="75" width="70" height="5" fill="url(#crown-gradient)" />
+        </g>
     </svg>
 );
 
@@ -296,9 +342,13 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                             <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Personal Details</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                                 <DetailItem icon={<CakeIcon />} label="Age" value={`${user.age} Years`} />
+                                <DetailItem icon={<ArrowsUpDownIcon />} label="Height" value={user.height} />
+                                <DetailItem icon={<ScaleIcon />} label="Weight" value={user.weight} />
                                 <DetailItem icon={<HeartIcon />} label="Religion" value={user.religion} />
                                 <DetailItem icon={<AcademicCapIcon />} label="Caste" value={user.caste} />
                                 <DetailItem icon={<ChatBubbleLeftRightIcon />} label="Mother Tongue" value={user.motherTongue} />
+                                <DetailItem icon={<SparklesIcon />} label="Zodiac Sign" value={user.zodiac} />
+                                <DetailItem icon={<ShieldCheckIcon />} label="Manglik" value={user.manglik} />
                             </div>
                         </div>
                         <div>
@@ -318,10 +368,12 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Location & Interests</h3>
-                            <div className="grid grid-cols-1 gap-y-6">
-                                <DetailItem icon={<HomeIcon />} label="Full Address" value={user.address} />
-                                <div className="flex items-start space-x-4">
+                            <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Favorites & Interests</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                <DetailItem icon={<FilmIcon />} label="Favorite Movies" value={user.favoriteMovies} />
+                                <DetailItem icon={<MusicalNoteIcon />} label="Favorite Song" value={user.favoriteSong} />
+                                <DetailItem icon={<PaintBrushIcon />} label="Favorite Color" value={user.favoriteColor} />
+                                <div className="flex items-start space-x-4 md:col-span-2">
                                     <div className="flex-shrink-0 w-6 h-6 text-orange-500 mt-1"><PhotoIcon /></div>
                                     <div>
                                         <p className="text-sm text-slate-500">Hobbies</p>
@@ -365,6 +417,15 @@ const MembershipModal = ({ onClose }) => {
                 </button>
             </div>
         </div>
+    );
+};
+
+// --- Footer Component Placeholder ---
+const Footer = () => {
+    return (
+        <footer className="bg-gray-800 text-white text-center p-4">
+            <p>© 2024 Soulmate Finder. All rights reserved.</p>
+        </footer>
     );
 };
 
@@ -455,189 +516,189 @@ const Ncon = () => {
 
     return (
 
-      <div>
-        <div className="font-sans bg-gradient-to-br from-orange-100 to-red-100 text-slate-800">
-            <div className="min-h-screen container mx-auto px-4 py-16">
-                {/* --- Header Section --- */}
-                <div className="text-center mb-14">
-                    <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 mb-4 tracking-tight">
-                        Find Your Soulmate
-                    </h1>
-                    <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-                        Browse through profiles on our elegantly designed platform. Your journey to finding love starts now.
-                    </p>
-                </div>
-
-                {/* --- Filter Section --- */}
-                <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-14">
-                    {/* Name Filter */}
-                    <div className="relative">
-                        <input
-                            type="text"
-                            placeholder="Search by name..."
-                            value={searchName}
-                            onChange={(e) => setSearchName(e.target.value)}
-                            className="w-64 bg-white border border-gray-300 rounded-full px-5 py-3 pl-12 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 shadow-sm text-slate-700 placeholder-slate-500"
-                        />
-                        <MagnifyingGlassIcon className="h-6 w-6 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+        <div>
+            <div className="font-sans bg-gradient-to-br from-orange-100 to-red-100 text-slate-800">
+                <div className="min-h-screen container mx-auto px-4 py-16">
+                    {/* --- Header Section --- */}
+                    <div className="text-center mb-14">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 mb-4 tracking-tight">
+                            Find Your Soulmate
+                        </h1>
+                        <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+                            Browse through profiles on our elegantly designed platform. Your journey to finding love starts now.
+                        </p>
                     </div>
 
-                    {/* Caste Filter */}
-                    <div className="relative">
-                        <select
-                            id="caste-filter"
-                            value={selectedCaste}
-                            onChange={(e) => setSelectedCaste(e.target.value)}
-                            className="w-64 appearance-none bg-white border border-gray-300 rounded-full px-5 py-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 text-slate-700"
-                        >
-                            <option value="">All Castes</option>
-                            {casteOptions.map((caste, i) => (
-                                <option key={i} value={caste} className="bg-white text-slate-700">{caste}</option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
+                    {/* --- Filter Section --- */}
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-14">
+                        {/* Name Filter */}
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Search by name..."
+                                value={searchName}
+                                onChange={(e) => setSearchName(e.target.value)}
+                                className="w-64 bg-white border border-gray-300 rounded-full px-5 py-3 pl-12 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 shadow-sm text-slate-700 placeholder-slate-500"
+                            />
+                            <MagnifyingGlassIcon className="h-6 w-6 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        </div>
 
-                {/* --- Profile Cards Grid --- */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {filteredUsers.map((user) => {
-                        const isRequested = requestedUsers.includes(user.email);
-                        return (
-                            <div
-                                key={user.email}
-                                className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-500 group hover:shadow-orange-500/20 hover:border-orange-400/50 flex flex-col"
+                        {/* Caste Filter */}
+                        <div className="relative">
+                            <select
+                                id="caste-filter"
+                                value={selectedCaste}
+                                onChange={(e) => setSelectedCaste(e.target.value)}
+                                className="w-64 appearance-none bg-white border border-gray-300 rounded-full px-5 py-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-300 text-slate-700"
                             >
-                                {/* --- Card Image with Hover Effect and Gallery Indicator --- */}
-                                <div className="relative overflow-hidden">
-                                    <img
-                                        src={user.images[0]}
-                                        alt={user.name}
-                                        onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found'; }}
-                                        className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    {user.isPremium && (
-                                        <div className="absolute top-4 left-4 transform -rotate-12">
-                                            <CrownIcon className="w-8 h-8" />
-                                        </div>
-                                    )}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                    <div className="absolute bottom-0 left-0 p-5">
-                                        <h2 className="text-3xl font-bold text-white tracking-tight">{user.name}</h2>
-                                        <p className="text-md text-orange-300 font-medium">{user.job}</p>
-                                    </div>
-                                    <div className="absolute top-4 right-4 flex items-center space-x-2">
-                                        {user.images.length > 1 && (
-                                            <button
-                                                onClick={() => openGallery(user.images)}
-                                                className="flex items-center space-x-2 bg-black/40 text-white text-xs font-semibold pl-2 pr-3 py-1.5 rounded-full cursor-pointer hover:bg-black/60 transition-colors backdrop-blur-sm"
-                                                title="View Photos"
-                                            >
-                                                <PhotoIcon className="h-4 w-4" />
-                                                <span>{user.images.length} Photos</span>
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={() => openProfileModal(user)}
-                                            className="flex items-center justify-center bg-white/80 text-orange-600 w-8 h-8 rounded-full cursor-pointer hover:bg-white transition-colors backdrop-blur-sm shadow-md"
-                                            title="View Full Profile"
-                                        >
-                                            <EyeIcon className="h-5 w-5" />
-                                        </button>
-                                    </div>
-                                </div>
+                                <option value="">All Castes</option>
+                                {casteOptions.map((caste, i) => (
+                                    <option key={i} value={caste} className="bg-white text-slate-700">{caste}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
 
-                                <div className="p-6 space-y-5 flex-grow">
-                                    {/* Key Info Row */}
-                                    <div className="flex justify-around text-center border-b border-gray-200 pb-4">
-                                        <div className="flex flex-col items-center">
-                                            <CakeIcon className="h-6 w-6 text-orange-500 mb-1" />
-                                            <span className="text-sm font-semibold text-slate-800">{user.age}</span>
-                                            <span className="text-xs text-slate-500">Years</span>
+                    {/* --- Profile Cards Grid --- */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {filteredUsers.map((user) => {
+                            const isRequested = requestedUsers.includes(user.email);
+                            return (
+                                <div
+                                    key={user.email}
+                                    className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-500 group hover:shadow-orange-500/20 hover:border-orange-400/50 flex flex-col"
+                                >
+                                    {/* --- Card Image with Hover Effect and Gallery Indicator --- */}
+                                    <div className="relative overflow-hidden">
+                                        <img
+                                            src={user.images[0]}
+                                            alt={user.name}
+                                            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found'; }}
+                                            className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                                        />
+                                        {user.isPremium && (
+                                            <div className="absolute top-4 left-4 transform -rotate-12">
+                                                <CrownIcon className="w-8 h-8" />
+                                            </div>
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                        <div className="absolute bottom-0 left-0 p-5">
+                                            <h2 className="text-3xl font-bold text-white tracking-tight">{user.name}</h2>
+                                            <p className="text-md text-orange-300 font-medium">{user.job}</p>
                                         </div>
-                                        <div className="flex flex-col items-center">
-                                            <MapPinIcon className="h-6 w-6 text-green-500 mb-1" />
-                                            <span className="text-sm font-semibold text-slate-800" title={user.location}>{user.location}</span>
-                                            <span className="text-xs text-slate-500">Location</span>
-                                        </div>
-                                        <div className="flex flex-col items-center">
-                                            <HeartIcon className="h-6 w-6 text-red-500 mb-1" />
-                                            <span className="text-sm font-semibold text-slate-800">{user.religion}</span>
-                                            <span className="text-xs text-slate-500">Religion</span>
-                                        </div>
-                                        <div className="flex flex-col items-center">
-                                            <AcademicCapIcon className="h-6 w-6 text-amber-600 mb-1" />
-                                            <span className="text-sm font-semibold text-slate-800">{user.caste}</span>
-                                            <span className="text-xs text-slate-500">Caste</span>
-                                        </div>
-                                    </div>
-                                    {/* Other Details */}
-                                    <div className="space-y-3 text-slate-600 text-sm pt-4">
-                                        <div className="flex items-start space-x-3">
-                                            <UsersIcon className="h-5 w-5 text-slate-400 mt-0.5 shrink-0" />
-                                            <p><span className="font-semibold text-slate-700">Family: </span>{user.family}</p>
-                                        </div>
-                                        <div className="flex items-center space-x-3">
-                                            <ChatBubbleLeftRightIcon className="h-5 w-5 text-slate-400" />
-                                            <p><span className="font-semibold text-slate-700">Speaks: </span>{user.motherTongue}</p>
-                                        </div>
-                                        <div className="flex items-center space-x-3">
-                                            <DevicePhoneMobileIcon className="h-5 w-5 text-slate-400" />
-                                            <p className="flex-grow">
-                                                <span className="font-semibold text-slate-700">Phone: </span>
-                                                {formatPhoneNumber(user.phone)}
-                                            </p>
-                                            <button onClick={handlePhoneViewClick} className="text-slate-500 hover:text-slate-700">
+                                        <div className="absolute top-4 right-4 flex items-center space-x-2">
+                                            {user.images.length > 1 && (
+                                                <button
+                                                    onClick={() => openGallery(user.images)}
+                                                    className="flex items-center space-x-2 bg-black/40 text-white text-xs font-semibold pl-2 pr-3 py-1.5 rounded-full cursor-pointer hover:bg-black/60 transition-colors backdrop-blur-sm"
+                                                    title="View Photos"
+                                                >
+                                                    <PhotoIcon className="h-4 w-4" />
+                                                    <span>{user.images.length} Photos</span>
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => openProfileModal(user)}
+                                                className="flex items-center justify-center bg-white/80 text-orange-600 w-8 h-8 rounded-full cursor-pointer hover:bg-white transition-colors backdrop-blur-sm shadow-md"
+                                                title="View Full Profile"
+                                            >
                                                 <EyeIcon className="h-5 w-5" />
                                             </button>
                                         </div>
                                     </div>
-                                </div>
 
-                                {/* --- Action Button --- */}
-                                <div className="px-6 pb-6 pt-2">
-                                    <button
-                                        disabled={isRequested}
-                                        onClick={() => handleRequest(user)}
-                                        className={`w-full flex items-center justify-center px-4 py-3 text-base font-bold rounded-xl transition-all duration-300 transform
-                                          ${isRequested
-                                                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                                : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-orange-500/40 focus:outline-none focus:ring-4 focus:ring-orange-300 hover:-translate-y-0.5'
-                                            }`}
-                                    >
-                                        {isRequested ? (
-                                            <>
-                                                <CheckCircleIcon className="h-6 w-6 mr-2" />
-                                                Request Sent
-                                            </>
-                                        ) : (
-                                            <>
-                                                <PlusCircleIcon className="h-6 w-6 mr-2" />
-                                                Send Request
-                                            </>
-                                        )}
-                                    </button>
+                                    <div className="p-6 space-y-5 flex-grow">
+                                        {/* Key Info Row */}
+                                        <div className="flex justify-around text-center border-b border-gray-200 pb-4">
+                                            <div className="flex flex-col items-center">
+                                                <CakeIcon className="h-6 w-6 text-orange-500 mb-1" />
+                                                <span className="text-sm font-semibold text-slate-800">{user.age}</span>
+                                                <span className="text-xs text-slate-500">Years</span>
+                                            </div>
+                                            <div className="flex flex-col items-center">
+                                                <MapPinIcon className="h-6 w-6 text-green-500 mb-1" />
+                                                <span className="text-sm font-semibold text-slate-800" title={user.location}>{user.location}</span>
+                                                <span className="text-xs text-slate-500">Location</span>
+                                            </div>
+                                            <div className="flex flex-col items-center">
+                                                <HeartIcon className="h-6 w-6 text-red-500 mb-1" />
+                                                <span className="text-sm font-semibold text-slate-800">{user.religion}</span>
+                                                <span className="text-xs text-slate-500">Religion</span>
+                                            </div>
+                                            <div className="flex flex-col items-center">
+                                                <AcademicCapIcon className="h-6 w-6 text-amber-600 mb-1" />
+                                                <span className="text-sm font-semibold text-slate-800">{user.caste}</span>
+                                                <span className="text-xs text-slate-500">Caste</span>
+                                            </div>
+                                        </div>
+                                        {/* Other Details */}
+                                        <div className="space-y-3 text-slate-600 text-sm pt-4">
+                                            <div className="flex items-start space-x-3">
+                                                <UsersIcon className="h-5 w-5 text-slate-400 mt-0.5 shrink-0" />
+                                                <p><span className="font-semibold text-slate-700">Family: </span>{user.family}</p>
+                                            </div>
+                                            <div className="flex items-center space-x-3">
+                                                <ChatBubbleLeftRightIcon className="h-5 w-5 text-slate-400" />
+                                                <p><span className="font-semibold text-slate-700">Speaks: </span>{user.motherTongue}</p>
+                                            </div>
+                                            <div className="flex items-center space-x-3">
+                                                <DevicePhoneMobileIcon className="h-5 w-5 text-slate-400" />
+                                                <p className="flex-grow">
+                                                    <span className="font-semibold text-slate-700">Phone: </span>
+                                                    {formatPhoneNumber(user.phone)}
+                                                </p>
+                                                <button onClick={handlePhoneViewClick} className="text-slate-500 hover:text-slate-700">
+                                                    <EyeIcon className="h-5 w-5" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* --- Action Button --- */}
+                                    <div className="px-6 pb-6 pt-2">
+                                        <button
+                                            disabled={isRequested}
+                                            onClick={() => handleRequest(user)}
+                                            className={`w-full flex items-center justify-center px-4 py-3 text-base font-bold rounded-xl transition-all duration-300 transform
+                                              ${isRequested
+                                                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                                    : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-orange-500/40 focus:outline-none focus:ring-4 focus:ring-orange-300 hover:-translate-y-0.5'
+                                                }`}
+                                        >
+                                            {isRequested ? (
+                                                <>
+                                                    <CheckCircleIcon className="h-6 w-6 mr-2" />
+                                                    Request Sent
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <PlusCircleIcon className="h-6 w-6 mr-2" />
+                                                    Send Request
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
+
+                    {/* --- No Results Message --- */}
+                    {filteredUsers.length === 0 && (
+                        <div className="text-center col-span-full py-24">
+                            <h3 className="text-3xl font-semibold text-slate-600">No Profiles Found</h3>
+                            <p className="text-slate-500 mt-3">Try adjusting your filters to discover more people.</p>
+                        </div>
+                    )}
                 </div>
 
-                {/* --- No Results Message --- */}
-                {filteredUsers.length === 0 && (
-                    <div className="text-center col-span-full py-24">
-                        <h3 className="text-3xl font-semibold text-slate-600">No Profiles Found</h3>
-                        <p className="text-slate-500 mt-3">Try adjusting your filters to discover more people.</p>
-                    </div>
-                )}
+                {/* --- Modals --- */}
+                {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
+                {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
+                {showMembershipModal && <MembershipModal onClose={() => setShowMembershipModal(false)} />}
             </div>
 
-            {/* --- Modals --- */}
-            {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
-            {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
-            {showMembershipModal && <MembershipModal onClose={() => setShowMembershipModal(false)} />}
-        </div>
-       
-   <Footer/>
+            <Footer />
         </div>
     );
 }

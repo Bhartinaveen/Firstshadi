@@ -1,4 +1,3 @@
-// Landing.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,19 +19,10 @@ const HeartIcon = () => (
   </svg>
 );
 
-/**
- * Reusable Select Field Component with Placeholder support for mobile
- * @param {object} props - Component props
- * @param {string} props.placeholder - The placeholder text for the select input.
- * @param {string} props.value - The current value of the select input.
- * @param {Function} props.onChange - The function to call when the value changes.
- * @param {string[]} props.options - An array of strings for the select options.
- * @param {string} [props.className] - Additional classes for the container.
- */
 const SelectField = ({ placeholder, value, onChange, options, className = "" }) => (
     <div className={className}>
         <select
-            className="w-full p-2.5 lg:p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+            className="w-full p-2.5 lg:p-3 bg-red border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
             value={value}
             onChange={onChange}
         >
@@ -42,10 +32,8 @@ const SelectField = ({ placeholder, value, onChange, options, className = "" }) 
     </div>
 );
 
-
 // --- Main Component ---
 const Landing = () => {
-  // **NOTE: Initial state is now empty ('') to show placeholders by default
   const [minAge, setMinAge] = useState('');
   const [maxAge, setMaxAge] = useState('');
   const [gender, setGender] = useState('');
@@ -55,15 +43,14 @@ const Landing = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Provide default values if user doesn't select any
-    const searchState = {
-        gender: gender || 'Woman',
-        minAge: minAge || 18,
-        maxAge: maxAge || 75,
-        religion: religion || '',
-        motherTongue: motherTongue || ''
+    const searchParams = {
+        gender: gender || null,
+        minAge: minAge || null,
+        maxAge: maxAge || null,
+        religion: religion || null,
+        motherTongue: motherTongue || null
     };
-    navigate('/sol', { state: searchState });
+    navigate('/sol', { state: searchParams });
   };
   
   return (
@@ -83,10 +70,9 @@ const Landing = () => {
         </p>
         
         <form 
-          className="w-full bg-white rounded-2xl p-6 md:p-8 shadow-2xl"
+          className="w-full bg-gradient-to-br from-orange-300 to-red-400 rounded-2xl p-6 md:p-8 shadow-2xl"
           onSubmit={handleSearch}
         >
-          {/* **UPDATED GRID: Now 2 columns on mobile, 5 on large screens */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 items-center">
             
             <SelectField
@@ -97,10 +83,9 @@ const Landing = () => {
                 options={['Woman', 'Man']}
             />
 
-            {/* **UPDATED AGE PICKER: More compact for mobile */}
             <div className="col-span-2 lg:col-span-1 grid grid-cols-2 gap-4">
                 <select 
-                  className="w-full p-2.5 lg:p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+                  className="w-full p-2.5 lg:p-3 bg-red border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
                   value={minAge}
                   onChange={(e) => {
                     const newMin = parseInt(e.target.value);
@@ -112,7 +97,7 @@ const Landing = () => {
                   {ageOptions.map((age) => <option key={`min-${age}`} value={age}>{age}</option>)}
                 </select>
                 <select 
-                  className="w-full p-2.5 lg:p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+                  className="w-full p-2.5 lg:p-3 bg-red border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
                   value={maxAge}
                   onChange={(e) => setMaxAge(parseInt(e.target.value))}
                 >
@@ -137,14 +122,13 @@ const Landing = () => {
 
             <button
               type="submit"
-              className="col-span-2 lg:col-span-1 w-full text-lg font-bold bg-amber-500 hover:bg-amber-600 transition-colors duration-300 text-slate-900 py-3 rounded-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-amber-500/30"
+              className="col-span-2 lg:col-span-1 w-full text-lg font-bold bg-rose-600 hover:bg-rose-700 transition-colors duration-300 text-white py-3 rounded-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-rose-600/30"
             >
               <HeartIcon />
               Find
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );
