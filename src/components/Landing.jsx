@@ -70,7 +70,7 @@ const Landing = () => {
         </p>
         
         <form 
-          className="w-full bg-gradient-to-br from-orange-300 to-red-400 rounded-2xl p-6 md:p-8 shadow-2xl"
+          className="w-full bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl p-6 md:p-8 shadow-2xl"
           onSubmit={handleSearch}
         >
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 items-center">
