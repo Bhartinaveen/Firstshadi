@@ -29,8 +29,8 @@ const Mymatch = () => {
   // Save data to localStorage
   const save = (key, data) => localStorage.setItem(key, JSON.stringify(data));
 
-  // Remove duplicates by email
-  const uniq = (arr, key = 'email') => {
+  // Remove duplicates by id
+  const uniq = (arr, key = 'id') => {
     const map = new Map();
     arr.forEach(item => map.set(item[key], item));
     return [...map.values()];
@@ -38,9 +38,9 @@ const Mymatch = () => {
 
   // Move user to Accepted bucket
   const moveToAccepted = (user) => {
-    const req = requested.filter(u => u.email !== user.email);
-    const dec = declined.filter(u => u.email !== user.email);
-    const acc = uniq([...accepted.filter(u => u.email !== user.email), user]);
+    const req = requested.filter(u => u.id !== user.id);
+    const dec = declined.filter(u => u.id !== user.id);
+    const acc = uniq([...accepted.filter(u => u.id !== user.id), user]);
 
     setRequested(req);
     save('requestedUsers', req);
@@ -54,9 +54,9 @@ const Mymatch = () => {
 
   // Move user to Declined bucket
   const moveToDeclined = (user) => {
-    const req = requested.filter(u => u.email !== user.email);
-    const acc = accepted.filter(u => u.email !== user.email);
-    const dec = uniq([...declined.filter(u => u.email !== user.email), user]);
+    const req = requested.filter(u => u.id !== user.id);
+    const acc = accepted.filter(u => u.id !== user.id);
+    const dec = uniq([...declined.filter(u => u.id !== user.id), user]);
 
     setRequested(req);
     save('requestedUsers', req);
@@ -118,8 +118,8 @@ const Mymatch = () => {
                 </div>
               )}
             </div>
-            <h4 className="font-semibold text-lg text-gray-800 mt-2">{user.name || user.fullName || 'N/A'}</h4>
-            <p className="text-sm text-gray-500 mt-1">{user.email || user.mobile || 'N/A'}</p>
+            <h4 className="font-semibold text-lg text-gray-800 mt-2">{user.name || user.fullName || ''}</h4>
+            <p className="text-sm text-gray-500 mt-1">{user.mobile || ''}</p>
 
             {actions === 'request' && (
               <div className="flex justify-center gap-4 mt-5">
@@ -225,7 +225,7 @@ const Mymatch = () => {
             {user.verified && (
               <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Verified Profile
               </span>
@@ -239,8 +239,8 @@ const Mymatch = () => {
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
               </svg>
               <div>
-                <p className="font-medium text-gray-500">Email</p>
-                <p>{user.email || "Not provided"}</p>
+                <p className="font-medium text-gray-500">Contact</p>
+                <p>{user.mobile || "Not provided"}</p>
               </div>
             </div>
             

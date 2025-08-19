@@ -59,19 +59,19 @@ const Memb = () => {
             </div>
 
             {/* Paid Plan */}
-            <div className="bg-indigo-900 text-white rounded-xl shadow-lg p-8 border-t-8 border-yellow-400">
+            <div className="bg-red-300 text-white rounded-xl shadow-lg p-8 border-t-8 border-red-900">
               <h3 className="text-2xl font-semibold mb-6">Complete Access</h3>
               <ul className="space-y-4 text-left">
                 {features.map((item, index) => (
                   <li key={index} className="flex items-center">
-                    <CheckCircleIcon className="w-5 h-5 text-yellow-300 mr-2" />
+                    <CheckCircleIcon className="w-5 h-5 text-yellow-900 mr-2" />
                     {item.title}
                   </li>
                 ))}
               </ul>
               <button
                 onClick={handleSeePremiumPlans}
-                className="mt-6 w-full bg-yellow-400 hover:bg-yellow-300 text-indigo-900 py-2 rounded-lg font-semibold"
+                className="mt-6 w-full bg-red-900 hover:bg-yellow-300 text-indigo-100 py-2 rounded-lg font-semibold"
               >
                 See Premium Plans
               </button>
