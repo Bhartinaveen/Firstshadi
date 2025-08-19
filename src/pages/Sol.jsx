@@ -48,7 +48,7 @@ const userData = [
     job: 'Government (SSC)',
     income: '₹ 6,00,000 PA',
     hobbies: 'Cricket, Reading Books',
-    address: '123, Ashok Nagar, Patna, Bihar, 800001',
+    // address: '123, Ashok Nagar, Patna, Bihar, 800001',
     location: 'Patna, Bihar',
     images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1921&auto=format&fit=crop'],
     isPremium: true,
@@ -74,7 +74,7 @@ const userData = [
     job: 'Teacher',
     income: '₹ 4,50,000 PA',
     hobbies: 'Reading, Cooking',
-    address: '456, Mithanpura, Muzaffarpur, Bihar, 842002',
+    // address: '456, Mithanpura, Muzaffarpur, Bihar, 842002',
     location: 'Muzaffarpur, Bihar',
     images: ['/image/s37.jpg', '/image/38.jpg'],
     isPremium: false,
@@ -100,7 +100,7 @@ const userData = [
     job: 'Software Engineer',
     income: '₹ 12,00,000 PA',
     hobbies: 'Football, Movies',
-    address: '789, Doranda, Ranchi, Jharkhand, 834002',
+    // address: '789, Doranda, Ranchi, Jharkhand, 834002',
     location: 'Ranchi, Jharkhand',
     images: ['/image/s24.jpg', '/image/s41.jpg'],
     isPremium: true,
@@ -126,7 +126,7 @@ const userData = [
     job: 'Doctor',
     income: '₹ 9,00,000 PA',
     hobbies: 'Painting, Yoga',
-    address: '101, A.P. Colony, Gaya, Bihar, 823001',
+    // address: '101, A.P. Colony, Gaya, Bihar, 823001',
     location: 'Gaya, Bihar',
     images: ['/image/s25.jpg', '/image/s26.jpg'],
     isPremium: false,
@@ -152,7 +152,7 @@ const userData = [
     job: 'Musician',
     income: '₹ 8,00,000 PA',
     hobbies: 'Playing Sitar, Traveling',
-    address: '22, Lanka, Varanasi, Uttar Pradesh, 221005',
+    // address: '22, Lanka, Varanasi, Uttar Pradesh, 221005',
     location: 'Varanasi, UP',
     images: ['/image/s39.jpg', '/image/s40.jpg'],
     isPremium: true,
@@ -178,7 +178,7 @@ const userData = [
     job: 'Architect',
     income: '₹ 11,00,000 PA',
     hobbies: 'Sketching, Photography',
-    address: '55, Hazratganj, Lucknow, Uttar Pradesh, 226001',
+    // address: '55, Hazratganj, Lucknow, Uttar Pradesh, 226001',
     location: 'Lucknow, UP',
     images: ['/image/s35.jpg', '/image/s36.jpg'],
     isPremium: false,
@@ -199,23 +199,22 @@ const casteOptions = [
   "Patel", "Other"
 ];
 
+// New Crown Icon with the requested design
 const CrownIcon = (props) => (
-    <svg width="48" height="48" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" {...props}>
         <defs>
-            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{stopColor: '#FFD700', stopOpacity: 1}} />
-                <stop offset="50%" style={{stopColor: '#FFA500', stopOpacity: 1}} />
-                <stop offset="100%" style={{stopColor: '#FFD700', stopOpacity: 1}} />
+            <linearGradient id="crown-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style={{ stopColor: '#FFD700' }} />
+                <stop offset="100%" style={{ stopColor: '#FDB813' }} />
             </linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-            </filter>
         </defs>
-        <path d="M256 0L176 128h-112l-16 64h400l-16-64h-112L256 0zM48 224l-32 256h480l-32-256H48z" fill="url(#gold-gradient)" style={{filter: 'url(#glow)'}}/>
+        <g>
+            <path d="M10 30 L15 70 L85 70 L90 30 L65 50 L50 30 L35 50 Z" fill="url(#crown-gradient)" />
+            <circle cx="25" cy="45" r="5" fill="#FFF700" />
+            <circle cx="50" cy="40" r="5" fill="#FFF700" />
+            <circle cx="75" cy="45" r="5" fill="#FFF700" />
+            <rect x="15" y="75" width="70" height="5" fill="url(#crown-gradient)" />
+        </g>
     </svg>
 );
 
@@ -381,10 +380,10 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Location</h3>
-                            <div className="grid grid-cols-1 gap-y-6">
+                            {/* <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Location</h3> */}
+                            {/* <div className="grid grid-cols-1 gap-y-6">
                                 <DetailItem icon={<HomeIcon />} label="Full Address" value={user.address} />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
