@@ -269,6 +269,10 @@ const GalleryModal = ({ images, onClose }) => {
                         src={images[currentIndex]}
                         alt={`Profile image ${currentIndex + 1}`}
                         className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in fade-in-0"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found';
+                        }}
                     />
                 </div>
 
@@ -304,7 +308,10 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                         src={user.images[0]} 
                         alt={user.name}
                         onClick={() => openGallery(user.images)}
-                        onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/200x200/f3f4f6/6b7280?text=Image'; }}
+                        onError={(e) => { 
+                            e.target.onerror = null; 
+                            e.target.src='https://placehold.co/200x200/f3f4f6/6b7280?text=Image'; 
+                        }}
                         className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-105 transition-transform duration-300"
                     />
                      {user.isPremium && (
@@ -447,11 +454,22 @@ function Sol() {
     const alreadyRequested = savedRequestData.some((u) => u.email === user.email);
     if (alreadyRequested) return;
 
-    const updatedRequests = [...savedRequestData, user];
-    const newRequestData = [...savedRequestData, user];
+    // Create a new user object with all necessary data including images
+    const userToSave = {
+      ...user,
+      // Ensure we have a proper image property for the My Matches page
+      image: user.images && user.images.length > 0 ? user.images[0] : '/default-avatar.png',
+      uploadedImages: user.images || []
+    };
+
+    const updatedRequests = [...requestedUsers, user.email];
+    const newRequestData = [...savedRequestData, userToSave];
 
     localStorage.setItem('requestedUsers', JSON.stringify(newRequestData));
     setRequestedUsers(updatedRequests);
+    
+    // Dispatch event to notify My Matches page of the update
+    window.dispatchEvent(new Event('connections-updated'));
   };
 
   const openGallery = (images) => {
@@ -564,7 +582,10 @@ function Sol() {
                       <img
                           src={user.images[0]}
                           alt={user.name}
-                          onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found'; }}
+                          onError={(e) => { 
+                            e.target.onerror = null; 
+                            e.target.src='https://placehold.co/600x800/f3f4f6/6b7280?text=Image+Not+Found'; 
+                          }}
                           className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       {user.isPremium && (
