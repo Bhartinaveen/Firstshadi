@@ -30,6 +30,9 @@ import {
     ScaleIcon
 } from '@heroicons/react/24/solid';
 
+// Import the memb.jsx component
+import Memb from './memb';
+
 // --- Mock Data with more details ---
 const userData = [
     {
@@ -229,7 +232,6 @@ const CrownIcon = (props) => (
     </svg>
 );
 
-
 // --- Gallery Modal (Carousel) ---
 const GalleryModal = ({ images, onClose }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -394,7 +396,7 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
 };
 
 // --- Membership Modal ---
-const MembershipModal = ({ onClose }) => {
+const MembershipModal = ({ onClose, onJoinPremium }) => {
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm p-4 animate-in fade-in-0">
             <div className="relative bg-white rounded-2xl max-w-md w-full shadow-2xl text-center p-8 m-4">
@@ -411,7 +413,10 @@ const MembershipModal = ({ onClose }) => {
                 <p className="text-slate-500 mb-8">
                     Become a premium member to view contact details and connect with profiles directly.
                 </p>
-                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 flex items-center justify-center space-x-2">
+                <button 
+                    onClick={onJoinPremium}
+                    className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 flex items-center justify-center space-x-2"
+                >
                     <LockClosedIcon className="w-5 h-5" />
                     <span>Join Premium Now</span>
                 </button>
@@ -428,7 +433,6 @@ const Footer = () => {
         </footer>
     );
 };
-
 
 // --- Main Component ---
 const Ncon = () => {
@@ -448,6 +452,7 @@ const Ncon = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [showMembershipModal, setShowMembershipModal] = useState(false);
+    const [showMembPage, setShowMembPage] = useState(false);
 
     useEffect(() => {
         try {
@@ -500,6 +505,15 @@ const Ncon = () => {
         setShowMembershipModal(true);
     };
 
+    const handleJoinPremium = () => {
+        setShowMembershipModal(false);
+        setShowMembPage(true);
+    };
+
+    const handleBackFromMemb = () => {
+        setShowMembPage(false);
+    };
+
     const filteredUsers = userData.filter((user) => {
         const userAge = parseInt(user.age);
         const { minAge, maxAge, gender, religion, motherTongue } = mockLocationState || {};
@@ -514,8 +528,12 @@ const Ncon = () => {
         return nameMatch && genderMatch && religionMatch && tongueMatch && casteMatch && ageMatch;
     });
 
-    return (
+    // If memb page is shown, render it instead of the main content
+    if (showMembPage) {
+        return <Memb onBack={handleBackFromMemb} />;
+    }
 
+    return (
         <div>
             <div className="font-sans bg-gradient-to-br from-orange-100 to-red-100 text-slate-800">
                 <div className="min-h-screen container mx-auto px-4 py-16">
@@ -695,7 +713,12 @@ const Ncon = () => {
                 {/* --- Modals --- */}
                 {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
                 {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
-                {showMembershipModal && <MembershipModal onClose={() => setShowMembershipModal(false)} />}
+                {showMembershipModal && (
+                    <MembershipModal 
+                        onClose={() => setShowMembershipModal(false)} 
+                        onJoinPremium={handleJoinPremium} 
+                    />
+                )}
             </div>
 
             <Footer />

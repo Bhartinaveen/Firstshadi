@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import {
     CakeIcon,
     UsersIcon,
@@ -21,7 +22,11 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     StarIcon,
-    LockClosedIcon
+    LockClosedIcon,
+    FilmIcon,
+    MusicalNoteIcon,
+    SparklesIcon,
+    PaintBrushIcon
 } from '@heroicons/react/24/solid';
 import Footer from '../components/Footer';
 
@@ -47,6 +52,11 @@ const userData = [
     location: 'Patna, Bihar',
     images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1921&auto=format&fit=crop'],
     isPremium: true,
+    zodiac: 'Leo',
+    favoriteMovies: '3 Idiots, Dangal, Sholay',
+    favoriteSongs: 'Tum Hi Ho, Kesariya, Chaiyya Chaiyya',
+    manglik: 'No',
+    favoriteColor: 'Blue'
   },
   {
     name: 'Anjali',
@@ -68,6 +78,11 @@ const userData = [
     location: 'Muzaffarpur, Bihar',
     images: ['/image/s37.jpg', '/image/38.jpg'],
     isPremium: false,
+    zodiac: 'Cancer',
+    favoriteMovies: 'DDLJ, Kabhi Khushi Kabhie Gham, Queen',
+    favoriteSongs: 'Tere Bina, Raabta, Senorita',
+    manglik: 'Yes',
+    favoriteColor: 'Pink'
   },
   {
     name: 'Rohit',
@@ -89,6 +104,11 @@ const userData = [
     location: 'Ranchi, Jharkhand',
     images: ['/image/s24.jpg', '/image/s41.jpg'],
     isPremium: true,
+    zodiac: 'Aries',
+    favoriteMovies: 'Avengers, Inception, The Dark Knight',
+    favoriteSongs: 'Shape of You, Blinding Lights, Despacito',
+    manglik: 'No',
+    favoriteColor: 'Black'
   },
   {
     name: 'Pooja',
@@ -110,6 +130,11 @@ const userData = [
     location: 'Gaya, Bihar',
     images: ['/image/s25.jpg', '/image/s26.jpg'],
     isPremium: false,
+    zodiac: 'Libra',
+    favoriteMovies: 'Barfi, English Vinglish, Piku',
+    favoriteSongs: 'Tum Se Hi, Apna Bana Le, Channa Mereya',
+    manglik: 'No',
+    favoriteColor: 'Purple'
   },
   {
     name: 'Vikram',
@@ -131,6 +156,11 @@ const userData = [
     location: 'Varanasi, UP',
     images: ['/image/s39.jpg', '/image/s40.jpg'],
     isPremium: true,
+    zodiac: 'Sagittarius',
+    favoriteMovies: 'Rockstar, Bohemian Rhapsody, Whiplash',
+    favoriteSongs: 'Tum Ho, Nadaan Parinde, Hallelujah',
+    manglik: 'Yes',
+    favoriteColor: 'Green'
   },
   {
     name: 'Priya',
@@ -152,6 +182,11 @@ const userData = [
     location: 'Lucknow, UP',
     images: ['/image/s35.jpg', '/image/s36.jpg'],
     isPremium: false,
+    zodiac: 'Taurus',
+    favoriteMovies: 'The Lunchbox, Guzaarish, Khabi Haan Kabhi Naa',
+    favoriteSongs: 'Raataan Lambiyan, Saibo, Pehla Nasha',
+    manglik: 'No',
+    favoriteColor: 'Red'
   },
 ];
 
@@ -299,6 +334,8 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                                 <DetailItem icon={<HeartIcon />} label="Religion" value={user.religion} />
                                 <DetailItem icon={<AcademicCapIcon />} label="Caste" value={user.caste} />
                                 <DetailItem icon={<ChatBubbleLeftRightIcon />} label="Mother Tongue" value={user.motherTongue} />
+                                <DetailItem icon={<SparklesIcon />} label="Zodiac Sign" value={user.zodiac} />
+                                <DetailItem icon={<SparklesIcon />} label="Manglik" value={user.manglik} />
                             </div>
                         </div>
                         <div>
@@ -318,9 +355,11 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Location & Interests</h3>
+                            <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Preferences & Interests</h3>
                             <div className="grid grid-cols-1 gap-y-6">
-                                <DetailItem icon={<HomeIcon />} label="Full Address" value={user.address} />
+                                <DetailItem icon={<FilmIcon />} label="Favorite Movies" value={user.favoriteMovies} />
+                                <DetailItem icon={<MusicalNoteIcon />} label="Favorite Songs" value={user.favoriteSongs} />
+                                <DetailItem icon={<PaintBrushIcon />} label="Favorite Color" value={user.favoriteColor} />
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-6 h-6 text-orange-500 mt-1"><PhotoIcon/></div>
                                     <div>
@@ -334,6 +373,12 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Location</h3>
+                            <div className="grid grid-cols-1 gap-y-6">
+                                <DetailItem icon={<HomeIcon />} label="Full Address" value={user.address} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -342,7 +387,7 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
 };
 
 // --- Membership Modal ---
-const MembershipModal = ({ onClose }) => {
+const MembershipModal = ({ onClose, onJoinPremium }) => {
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm p-4 animate-in fade-in-0">
             <div className="relative bg-white rounded-2xl max-w-md w-full shadow-2xl text-center p-8 m-4">
@@ -355,11 +400,15 @@ const MembershipModal = ({ onClose }) => {
                 >
                     <XMarkIcon className="w-7 h-7" />
                 </button>
+
+                
                 <h2 className="text-3xl font-extrabold text-slate-800 mt-8 mb-4">Unlock Premium Access</h2>
                 <p className="text-slate-500 mb-8">
                     Become a premium member to view contact details and connect with profiles directly.
                 </p>
-                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 flex items-center justify-center space-x-2">
+                <button 
+                    onClick={onJoinPremium}
+                    className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 flex items-center justify-center space-x-2">
                     <LockClosedIcon className="w-5 h-5" />
                     <span>Join Premium Now</span>
                 </button>
@@ -371,6 +420,7 @@ const MembershipModal = ({ onClose }) => {
 // --- Main Component ---
 function Sol() {
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = location.state || {};
   
   const [requestedUsers, setRequestedUsers] = useState([]);
@@ -431,6 +481,12 @@ function Sol() {
 
   const handlePhoneViewClick = () => {
     setShowMembershipModal(true);
+  };
+
+  const handleJoinPremium = () => {
+    // Navigate to the memb.jsx page
+    navigate('/memb');
+    setShowMembershipModal(false);
   };
 
   const filteredUsers = userData.filter((user) => {
@@ -577,6 +633,10 @@ function Sol() {
                             <p><span className="font-semibold text-slate-700">Speaks: </span>{user.motherTongue}</p>
                         </div>
                         <div className="flex items-center space-x-3">
+                            <SparklesIcon className="h-5 w-5 text-slate-400" />
+                            <p><span className="font-semibold text-slate-700">Zodiac: </span>{user.zodiac}</p>
+                        </div>
+                        <div className="flex items-center space-x-3">
                               <DevicePhoneMobileIcon className="h-5 w-5 text-slate-400" />
                               <p className="flex-grow">
                                   <span className="font-semibold text-slate-700">Phone: </span>
@@ -630,7 +690,12 @@ function Sol() {
         {/* --- Modals --- */}
         {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
         {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
-        {showMembershipModal && <MembershipModal onClose={() => setShowMembershipModal(false)} />}
+        {showMembershipModal && (
+          <MembershipModal 
+            onClose={() => setShowMembershipModal(false)} 
+            onJoinPremium={handleJoinPremium} 
+          />
+        )}
       </div>
 
       <Footer/>
