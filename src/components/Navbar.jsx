@@ -67,7 +67,7 @@ const Navbar = () => {
               <img src="/image/l2.png" alt="Logo" className="h-21 w-21" />
             </Link>
             {/* --- CHANGE: Text color changed to dark slate for readability --- */}
-            <span className="-translate-x-4 font-bold text-slate-700">First</span>
+            <span className="-translate-x-4 font-bold text-slate-700  bg-gradient-to-r from-rose-500 to-indigo-600">First</span>
             <span className="-translate-x-5 font-bold text-slate-700">Marriage</span>
           </div>
 

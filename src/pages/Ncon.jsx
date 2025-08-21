@@ -52,7 +52,6 @@ const userData = [
         job: 'Government (SSC)',
         income: '₹ 6,00,000 PA',
         hobbies: 'Cricket, Reading Books',
-        // address: '123, Ashok Nagar, Patna, Bihar, 800001',
         location: 'Patna, Bihar',
         images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1921&auto=format&fit=crop'],
         isPremium: true,
@@ -80,7 +79,6 @@ const userData = [
         job: 'Teacher',
         income: '₹ 4,50,000 PA',
         hobbies: 'Reading, Cooking',
-        // address: '456, Mithanpura, Muzaffarpur, Bihar, 842002',
         location: 'Muzaffarpur, Bihar',
         images: ['/image/s37.jpg', '/image/s38.jpg'],
         isPremium: false,
@@ -108,7 +106,6 @@ const userData = [
         job: 'Software Engineer',
         income: '₹ 12,00,000 PA',
         hobbies: 'Football, Movies',
-        // address: '789, Doranda, Ranchi, Jharkhand, 834002',
         location: 'Ranchi, Jharkhand',
         images: ['/image/s24.jpg', '/image/s41.jpg'],
         isPremium: true,
@@ -136,7 +133,6 @@ const userData = [
         job: 'Doctor',
         income: '₹ 9,00,000 PA',
         hobbies: 'Painting, Yoga',
-        // address: '101, A.P. Colony, Gaya, Bihar, 823001',
         location: 'Gaya, Bihar',
         images: ['/image/s25.jpg', '/image/s26.jpg'],
         isPremium: false,
@@ -164,7 +160,6 @@ const userData = [
         job: 'Musician',
         income: '₹ 8,00,000 PA',
         hobbies: 'Playing Sitar, Traveling',
-        // address: '22, Lanka, Varanasi, Uttar Pradesh, 221005',
         location: 'Varanasi, UP',
         images: ['/image/s39.jpg', '/image/s40.jpg'],
         isPremium: true,
@@ -192,7 +187,6 @@ const userData = [
         job: 'Architect',
         income: '₹ 11,00,000 PA',
         hobbies: 'Sketching, Photography',
-        // address: '55, Hazratganj, Lucknow, Uttar Pradesh, 226001',
         location: 'Lucknow, UP',
         images: ['/image/s35.jpg', '/image/s36.jpg'],
         isPremium: false,
@@ -468,10 +462,8 @@ const Ncon = () => {
         const alreadyRequested = savedRequestData.some((u) => u.email === user.email);
         if (alreadyRequested) return;
 
-        // Create a new user object with all necessary data including images
         const userToSave = {
             ...user,
-            // Ensure we have a proper image property for the My Matches page
             image: user.images && user.images.length > 0 ? user.images[0] : '/default-avatar.png',
             uploadedImages: user.images || []
         };
@@ -482,7 +474,6 @@ const Ncon = () => {
         localStorage.setItem('requestedUsers', JSON.stringify(newRequestData));
         setRequestedUsers(updatedRequests);
         
-        // Dispatch event to notify My Matches page of the update
         window.dispatchEvent(new Event('connections-updated'));
     };
 
@@ -538,7 +529,6 @@ const Ncon = () => {
         return nameMatch && genderMatch && religionMatch && tongueMatch && casteMatch && ageMatch;
     });
 
-    // If memb page is shown, render it instead of the main content
     if (showMembPage) {
         return <Memb onBack={handleBackFromMemb} />;
     }
@@ -559,7 +549,6 @@ const Ncon = () => {
 
                 {/* --- Filter Section --- */}
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-14">
-                    {/* Name Filter */}
                     <div className="relative">
                         <input
                             type="text"
@@ -571,7 +560,6 @@ const Ncon = () => {
                         <MagnifyingGlassIcon className="h-6 w-6 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                     </div>
 
-                    {/* Caste Filter */}
                     <div className="relative">
                         <select
                             id="caste-filter"
@@ -592,8 +580,6 @@ const Ncon = () => {
                     {filteredUsers.map((user) => {
                         const isRequested = requestedUsers.includes(user.email);
                         return (
-                           
-
                             <div
                                 key={user.email}
                                 className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-500 group hover:shadow-orange-500/20 hover:border-orange-400/50 flex flex-col"
@@ -638,10 +624,19 @@ const Ncon = () => {
                                             <EyeIcon className="h-5 w-5" />
                                         </button>
                                     </div>
+                                    
+                                    {/* ✨ NEW: GOLDEN PREMIUM BADGE ✨ */}
+                                    {user.isPremium && (
+                                        <div className="absolute bottom-4 right-4 flex items-center space-x-2 bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
+                                            <CrownIcon className="w-5 h-5" />
+                                            <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">
+                                                Premium
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="p-6 space-y-5 flex-grow">
-                                    {/* Key Info Row */}
                                     <div className="flex justify-around text-center border-b border-gray-200 pb-4">
                                         <div className="flex flex-col items-center">
                                             <CakeIcon className="h-6 w-6 text-orange-500 mb-1" />
@@ -664,7 +659,6 @@ const Ncon = () => {
                                             <span className="text-xs text-slate-500">Caste</span>
                                         </div>
                                     </div>
-                                    {/* Other Details */}
                                     <div className="space-y-3 text-slate-600 text-sm pt-4">
                                         <div className="flex items-start space-x-3">
                                             <UsersIcon className="h-5 w-5 text-slate-400 mt-0.5 shrink-0" />
@@ -687,16 +681,15 @@ const Ncon = () => {
                                     </div>
                                 </div>
 
-                                {/* --- Action Button --- */}
                                 <div className="px-6 pb-6 pt-2">
                                     <button
                                         disabled={isRequested}
                                         onClick={() => handleRequest(user)}
                                         className={`w-full flex items-center justify-center px-4 py-3 text-base font-bold rounded-xl transition-all duration-300 transform
                                           ${isRequested
-                                                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                                : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-orange-500/40 focus:outline-none focus:ring-4 focus:ring-orange-300 hover:-translate-y-0.5'
-                                            }`}
+                                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                            : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-orange-500/40 focus:outline-none focus:ring-4 focus:ring-orange-300 hover:-translate-y-0.5'
+                                          }`}
                                     >
                                         {isRequested ? (
                                             <>
@@ -716,7 +709,6 @@ const Ncon = () => {
                     })}
                 </div>
 
-                {/* --- No Results Message --- */}
                 {filteredUsers.length === 0 && (
                     <div className="text-center col-span-full py-24">
                         <h3 className="text-3xl font-semibold text-slate-600">No Profiles Found</h3>
@@ -725,7 +717,6 @@ const Ncon = () => {
                 )}
             </div>
 
-            {/* --- Modals --- */}
             {showGalleryModal && <GalleryModal images={galleryImages} onClose={closeGallery} />}
             {showProfileModal && <ProfileModal user={selectedUser} onClose={closeProfileModal} openGallery={openGallery} />}
             {showMembershipModal && (
@@ -736,7 +727,6 @@ const Ncon = () => {
             )}
         </div>
           <Footer/>
-
         </div>
     );
 }

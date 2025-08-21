@@ -48,7 +48,6 @@ const userData = [
     job: 'Government (SSC)',
     income: '₹ 6,00,000 PA',
     hobbies: 'Cricket, Reading Books',
-    // address: '123, Ashok Nagar, Patna, Bihar, 800001',
     location: 'Patna, Bihar',
     images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop', 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1921&auto=format&fit=crop'],
     isPremium: true,
@@ -74,7 +73,6 @@ const userData = [
     job: 'Teacher',
     income: '₹ 4,50,000 PA',
     hobbies: 'Reading, Cooking',
-    // address: '456, Mithanpura, Muzaffarpur, Bihar, 842002',
     location: 'Muzaffarpur, Bihar',
     images: ['/image/s37.jpg', '/image/38.jpg'],
     isPremium: false,
@@ -100,7 +98,6 @@ const userData = [
     job: 'Software Engineer',
     income: '₹ 12,00,000 PA',
     hobbies: 'Football, Movies',
-    // address: '789, Doranda, Ranchi, Jharkhand, 834002',
     location: 'Ranchi, Jharkhand',
     images: ['/image/s24.jpg', '/image/s41.jpg'],
     isPremium: true,
@@ -126,7 +123,6 @@ const userData = [
     job: 'Doctor',
     income: '₹ 9,00,000 PA',
     hobbies: 'Painting, Yoga',
-    // address: '101, A.P. Colony, Gaya, Bihar, 823001',
     location: 'Gaya, Bihar',
     images: ['/image/s25.jpg', '/image/s26.jpg'],
     isPremium: false,
@@ -152,7 +148,6 @@ const userData = [
     job: 'Musician',
     income: '₹ 8,00,000 PA',
     hobbies: 'Playing Sitar, Traveling',
-    // address: '22, Lanka, Varanasi, Uttar Pradesh, 221005',
     location: 'Varanasi, UP',
     images: ['/image/s39.jpg', '/image/s40.jpg'],
     isPremium: true,
@@ -178,7 +173,6 @@ const userData = [
     job: 'Architect',
     income: '₹ 11,00,000 PA',
     hobbies: 'Sketching, Photography',
-    // address: '55, Hazratganj, Lucknow, Uttar Pradesh, 226001',
     location: 'Lucknow, UP',
     images: ['/image/s35.jpg', '/image/s36.jpg'],
     isPremium: false,
@@ -313,11 +307,11 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                         }}
                         className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-105 transition-transform duration-300"
                     />
-                     {user.isPremium && (
-                        <div className="absolute -top-2 -right-2 transform rotate-12">
-                            <CrownIcon className="w-8 h-8" />
-                        </div>
-                    )}
+                         {user.isPremium && (
+                            <div className="absolute -top-2 -right-2 transform rotate-12">
+                                <CrownIcon className="w-8 h-8" />
+                            </div>
+                        )}
                 </div>
                 <div className="bg-gradient-to-br from-orange-50 to-red-50 p-6 pt-20 rounded-2xl w-full mt-16 max-h-[80vh] overflow-y-auto shadow-2xl border border-gray-200">
                     <button
@@ -379,12 +373,6 @@ const ProfileModal = ({ user, onClose, openGallery }) => {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            {/* <h3 className="text-xl font-bold text-slate-700 mb-4 border-l-4 border-orange-500 pl-3">Location</h3> */}
-                            {/* <div className="grid grid-cols-1 gap-y-6">
-                                <DetailItem icon={<HomeIcon />} label="Full Address" value={user.address} />
-                            </div> */}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -397,7 +385,7 @@ const MembershipModal = ({ onClose, onJoinPremium }) => {
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm p-4 animate-in fade-in-0">
             <div className="relative bg-white rounded-2xl max-w-md w-full shadow-2xl text-center p-8 m-4">
-                 <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gradient-to-r from-red-500 to-orange-500 p-4 rounded-full shadow-lg">
+                 <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-yellow-600 p-4 rounded-full shadow-lg">
                     <StarIcon className="w-12 h-12 text-white" />
                 </div>
                 <button
@@ -414,7 +402,7 @@ const MembershipModal = ({ onClose, onJoinPremium }) => {
                 </p>
                 <button 
                     onClick={onJoinPremium}
-                    className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 flex items-center justify-center space-x-2">
+                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 flex items-center justify-center space-x-2">
                     <LockClosedIcon className="w-5 h-5" />
                     <span>Join Premium Now</span>
                 </button>
@@ -516,9 +504,9 @@ function Sol() {
     const tongueMatch = !motherTongue || user.motherTongue === motherTongue;
     const casteMatch = !selectedCaste || user.caste === selectedCaste;
     const ageMatch = (!minAge && !maxAge) || 
-                    (minAge && !maxAge && userAge >= minAge) || 
-                    (!minAge && maxAge && userAge <= maxAge) || 
-                    (minAge && maxAge && userAge >= minAge && userAge <= maxAge);
+                       (minAge && !maxAge && userAge >= minAge) || 
+                       (!minAge && maxAge && userAge <= maxAge) || 
+                       (minAge && maxAge && userAge >= minAge && userAge <= maxAge);
 
     return nameMatch && genderMatch && religionMatch && tongueMatch && casteMatch && ageMatch;
   });
@@ -592,6 +580,17 @@ function Sol() {
                               <CrownIcon className="w-8 h-8" />
                           </div>
                       )}
+                      
+                      {/* ✨ REPLACED PREMIUM BADGE ✨ */}
+                      {user.isPremium && (
+                        <div className="absolute bottom-4 right-4 flex items-center space-x-2 bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
+                            <CrownIcon className="w-5 h-5" />
+                            <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">
+                                Premium
+                            </span>
+                        </div>
+                      )}
+
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                       <div className="absolute bottom-0 left-0 p-5">
                           <h2 className="text-3xl font-bold text-white tracking-tight">{user.name}</h2>
@@ -656,7 +655,7 @@ function Sol() {
                             <SparklesIcon className="h-5 w-5 text-slate-400" />
                             <p><span className="font-semibold text-slate-700">Zodiac: </span>{user.zodiac}</p>
                         </div>
-                        <div className="flex items-center space-x-3">
+                          <div className="flex items-center space-x-3">
                               <DevicePhoneMobileIcon className="h-5 w-5 text-slate-400" />
                               <p className="flex-grow">
                                   <span className="font-semibold text-slate-700">Phone: </span>
