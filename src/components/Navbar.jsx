@@ -59,16 +59,16 @@ const Navbar = () => {
 
   return (
     <>
-      {/* --- CHANGE: Navbar color changed to the very light off-white from the image --- */}
       <nav className="fixed h-18 top-0 left-0 w-full bg-[#fff5ee] px-6 py-2 shadow-md z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2 -translate-y-4 -translate-x-4">
             <Link to="/">
               <img src="/image/l2.png" alt="Logo" className="h-21 w-21" />
             </Link>
-            {/* --- CHANGE: Text color changed to dark slate for readability --- */}
-            <span className="-translate-x-4 font-bold text-slate-700  bg-gradient-to-r from-rose-500 to-indigo-600">First</span>
-            <span className="-translate-x-5 font-bold text-slate-700">Marriage</span>
+            {/* --- CHANGE: "First Marriage" text now has a gradient matching the image --- */}
+            <span className="-translate-x-4 text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+              First Marriage
+            </span>
           </div>
 
           <div className="hidden md:flex items-center space-x-6 text-slate-700 font-medium -translate-y-3">
@@ -80,7 +80,6 @@ const Navbar = () => {
 
             <Link to="/notifications" className="relative">
               <Bell className="h-6 w-6" />
-              {/* --- CHANGE: Notification dot color changed for contrast --- */}
               {notificationCount > 0 && (
                 <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white" />
               )}
@@ -91,7 +90,6 @@ const Navbar = () => {
             </Link>
 
             <div className="relative group">
-              {/* --- CHANGE: Chat button text color updated to be a colorful accent --- */}
               <button
                 onClick={toggleChat}
                 className="font-semibold flex items-center gap-1 text-orange-500 hover:text-orange-600"
@@ -117,7 +115,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* --- CHANGE: Mobile menu background is now white for clear separation --- */}
         <div
           ref={menuRef}
           className={`fixed top-0 right-0 h-auto pb-4 w-2/4 sm:w-1/2 bg-white shadow-lg transform ${
@@ -142,7 +139,6 @@ const Navbar = () => {
                   toggleChat();
                   toggleMenu();
                 }}
-                 // --- CHANGE: Mobile chat button color changed to an accent color ---
                 className="flex items-center gap-1 text-orange-500 font-bold"
               >
                 💬 Chat
@@ -160,7 +156,6 @@ const Navbar = () => {
       {isChatOpen && (
         <div className="fixed inset-0 flex justify-end z-50">
           <div className="bg-white w-80 h-full flex flex-col shadow-lg">
-            {/* --- CHANGE: Chat components now use a coral color as a warm accent --- */}
             <div className="p-4 bg-[#fb9c7c] flex justify-between items-center">
               <h2 className="font-bold text-white">Chat Support</h2>
               <button onClick={toggleChat}>
