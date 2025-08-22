@@ -31,7 +31,7 @@ import {
 } from '@heroicons/react/24/solid';
 
 // Import the memb.jsx component
-import Memb from './memb';
+import Memb from './Memb';
 import Footer from '../components/Footer';
 
 // --- Mock Data with more details ---
