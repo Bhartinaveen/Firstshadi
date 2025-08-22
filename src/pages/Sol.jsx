@@ -581,6 +581,7 @@ function Sol() {
                           </div>
                       )}
                       
+                      {/* add commit  */}
                       {/* ✨ REPLACED PREMIUM BADGE ✨ */}
                       {user.isPremium && (
                         <div className="absolute bottom-4 right-4 flex items-center space-x-2 bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
